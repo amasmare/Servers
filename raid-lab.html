@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 03 — RAID Configuration &amp; Storage Math</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
+.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#f59e0b;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #10b981;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#059669,#10b981);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#6ee7b7}
+.site-author-block{text-align:right;border-left:1px solid rgba(255,255,255,.08);padding-left:18px;flex-shrink:0}
+.site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b;margin-top:1px}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#10b981;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(16,185,129,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(16,185,129,.1)}
+.tabs{display:flex;gap:0;background:#071020;border-bottom:1px solid #1e3a5c;padding:0 20px;overflow-x:auto}
+.tab{padding:14px 22px;cursor:pointer;color:#7ab3d4;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover{color:#10b981}.tab.active{color:#10b981;border-bottom-color:#10b981;background:rgba(16,185,129,.05)}
+.tab-panel{display:none;padding:30px;max-width:960px;margin:0 auto}.tab-panel.active{display:block}
+h2{color:#10b981;margin-bottom:8px;font-size:1.2rem}
+.subtitle{color:#7ab3d4;font-size:.85rem;margin-bottom:20px;line-height:1.7}
+.card{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
+.card h3{color:#10b981;margin-bottom:12px;font-size:1rem}
+.btn{padding:9px 20px;border:none;border-radius:6px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
+.btn-green{background:#10b981;color:#fff}.btn-green:hover{background:#059669}
+.btn-outline{background:transparent;border:1px solid #10b981;color:#10b981}.btn-outline:hover{background:rgba(16,185,129,.1)}
+.btn-sm{padding:5px 12px;font-size:.78rem}
+.alert{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.88rem;line-height:1.6}
+.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:#7ab3d4}
+.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#34d399}
+.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
+.alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
+.score-badge{display:inline-block;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#10b981;margin-bottom:16px}
+/* RAID Calculator */
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.input-group{margin-bottom:14px}
+.input-group label{display:block;font-size:.82rem;color:#7ab3d4;margin-bottom:5px}
+.input-group input,.input-group select{width:100%;background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:9px 12px;color:#e0e6f0;font-size:.9rem}
+.input-group input:focus,.input-group select:focus{outline:none;border-color:#10b981}
+.result-box{background:#071020;border:2px solid #10b981;border-radius:10px;padding:18px;text-align:center}
+.result-big{font-size:2.2rem;font-weight:800;color:#10b981;margin:8px 0}
+.result-label{font-size:.8rem;color:#64748b;margin-bottom:4px}
+.result-detail{font-size:.82rem;color:#7ab3d4;line-height:1.7}
+/* RAID Visual */
+.raid-visual{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap;align-items:flex-end}
+.drive-col{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:60px}
+.drive-label{font-size:.7rem;color:#64748b;margin-bottom:4px}
+.block{width:56px;height:24px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;transition:all .3s}
+.block-data{background:#0ea5e9;color:#fff}
+.block-parity{background:#f59e0b;color:#000}
+.block-mirror{background:#10b981;color:#fff}
+.block-stripe{background:#7c3aed;color:#fff}
+.block-empty{background:#1e3a5c;color:#475569}
+.fault-badge{margin-top:6px;font-size:.65rem;padding:3px 8px;border-radius:10px;font-weight:700}
+.fb-ok{background:rgba(16,185,129,.2);color:#34d399}
+.fb-warn{background:rgba(239,68,68,.2);color:#f87171}
+/* Scenario picker */
+.scenario-opts{display:grid;gap:8px;margin:12px 0}
+.sc-btn{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px 16px;cursor:pointer;text-align:left;transition:all .2s;font-size:.88rem;color:#e0e6f0;width:100%}
+.sc-btn:hover{border-color:#10b981}
+.sc-btn.sc-correct{border-color:#10b981;background:rgba(16,185,129,.1);color:#34d399}
+.sc-btn.sc-wrong{border-color:#ef4444;background:rgba(239,68,68,.1);color:#f87171}
+/* Quiz */
+.quiz-q p{font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5}
+.quiz-options{display:grid;gap:8px}
+.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:left;width:100%}
+.quiz-opt:hover{border-color:#10b981;background:rgba(16,185,129,.06)}
+.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}
+.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
+.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
+.site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}
+.site-footer-bar strong{color:#f59e0b}
+@media(max-width:600px){.calc-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="site-topbar">
+  <span>🖥️ Training Environment — Academic Use Only | CompTIA Server+</span>
+  <span class="author-tag">Eng. Abdullah Alasmari · م. عبدالله الأسمري</span>
+</div>
+<div class="site-header-bar">
+  <div class="site-logo-box">💾</div>
+  <div class="site-lab-info">
+    <h2>Lab 03 — RAID Configuration &amp; Storage Math</h2>
+    <span>CompTIA Server+ SK0-005 · Chapter 3</span>
+  </div>
+  <div class="site-author-block">
+    <div class="aname">Eng. Abdullah Alasmari</div>
+    <div class="abook">Server+ Interactive Labs</div>
+  </div>
+</div>
+<a href="index.html" class="back-btn">← Back to Labs</a>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('t1',this)">RAID Calculator</div>
+  <div class="tab" onclick="showTab('t2',this)">Visual Layout</div>
+  <div class="tab" onclick="showTab('t3',this)">Scenario Picker</div>
+  <div class="tab" onclick="showTab('t4',this)">Knowledge Quiz</div>
+</div>
+
+<!-- TAB 1: Calculator -->
+<div id="t1" class="tab-panel active">
+  <h2>RAID Capacity Calculator</h2>
+  <p class="subtitle">Enter the number of drives, drive size, and RAID level to calculate usable capacity and fault tolerance.</p>
+  <div class="calc-grid">
+    <div class="card">
+      <h3>⚙️ Configuration</h3>
+      <div class="input-group">
+        <label>Number of Drives</label>
+        <input type="number" id="num-drives" value="4" min="2" max="16" oninput="calcRAID()">
+      </div>
+      <div class="input-group">
+        <label>Drive Size (TB)</label>
+        <input type="number" id="drive-size" value="2" min="0.1" max="100" step="0.1" oninput="calcRAID()">
+      </div>
+      <div class="input-group">
+        <label>RAID Level</label>
+        <select id="raid-level" onchange="calcRAID()">
+          <option value="0">RAID 0 — Striping</option>
+          <option value="1">RAID 1 — Mirroring</option>
+          <option value="5" selected>RAID 5 — Striping + Parity</option>
+          <option value="6">RAID 6 — Striping + Double Parity</option>
+          <option value="10">RAID 10 — Stripe of Mirrors</option>
+          <option value="jbod">JBOD — Just a Bunch of Disks</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label>Hot Spare Drives</label>
+        <input type="number" id="hot-spare" value="0" min="0" max="4" oninput="calcRAID()">
+      </div>
+    </div>
+    <div>
+      <div class="result-box">
+        <div class="result-label">Usable Capacity</div>
+        <div class="result-big" id="res-capacity">— TB</div>
+        <div class="result-detail" id="res-detail"></div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <h3>📊 RAID Summary</h3>
+        <div id="res-summary" style="font-size:.85rem;color:#7ab3d4;line-height:1.8"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📋 RAID Level Quick Reference</h3>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:.8rem">
+        <thead><tr style="background:#071020">
+          <th style="padding:9px;text-align:left;color:#7ab3d4;border-bottom:2px solid #1e3a5c">RAID Level</th>
+          <th style="padding:9px;text-align:left;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Min Drives</th>
+          <th style="padding:9px;text-align:left;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Usable Capacity</th>
+          <th style="padding:9px;text-align:left;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Fault Tolerance</th>
+          <th style="padding:9px;text-align:left;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Best For</th>
+        </tr></thead>
+        <tbody id="raid-ref-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2: Visual Layout -->
+<div id="t2" class="tab-panel">
+  <h2>RAID Data Layout Visualizer</h2>
+  <p class="subtitle">See exactly how data blocks are distributed across drives for each RAID level. Select a level to visualize.</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+    <button class="btn btn-outline btn-sm" onclick="showVisual('0')">RAID 0</button>
+    <button class="btn btn-outline btn-sm" onclick="showVisual('1')">RAID 1</button>
+    <button class="btn btn-outline btn-sm" onclick="showVisual('5')">RAID 5</button>
+    <button class="btn btn-outline btn-sm" onclick="showVisual('6')">RAID 6</button>
+    <button class="btn btn-outline btn-sm" onclick="showVisual('10')">RAID 10</button>
+  </div>
+  <div class="card" id="visual-card">
+    <h3 id="vis-title">Select a RAID level above</h3>
+    <div id="vis-desc" class="subtitle" style="margin-bottom:16px"></div>
+    <div class="raid-visual" id="vis-drives"></div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:.75rem">
+      <span><span style="display:inline-block;width:14px;height:14px;background:#0ea5e9;border-radius:3px;vertical-align:middle;margin-right:4px"></span>Data Block</span>
+      <span><span style="display:inline-block;width:14px;height:14px;background:#f59e0b;border-radius:3px;vertical-align:middle;margin-right:4px"></span>Parity Block</span>
+      <span><span style="display:inline-block;width:14px;height:14px;background:#10b981;border-radius:3px;vertical-align:middle;margin-right:4px"></span>Mirror Block</span>
+    </div>
+    <div id="vis-facts" style="margin-top:16px"></div>
+  </div>
+</div>
+
+<!-- TAB 3: Scenario Picker -->
+<div id="t3" class="tab-panel">
+  <h2>Which RAID Should I Use?</h2>
+  <p class="subtitle">Read each scenario and choose the most appropriate RAID level.</p>
+  <div class="score-badge" id="sc-score">Score: 0 / 0</div>
+  <div id="sc-card" class="card"></div>
+</div>
+
+<!-- TAB 4: Quiz -->
+<div id="t4" class="tab-panel">
+  <h2>Knowledge Quiz — RAID &amp; Storage</h2>
+  <p class="subtitle">12 questions covering RAID levels, capacity math, and fault tolerance.</p>
+  <div class="score-badge" id="quiz-score">Score: 0 / 12</div>
+  <div id="quiz-container"></div>
+</div>
+
+<div class="site-footer-bar">
+  <p>Designed by <strong>Eng. Abdullah Alasmari</strong> · CompTIA Server+ Interactive Labs</p>
+</div>
+
+<script>
+function showTab(id,el){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');el.classList.add('active');}
+
+// ---- RAID CALCULATOR ----
+const RAID_REF=[
+  {level:'RAID 0',min:2,cap:'n × drive',fault:'None (0 drives)',best:'Speed-critical, non-critical data'},
+  {level:'RAID 1',min:2,cap:'n/2 × drive',fault:'n/2 drives',best:'OS drives, small critical data'},
+  {level:'RAID 5',min:3,cap:'(n-1) × drive',fault:'1 drive',best:'General purpose, read-heavy'},
+  {level:'RAID 6',min:4,cap:'(n-2) × drive',fault:'2 drives',best:'Large arrays, critical data'},
+  {level:'RAID 10',min:4,cap:'n/2 × drive',fault:'1 per mirror pair',best:'High I/O databases'},
+  {level:'JBOD',min:1,cap:'sum of all drives',fault:'None',best:'Maximum capacity, non-redundant'},
+];
+function buildRef(){
+  document.getElementById('raid-ref-tbody').innerHTML=RAID_REF.map(r=>`<tr style="border-bottom:1px solid #1e3a5c">
+    <td style="padding:9px;color:#10b981;font-weight:700">${r.level}</td>
+    <td style="padding:9px;color:#e0e6f0">${r.min}</td>
+    <td style="padding:9px;color:#e0e6f0">${r.cap}</td>
+    <td style="padding:9px;color:#fbbf24">${r.fault}</td>
+    <td style="padding:9px;color:#7ab3d4">${r.best}</td>
+  </tr>`).join('');
+}
+function calcRAID(){
+  const n=parseInt(document.getElementById('num-drives').value)||4;
+  const sz=parseFloat(document.getElementById('drive-size').value)||2;
+  const level=document.getElementById('raid-level').value;
+  const spare=parseInt(document.getElementById('hot-spare').value)||0;
+  const active=n-spare;
+  let usable=0,fault='',minDrives=2,valid=true,note='';
+  if(level==='0'){usable=active*sz;fault='0 drives (no redundancy)';minDrives=2;}
+  else if(level==='1'){usable=(active/2)*sz;fault=`${Math.floor(active/2)} drive(s)`;minDrives=2;}
+  else if(level==='5'){usable=(active-1)*sz;fault='1 drive';minDrives=3;if(active<3){valid=false;note='RAID 5 requires at least 3 active drives.';}}
+  else if(level==='6'){usable=(active-2)*sz;fault='2 drives';minDrives=4;if(active<4){valid=false;note='RAID 6 requires at least 4 active drives.';}}
+  else if(level==='10'){usable=(active/2)*sz;fault='1 per mirror pair';minDrives=4;if(active%2!==0){valid=false;note='RAID 10 requires an even number of active drives.';}else if(active<4){valid=false;note='RAID 10 requires at least 4 active drives.';}}
+  else if(level==='jbod'){usable=active*sz;fault='None';minDrives=1;}
+  if(!valid){document.getElementById('res-capacity').textContent='Invalid';document.getElementById('res-detail').textContent=note;document.getElementById('res-summary').innerHTML=`<span style="color:#f87171">${note}</span>`;return;}
+  const overhead=((active*sz-usable)/(active*sz)*100).toFixed(0);
+  document.getElementById('res-capacity').textContent=usable.toFixed(2)+' TB';
+  document.getElementById('res-detail').textContent=`${(usable*1000).toFixed(0)} GB · ${active} active + ${spare} spare drive(s)`;
+  document.getElementById('res-summary').innerHTML=`
+    <b style="color:#10b981">RAID ${level.toUpperCase()}</b><br>
+    Total raw: ${(active*sz).toFixed(2)} TB<br>
+    Usable: ${usable.toFixed(2)} TB (${100-parseInt(overhead)}% efficiency)<br>
+    Overhead/parity: ${(active*sz-usable).toFixed(2)} TB (${overhead}%)<br>
+    Fault tolerance: ${fault}<br>
+    Hot spares: ${spare} drive(s)<br>
+    ${spare>0?`After failure: hot spare automatically rebuilds array`:''}
+  `;
+}
+buildRef();calcRAID();
+
+// ---- VISUAL ----
+function showVisual(r){
+  const configs={
+    '0':{title:'RAID 0 — Striping (No Redundancy)',desc:'Data is split across all drives in stripes. Maximum speed, zero fault tolerance. If any drive fails, ALL data is lost.',drives:[['A1','A2','A3'],['B1','B2','B3'],['C1','C2','C3'],['D1','D2','D3']],types:[['d','d','d'],['d','d','d'],['d','d','d'],['d','d','d']],fault:0,facts:'⚡ Fastest read/write of all RAID levels<br>❌ No redundancy — one drive failure = total data loss<br>📐 Formula: n × drive size<br>🔑 Min drives: 2'},
+    '1':{title:'RAID 1 — Mirroring',desc:'Every drive has an exact mirror copy. Excellent fault tolerance, 50% capacity efficiency.',drives:[['A1','B1','C1'],['A1','B1','C1']],types:[['m','m','m'],['m','m','m']],fault:1,facts:'🛡️ Can survive failure of all but one drive<br>📉 50% capacity efficiency<br>📐 Formula: n/2 × drive size<br>🔑 Min drives: 2 (usually used in pairs)'},
+    '5':{title:'RAID 5 — Striping with Distributed Parity',desc:'Data and parity are distributed across all drives. Parity (P) allows recovery from any single drive failure.',drives:[['A1','B1','P1'],['A2','P2','C1'],['P3','B2','C2']],types:[['d','d','p'],['d','p','d'],['p','d','d']],fault:1,facts:'⚖️ Good balance of speed, capacity, and redundancy<br>🛡️ Survives 1 drive failure<br>📐 Formula: (n-1) × drive size<br>🔑 Min drives: 3'},
+    '6':{title:'RAID 6 — Striping with Double Parity',desc:'Like RAID 5 but with two parity blocks per stripe. Survives simultaneous failure of any 2 drives.',drives:[['A1','B1','P1','Q1'],['A2','P2','Q2','C1'],['P3','Q3','B2','C2'],['Q4','A3','B3','C3']],types:[['d','d','p','p'],['d','p','p','d'],['p','p','d','d'],['p','d','d','d']],fault:2,facts:'🛡️🛡️ Survives 2 simultaneous drive failures<br>📉 Uses 2 drives worth of capacity for parity<br>📐 Formula: (n-2) × drive size<br>🔑 Min drives: 4'},
+    '10':{title:'RAID 10 — Stripe of Mirrors',desc:'Drives are paired as mirrors (RAID 1), then those pairs are striped (RAID 0). High performance + redundancy.',drives:[['A1','A2'],['A1','A2'],['B1','B2'],['B1','B2']],types:[['m','m'],['m','m'],['m','m'],['m','m']],fault:1,facts:'⚡🛡️ Best of both worlds — fast reads and redundancy<br>📉 50% capacity efficiency like RAID 1<br>📐 Formula: n/2 × drive size<br>🔑 Min drives: 4 (must be even)'},
+  };
+  const c=configs[r];if(!c)return;
+  document.getElementById('vis-title').textContent=c.title;
+  document.getElementById('vis-desc').textContent=c.desc;
+  const typeClass={d:'block-data',p:'block-parity',m:'block-mirror'};
+  const typeLabel={d:'Data',p:'Par',m:'Mir'};
+  document.getElementById('vis-drives').innerHTML=c.drives.map((drv,di)=>`
+    <div class="drive-col">
+      <div class="drive-label">Drive ${di+1}</div>
+      ${drv.map((blk,bi)=>`<div class="block ${typeClass[c.types[di][bi]]}">${blk}</div>`).join('')}
+      <div class="fault-badge ${c.fault>0?'fb-ok':'fb-warn'}">${c.fault>0?'✓':'✗'}</div>
+    </div>`).join('');
+  document.getElementById('vis-facts').innerHTML=`<div class="alert alert-info">${c.facts}</div>`;
+}
+
+// ---- SCENARIO PICKER ----
+const SCENARIOS=[
+  {q:"A video editing studio needs maximum read/write speed for 4K video scratch files. Data loss is acceptable since source files are stored elsewhere. They have 4 × 4TB drives.",ans:"RAID 0",opts:["RAID 0","RAID 1","RAID 5","RAID 6"],explain:"RAID 0 provides maximum performance with all 4 drives contributing. Since source files are backed up, the risk is acceptable."},
+  {q:"A hospital needs to store patient records. They have 2 drives and need to ensure zero data loss even if one drive completely fails.",ans:"RAID 1",opts:["RAID 0","RAID 1","RAID 5","RAID 10"],explain:"RAID 1 mirrors all data across both drives. If one fails, the other has an identical copy — perfect for critical 2-drive setups."},
+  {q:"An e-commerce company needs a general-purpose storage array with 6 × 2TB drives. They want good capacity, redundancy against single drive failure, and reasonable performance.",ans:"RAID 5",opts:["RAID 0","RAID 1","RAID 5","RAID 6"],explain:"RAID 5 with 6 drives gives 10TB usable, protects against 1 drive failure, and offers good all-around read performance."},
+  {q:"A financial institution needs a 8 × 4TB storage array. Due to slow drive rebuild times and compliance requirements, they must survive TWO simultaneous drive failures.",ans:"RAID 6",opts:["RAID 1","RAID 5","RAID 6","RAID 10"],explain:"RAID 6 uses double parity, allowing the array to survive 2 simultaneous drive failures — critical for large arrays with long rebuild windows."},
+  {q:"A high-traffic database server needs maximum I/O performance AND redundancy. Budget is not a constraint. They have 8 × 2TB SAS drives.",ans:"RAID 10",opts:["RAID 5","RAID 6","RAID 10","JBOD"],explain:"RAID 10 stripes across mirror pairs — giving near-RAID-0 write performance plus RAID-1 redundancy. Ideal for I/O-intensive databases."},
+  {q:"A backup appliance needs to combine 5 drives of different sizes (1TB, 2TB, 3TB, 4TB, 6TB) into a single volume for maximum capacity. No redundancy needed.",ans:"JBOD",opts:["RAID 0","RAID 5","RAID 6","JBOD"],explain:"JBOD presents all drives as one volume without striping. It can combine different-sized drives and uses 100% of capacity with no redundancy."},
+];
+let scIdx=0,scCorrect=0;
+function loadScenario(){
+  const sc=SCENARIOS[scIdx];
+  document.getElementById('sc-card').innerHTML=`
+    <h3>Scenario ${scIdx+1} of ${SCENARIOS.length}</h3>
+    <p style="color:#e0e6f0;line-height:1.7;margin:12px 0">${sc.q}</p>
+    <div class="scenario-opts">${sc.opts.map(o=>`<button class="sc-btn" onclick="pickScenario('${o}')">${o}</button>`).join('')}</div>
+    <div id="sc-fb"></div>
+  `;
+  updateScScore();
+}
+function pickScenario(choice){
+  const sc=SCENARIOS[scIdx];
+  document.querySelectorAll('.sc-btn').forEach(b=>{b.disabled=true;if(b.textContent===sc.ans)b.classList.add('sc-correct');});
+  const correct=choice===sc.ans;
+  if(correct)scCorrect++;
+  document.getElementById('sc-fb').innerHTML=`<div class="alert ${correct?'alert-success':'alert-warn'}" style="margin-top:12px">${correct?'✅':'💡'} ${sc.explain}<br><button class="btn btn-outline btn-sm" onclick="nextScenario()" style="margin-top:10px">${scIdx<SCENARIOS.length-1?'Next Scenario →':'See Results'}</button></div>`;
+  updateScScore();
+}
+function nextScenario(){
+  scIdx++;
+  if(scIdx>=SCENARIOS.length){document.getElementById('sc-card').innerHTML=`<h3>All Scenarios Complete!</h3><div class="alert alert-success" style="margin-top:12px">You scored ${scCorrect}/${SCENARIOS.length}. <button class="btn btn-outline btn-sm" onclick="scIdx=0;scCorrect=0;loadScenario()" style="margin-left:10px">Retry</button></div>`;return;}
+  loadScenario();
+}
+function updateScScore(){document.getElementById('sc-score').textContent=`Score: ${scCorrect} / ${Math.min(scIdx,SCENARIOS.length)}`;}
+loadScenario();
+
+// ---- QUIZ ----
+const QUIZ=[
+  {q:"How many drives can RAID 5 lose before data loss occurs?",opts:["0","1","2","3"],ans:1},
+  {q:"A RAID 6 array has 6 × 4TB drives. What is the usable capacity?",opts:["24TB","20TB","16TB","12TB"],ans:2},
+  {q:"RAID 10 requires a minimum of how many drives?",opts:["2","3","4","6"],ans:2},
+  {q:"Which RAID level provides NO fault tolerance but maximum performance?",opts:["RAID 1","RAID 5","RAID 0","RAID 10"],ans:2},
+  {q:"A hot spare drive in a RAID array is:",opts:["An extra drive in use for additional capacity","An idle drive that automatically replaces a failed drive","A drive used for temporary storage","A faster drive used for caching"],ans:1},
+  {q:"RAID 5 with 5 × 2TB drives has a usable capacity of:",opts:["10TB","8TB","6TB","4TB"],ans:1},
+  {q:"What type of data does RAID 5 store on each drive to enable recovery?",opts:["A full mirror copy","Parity information","A compressed backup","Differential snapshots"],ans:1},
+  {q:"Which RAID level is best for a high-I/O database requiring both speed and redundancy?",opts:["RAID 0","RAID 5","RAID 6","RAID 10"],ans:3},
+  {q:"RAID 1 with 4 drives (in pairs) can survive the loss of how many drives?",opts:["1","2","3","4"],ans:1},
+  {q:"What does JBOD stand for?",opts:["Just a Better-Organized Drive","Joint Basic On-Demand","Just a Bunch of Disks","Joint Backup of Data"],ans:2},
+  {q:"A RAID 6 array needs a minimum of how many drives?",opts:["2","3","4","5"],ans:2},
+  {q:"During RAID 5 rebuild after a drive failure, the array is vulnerable to data loss if:",opts:["The server reboots","Another drive fails","Backup power is used","The OS patches"],ans:1},
+];
+let quizScores={};
+function buildQuiz(){
+  document.getElementById('quiz-container').innerHTML=QUIZ.map((q,qi)=>`
+    <div class="card" style="margin-bottom:16px">
+      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">Q${qi+1}. ${q.q}</p>
+      <div class="quiz-options">${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
+      <div id="qf-${qi}" style="margin-top:8px"></div>
+    </div>`).join('');
+}
+function answerQ(qi,oi){
+  if(quizScores[qi]!==undefined)return;
+  const q=QUIZ[qi];
+  document.querySelectorAll(`#quiz-container .card`)[qi].querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('correct');});
+  if(oi!==q.ans){document.querySelectorAll(`#quiz-container .card`)[qi].querySelectorAll('.quiz-opt')[oi].classList.add('incorrect');quizScores[qi]=0;}
+  else{quizScores[qi]=1;}
+  document.getElementById('quiz-score').textContent=`Score: ${Object.values(quizScores).reduce((a,b)=>a+b,0)} / 12`;
+}
+buildQuiz();
+</script>
+</body>
+</html>

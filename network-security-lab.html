@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 08 — Network Security</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
+.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#f59e0b;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #fb923c;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#c2410c,#f97316);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#fed7aa}
+.site-author-block{text-align:right;border-left:1px solid rgba(255,255,255,.08);padding-left:18px;flex-shrink:0}
+.site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#fb923c;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(251,146,60,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(251,146,60,.1)}
+.tabs{display:flex;gap:0;background:#071020;border-bottom:1px solid #1e3a5c;padding:0 20px;overflow-x:auto}
+.tab{padding:14px 22px;cursor:pointer;color:#7ab3d4;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#fb923c}.tab.active{border-bottom-color:#fb923c;background:rgba(251,146,60,.05)}
+.tab-panel{display:none;padding:30px;max-width:960px;margin:0 auto}.tab-panel.active{display:block}
+h2{color:#fb923c;margin-bottom:8px;font-size:1.2rem}
+.subtitle{color:#7ab3d4;font-size:.85rem;margin-bottom:20px;line-height:1.7}
+.card{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
+.card h3{color:#fb923c;margin-bottom:12px;font-size:1rem}
+.btn{padding:9px 20px;border:none;border-radius:6px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
+.btn-orange{background:#c2410c;color:#fff}.btn-orange:hover{background:#9a3412}
+.btn-outline{background:transparent;border:1px solid #fb923c;color:#fb923c}.btn-outline:hover{background:rgba(251,146,60,.1)}
+.btn-sm{padding:5px 12px;font-size:.78rem}
+.alert{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.88rem;line-height:1.6}
+.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#34d399}
+.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
+.alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
+.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:#7ab3d4}
+.score-badge{display:inline-block;background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#fb923c;margin-bottom:16px}
+/* Firewall builder */
+.fw-rule{display:grid;grid-template-columns:80px 1fr 80px 80px 80px;gap:8px;align-items:center;background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px;margin-bottom:8px;font-size:.82rem}
+.fw-rule select,.fw-rule input{background:#0a0f1e;border:1px solid #1e3a5c;border-radius:6px;color:#e0e6f0;padding:5px 8px;font-size:.8rem;width:100%}
+.fw-rule select:focus,.fw-rule input:focus{outline:none;border-color:#fb923c}
+.fw-action-allow{color:#34d399;font-weight:700}
+.fw-action-deny{color:#f87171;font-weight:700}
+.fw-header{display:grid;grid-template-columns:80px 1fr 80px 80px 80px;gap:8px;font-size:.75rem;color:#64748b;padding:0 10px;margin-bottom:4px}
+/* VLAN */
+.vlan-hosts{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.vlan-host{background:#071020;border:2px solid #1e3a5c;border-radius:8px;padding:10px 14px;cursor:pointer;transition:all .2s;font-size:.82rem;text-align:center;min-width:90px}
+.vlan-host:hover{border-color:#fb923c}.vlan-host.assigned{border-color:#10b981;background:rgba(16,185,129,.08)}
+.vlan-zone{background:#071020;border:2px dashed #1e3a5c;border-radius:10px;padding:12px;min-height:80px;margin-bottom:8px;transition:border-color .2s}
+.vlan-zone:hover{border-color:#fb923c}
+/* Quiz */
+.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:left;width:100%;margin-bottom:8px}
+.quiz-opt:hover{border-color:#fb923c}.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
+.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
+.site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#f59e0b}
+</style>
+</head>
+<body>
+<div class="site-topbar">
+  <span>🖥️ Training Environment — Academic Use Only | CompTIA Server+</span>
+  <span class="author-tag">Eng. Abdullah Alasmari · م. عبدالله الأسمري</span>
+</div>
+<div class="site-header-bar">
+  <div class="site-logo-box">🛡️</div>
+  <div class="site-lab-info">
+    <h2>Lab 08 — Network Security</h2>
+    <span>CompTIA Server+ SK0-005 · Chapter 8</span>
+  </div>
+  <div class="site-author-block">
+    <div class="aname">Eng. Abdullah Alasmari</div>
+    <div class="abook">Server+ Interactive Labs</div>
+  </div>
+</div>
+<a href="index.html" class="back-btn">← Back to Labs</a>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('t1',this)">Firewall Rules</div>
+  <div class="tab" onclick="showTab('t2',this)">VLAN Segmentation</div>
+  <div class="tab" onclick="showTab('t3',this)">VPN &amp; IPsec</div>
+  <div class="tab" onclick="showTab('t4',this)">Quiz</div>
+</div>
+
+<!-- TAB 1 -->
+<div id="t1" class="tab-panel active">
+  <h2>Firewall Rule Builder</h2>
+  <p class="subtitle">Build a firewall ruleset for a company web server. Rules are evaluated top to bottom — first match wins. Add and test rules, then click "Test Traffic" to see what's allowed.</p>
+  <div class="card">
+    <h3>📋 Add Firewall Rule</h3>
+    <div style="display:grid;grid-template-columns:80px 1fr 100px 100px 80px;gap:8px;align-items:end;margin-bottom:12px;font-size:.82rem">
+      <div><label style="display:block;color:#7ab3d4;margin-bottom:4px;font-size:.75rem">Action</label>
+        <select id="fw-action"><option value="ALLOW">ALLOW</option><option value="DENY">DENY</option></select></div>
+      <div><label style="display:block;color:#7ab3d4;margin-bottom:4px;font-size:.75rem">Source IP / Range</label>
+        <select id="fw-src"><option value="Any">Any</option><option value="192.168.1.0/24">LAN (192.168.1.x)</option><option value="10.0.0.0/8">Internal (10.x.x.x)</option><option value="203.0.113.0/24">Known Attacker Range</option></select></div>
+      <div><label style="display:block;color:#7ab3d4;margin-bottom:4px;font-size:.75rem">Port</label>
+        <select id="fw-port"><option value="80">80 (HTTP)</option><option value="443">443 (HTTPS)</option><option value="22">22 (SSH)</option><option value="3389">3389 (RDP)</option><option value="3306">3306 (MySQL)</option><option value="Any">Any</option></select></div>
+      <div><label style="display:block;color:#7ab3d4;margin-bottom:4px;font-size:.75rem">Protocol</label>
+        <select id="fw-proto"><option value="TCP">TCP</option><option value="UDP">UDP</option><option value="Any">Any</option></select></div>
+      <div><button class="btn btn-orange" onclick="addRule()" style="height:34px;padding:0 12px;font-size:.8rem">+ Add</button></div>
+    </div>
+    <div class="fw-header"><span>Action</span><span>Source</span><span>Port</span><span>Protocol</span><span>Del</span></div>
+    <div id="fw-rules"></div>
+    <button class="btn btn-outline btn-sm" onclick="addPreset()">Load Example Rules</button>
+  </div>
+  <div class="card">
+    <h3>🔬 Test Traffic</h3>
+    <p class="subtitle" style="margin-bottom:12px">Click a traffic type to see if it's allowed or denied by your ruleset.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+      <button class="btn btn-outline btn-sm" onclick="testTraffic('Any','80','TCP')">HTTP from Internet</button>
+      <button class="btn btn-outline btn-sm" onclick="testTraffic('Any','443','TCP')">HTTPS from Internet</button>
+      <button class="btn btn-outline btn-sm" onclick="testTraffic('203.0.113.0/24','Any','Any')">Traffic from Known Attacker</button>
+      <button class="btn btn-outline btn-sm" onclick="testTraffic('Any','22','TCP')">SSH from Internet</button>
+      <button class="btn btn-outline btn-sm" onclick="testTraffic('192.168.1.0/24','22','TCP')">SSH from LAN</button>
+      <button class="btn btn-outline btn-sm" onclick="testTraffic('Any','3306','TCP')">MySQL from Internet</button>
+    </div>
+    <div id="fw-test-result"></div>
+  </div>
+  <div class="card">
+    <h3>💡 Firewall Best Practices</h3>
+    <div style="font-size:.84rem;color:#7ab3d4;line-height:2">
+      • <strong style="color:#fb923c">Deny all by default</strong> — implicit deny as the last rule<br>
+      • <strong style="color:#fb923c">Allow only what's needed</strong> — whitelist approach<br>
+      • <strong style="color:#fb923c">Most specific rules first</strong> — rules are read top-to-bottom<br>
+      • <strong style="color:#fb923c">Block management ports (22, 3389) from internet</strong> — limit to management VLAN<br>
+      • <strong style="color:#fb923c">Stateful inspection</strong> — track connection state, not just packets<br>
+      • <strong style="color:#fb923c">Log denied traffic</strong> — essential for incident investigation
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2 -->
+<div id="t2" class="tab-panel">
+  <h2>VLAN Segmentation</h2>
+  <p class="subtitle">Assign each host to the correct VLAN based on its role. VLANs isolate traffic and reduce broadcast domains.</p>
+  <div class="score-badge" id="vlan-score">Assigned: 0 / 8</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div>
+      <div class="card">
+        <h3>🌐 Hosts to Assign</h3>
+        <div class="vlan-hosts" id="vlan-hosts"></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h3>VLAN Zones</h3>
+        <div style="margin-bottom:10px">
+          <div style="font-size:.78rem;color:#fb923c;font-weight:700;margin-bottom:4px">VLAN 10 — Management</div>
+          <div class="vlan-zone" id="vz-mgmt" onclick="dropToVLAN('mgmt')"></div>
+        </div>
+        <div style="margin-bottom:10px">
+          <div style="font-size:.78rem;color:#34d399;font-weight:700;margin-bottom:4px">VLAN 20 — Servers (DMZ)</div>
+          <div class="vlan-zone" id="vz-dmz" onclick="dropToVLAN('dmz')"></div>
+        </div>
+        <div style="margin-bottom:10px">
+          <div style="font-size:.78rem;color:#818cf8;font-weight:700;margin-bottom:4px">VLAN 30 — Internal Users</div>
+          <div class="vlan-zone" id="vz-users" onclick="dropToVLAN('users')"></div>
+        </div>
+        <div>
+          <div style="font-size:.78rem;color:#fbbf24;font-weight:700;margin-bottom:4px">VLAN 40 — Guest / IoT</div>
+          <div class="vlan-zone" id="vz-guest" onclick="dropToVLAN('guest')"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-orange" onclick="checkVLANs()">Check VLAN Assignments</button>
+  <div id="vlan-feedback" style="margin-top:12px"></div>
+</div>
+
+<!-- TAB 3 -->
+<div id="t3" class="tab-panel">
+  <h2>VPN &amp; IPsec</h2>
+  <p class="subtitle">Learn the different VPN types and IPsec modes. Click each scenario to identify the best solution.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+    <div class="card">
+      <h3>🔒 IPsec Modes</h3>
+      <div style="margin-bottom:14px;padding:12px;background:#071020;border:1px solid #1e3a5c;border-radius:8px">
+        <div style="color:#fb923c;font-weight:700;margin-bottom:6px">Transport Mode</div>
+        <div style="font-size:.8rem;color:#64748b;line-height:1.5">Encrypts only the payload (data) of IP packets. Original IP headers are preserved. Used for host-to-host communications.</div>
+        <div style="font-size:.75rem;color:#7ab3d4;margin-top:6px">[IP Header] [ESP Header] [Encrypted Payload]</div>
+      </div>
+      <div style="padding:12px;background:#071020;border:1px solid #1e3a5c;border-radius:8px">
+        <div style="color:#fb923c;font-weight:700;margin-bottom:6px">Tunnel Mode</div>
+        <div style="font-size:.8rem;color:#64748b;line-height:1.5">Encrypts the entire original IP packet and adds a new outer IP header. Used for network-to-network VPN tunnels (site-to-site).</div>
+        <div style="font-size:.75rem;color:#7ab3d4;margin-top:6px">[New IP Header] [ESP Header] [Encrypted (Original IP + Payload)]</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>🌐 VPN Types</h3>
+      <div style="margin-bottom:10px;padding:10px;background:#071020;border:1px solid #1e3a5c;border-radius:8px">
+        <div style="color:#fb923c;font-weight:700;font-size:.85rem;margin-bottom:3px">Site-to-Site VPN</div>
+        <div style="font-size:.78rem;color:#64748b">Connects entire networks (office to data center). Always-on, transparent to users. IPsec Tunnel mode.</div>
+      </div>
+      <div style="margin-bottom:10px;padding:10px;background:#071020;border:1px solid #1e3a5c;border-radius:8px">
+        <div style="color:#fb923c;font-weight:700;font-size:.85rem;margin-bottom:3px">Remote Access VPN (SSL/TLS)</div>
+        <div style="font-size:.78rem;color:#64748b">Individual users connect to corporate network. Client software or browser-based. Cisco AnyConnect, OpenVPN.</div>
+      </div>
+      <div style="margin-bottom:10px;padding:10px;background:#071020;border:1px solid #1e3a5c;border-radius:8px">
+        <div style="color:#fb923c;font-weight:700;font-size:.85rem;margin-bottom:3px">Split Tunneling</div>
+        <div style="font-size:.78rem;color:#64748b">VPN only routes corporate traffic through tunnel; internet goes direct. Reduces VPN load but reduces security.</div>
+      </div>
+      <div style="padding:10px;background:#071020;border:1px solid #1e3a5c;border-radius:8px">
+        <div style="color:#fb923c;font-weight:700;font-size:.85rem;margin-bottom:3px">Full Tunnel VPN</div>
+        <div style="font-size:.78rem;color:#64748b">ALL traffic routed through VPN. Maximum visibility and control. Higher bandwidth usage on VPN server.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Scenario Quiz — Which VPN/IPsec Solution?</h3>
+    <div id="vpn-scenarios"></div>
+  </div>
+</div>
+
+<!-- TAB 4 -->
+<div id="t4" class="tab-panel">
+  <h2>Knowledge Quiz — Network Security</h2>
+  <p class="subtitle">12 questions on firewalls, VLANs, VPN, IDS/IPS, and network security architecture.</p>
+  <div class="score-badge" id="quiz-score">Score: 0 / 12</div>
+  <div id="quiz-container"></div>
+</div>
+
+<div class="site-footer-bar">
+  <p>Designed by <strong>Eng. Abdullah Alasmari</strong> · CompTIA Server+ Interactive Labs</p>
+</div>
+
+<script>
+function showTab(id,el){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');el.classList.add('active');}
+
+// ---- FIREWALL BUILDER ----
+let rules=[];
+function renderRules(){
+  document.getElementById('fw-rules').innerHTML=rules.length?rules.map((r,i)=>`
+    <div class="fw-rule">
+      <span class="${r.action==='ALLOW'?'fw-action-allow':'fw-action-deny'}">${r.action}</span>
+      <span style="color:#e0e6f0;font-size:.8rem">${r.src}</span>
+      <span style="color:#e0e6f0">${r.port}</span>
+      <span style="color:#e0e6f0">${r.proto}</span>
+      <button onclick="deleteRule(${i})" style="background:transparent;border:none;color:#f87171;cursor:pointer;font-size:.9rem">✕</button>
+    </div>`).join('')+'<div class="fw-rule" style="opacity:.5"><span class="fw-action-deny">DENY</span><span style="color:#64748b">Any (implicit)</span><span>Any</span><span>Any</span><span>—</span></div>':
+    '<div style="color:#64748b;font-size:.82rem;padding:10px">No rules — implicit DENY ALL</div><div class="fw-rule" style="opacity:.5"><span class="fw-action-deny">DENY</span><span style="color:#64748b">Any (implicit)</span><span>Any</span><span>Any</span><span>—</span></div>';
+}
+function addRule(){
+  rules.push({action:document.getElementById('fw-action').value,src:document.getElementById('fw-src').value,port:document.getElementById('fw-port').value,proto:document.getElementById('fw-proto').value});
+  renderRules();
+}
+function deleteRule(i){rules.splice(i,1);renderRules();}
+function addPreset(){
+  rules=[
+    {action:'DENY',src:'203.0.113.0/24',port:'Any',proto:'Any'},
+    {action:'ALLOW',src:'Any',port:'80',proto:'TCP'},
+    {action:'ALLOW',src:'Any',port:'443',proto:'TCP'},
+    {action:'ALLOW',src:'192.168.1.0/24',port:'22',proto:'TCP'},
+    {action:'DENY',src:'Any',port:'22',proto:'TCP'},
+    {action:'DENY',src:'Any',port:'3389',proto:'TCP'},
+    {action:'DENY',src:'Any',port:'3306',proto:'TCP'},
+  ];
+  renderRules();
+}
+function testTraffic(src,port,proto){
+  for(const rule of rules){
+    const srcMatch=rule.src==='Any'||rule.src===src;
+    const portMatch=rule.port==='Any'||rule.port===port;
+    const protoMatch=rule.proto==='Any'||rule.proto===proto;
+    if(srcMatch&&portMatch&&protoMatch){
+      document.getElementById('fw-test-result').innerHTML=`<div class="alert ${rule.action==='ALLOW'?'alert-success':'alert-danger'}"><strong>${rule.action==='ALLOW'?'✅ ALLOWED':'❌ DENIED'}</strong> — Traffic from ${src} on port ${port}/${proto} matched rule: ${rule.action} ${rule.src}:${rule.port}/${rule.proto}</div>`;
+      return;
+    }
+  }
+  document.getElementById('fw-test-result').innerHTML=`<div class="alert alert-danger"><strong>❌ DENIED</strong> — No rule matched. Implicit DENY ALL blocks traffic from ${src} on port ${port}/${proto}</div>`;
+}
+renderRules();
+
+// ---- VLAN ----
+const VLAN_HOSTS=[
+  {name:"IPMI/iDRAC",icon:"⚙️",vlan:"mgmt"},
+  {name:"Network Switch CLI",icon:"🔌",vlan:"mgmt"},
+  {name:"Web Server",icon:"🌐",vlan:"dmz"},
+  {name:"Mail Server",icon:"📧",vlan:"dmz"},
+  {name:"Finance PC",icon:"💰",vlan:"users"},
+  {name:"HR Laptop",icon:"👔",vlan:"users"},
+  {name:"Visitor WiFi",icon:"📱",vlan:"guest"},
+  {name:"Security Camera",icon:"📷",vlan:"guest"},
+];
+let selectedHost=null,vlanAssigned={};
+function buildVLANHosts(){
+  document.getElementById('vlan-hosts').innerHTML=VLAN_HOSTS.map((h,i)=>`
+    <div class="vlan-host" id="vh-${i}" onclick="selectVLANHost(${i})">${h.icon}<br><span style="font-size:.7rem">${h.name}</span></div>`).join('');
+}
+function selectVLANHost(i){selectedHost=i;document.querySelectorAll('.vlan-host').forEach(el=>el.style.borderColor='#1e3a5c');document.getElementById('vh-'+i).style.borderColor='#fb923c';}
+function dropToVLAN(zone){
+  if(selectedHost===null)return;
+  vlanAssigned[selectedHost]=zone;
+  document.getElementById('vh-'+selectedHost).classList.add('assigned');
+  document.getElementById('vh-'+selectedHost).style.borderColor='#10b981';
+  document.getElementById('vlan-score').textContent=`Assigned: ${Object.keys(vlanAssigned).length} / 8`;
+  selectedHost=null;
+}
+function checkVLANs(){
+  let correct=0;
+  VLAN_HOSTS.forEach((h,i)=>{if(vlanAssigned[i]===h.vlan)correct++;});
+  document.getElementById('vlan-feedback').innerHTML=`<div class="alert ${correct===8?'alert-success':correct>=5?'alert-warn':'alert-danger'}">Score: ${correct}/8 correct.<br>
+    Correct: IPMI/Switch → VLAN 10 (Mgmt) | Web/Mail → VLAN 20 (DMZ) | Finance/HR → VLAN 30 (Users) | Visitor/Camera → VLAN 40 (Guest)</div>`;
+}
+buildVLANHosts();
+
+// ---- VPN SCENARIOS ----
+const VPN_SC=[
+  {q:"A company needs to permanently connect its branch office in Dubai to its main data center in Riyadh. The connection must be transparent to users.",opts:["Remote Access VPN","Site-to-Site VPN","Split Tunnel VPN","L2TP without IPsec"],ans:1,explain:"Site-to-site VPN connects two networks permanently. Routers establish the tunnel; users don't need VPN clients."},
+  {q:"An employee works from home and needs to access internal company servers. They need a VPN client on their laptop.",opts:["Site-to-Site VPN","Full Tunnel Remote Access VPN","IPsec Transport Mode","GRE Tunnel"],ans:1,explain:"Remote Access VPN (SSL/TLS) with client software is the standard for individual remote workers."},
+  {q:"You need to encrypt communication between two specific servers in different buildings (host-to-host), not between networks.",opts:["IPsec Transport Mode","IPsec Tunnel Mode","SSL VPN","PPTP"],ans:0,explain:"IPsec Transport Mode encrypts only the payload and keeps original IP headers — ideal for host-to-host encryption."},
+  {q:"A company wants remote employees' internet traffic to bypass the VPN while corporate app traffic goes through the tunnel, to reduce VPN bandwidth.",opts:["Full Tunnel","Split Tunneling","Site-to-Site","IPsec Tunnel Mode"],ans:1,explain:"Split tunneling sends only corporate traffic through the VPN while internet traffic goes direct. Saves bandwidth but reduces visibility."},
+];
+let vpnScores={};
+function buildVPNSc(){
+  document.getElementById('vpn-scenarios').innerHTML=VPN_SC.map((q,qi)=>`
+    <div style="margin-bottom:16px;padding:14px;background:#071020;border:1px solid #1e3a5c;border-radius:8px">
+      <p style="font-weight:600;color:#e0e6f0;margin-bottom:10px;font-size:.88rem;line-height:1.5">Q${qi+1}. ${q.q}</p>
+      <div style="display:grid;gap:6px">${q.opts.map((o,oi)=>`<button style="background:#0d1b2a;border:1px solid #1e3a5c;border-radius:6px;padding:8px 12px;cursor:pointer;text-align:left;color:#e0e6f0;font-size:.82rem;width:100%;transition:all .2s" onclick="answerVPN(${qi},${oi})">${o}</button>`).join('')}</div>
+      <div id="vf-${qi}" style="margin-top:8px"></div>
+    </div>`).join('');
+}
+function answerVPN(qi,oi){
+  if(vpnScores[qi]!==undefined)return;
+  const q=VPN_SC[qi];const correct=oi===q.ans;
+  vpnScores[qi]=correct?1:0;
+  document.querySelectorAll('#vpn-scenarios > div')[qi].querySelectorAll('button').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.style.background='rgba(16,185,129,.2)';});
+  if(!correct)document.querySelectorAll('#vpn-scenarios > div')[qi].querySelectorAll('button')[oi].style.background='rgba(239,68,68,.2)';
+  document.getElementById('vf-'+qi).innerHTML=`<div class="alert ${correct?'alert-success':'alert-warn'}">${correct?'✅':'💡'} ${q.explain}</div>`;
+}
+buildVPNSc();
+
+// ---- QUIZ ----
+const QUIZ=[
+  {q:"A DMZ (Demilitarized Zone) in network security is used to:",opts:["Physically separate servers from clients","Host public-facing services while isolating them from the internal network","Block all external traffic","Provide wireless access to guests"],ans:1},
+  {q:"IDS (Intrusion Detection System) differs from IPS (Intrusion Prevention System) in that IDS:",opts:["Blocks malicious traffic automatically","Only detects and alerts on suspicious traffic","Encrypts all network traffic","Manages firewall rules automatically"],ans:1},
+  {q:"Which VPN protocol is considered MOST secure for modern deployments?",opts:["PPTP","L2TP/IPsec","IPsec IKEv2 / SSL TLS 1.3","WEP"],ans:2},
+  {q:"A stateful firewall tracks:",opts:["Only packet headers","Only IP addresses","The state of network connections (established, related)","Only port numbers"],ans:2},
+  {q:"VLANs (Virtual LANs) are used to:",opts:["Increase internet bandwidth","Segment a physical network into logical isolated networks","Replace physical switches","Encrypt network traffic"],ans:1},
+  {q:"NAT (Network Address Translation) hides internal IP addresses by:",opts:["Encrypting all packets","Replacing private IPs with a public IP when packets leave the network","Blocking all inbound traffic","Using IPv6"],ans:1},
+  {q:"Which protocol is used to check if an SSL/TLS certificate has been revoked, in real-time?",opts:["CRL","OCSP","LDAP","SNMP"],ans:1},
+  {q:"A packet filtering firewall makes decisions based on:",opts:["Full application inspection","Source IP, destination IP, source port, destination port, protocol","User identity and credentials","Traffic content and payload"],ans:1},
+  {q:"Port mirroring (SPAN) on a switch is used for:",opts:["Increasing port speed","Sending a copy of all traffic on a port to another port (for monitoring/IDS)","Load balancing traffic","VLAN trunking"],ans:1},
+  {q:"RADIUS is used for:",opts:["Route distribution","Centralized authentication and authorization for network access","Real-time malware detection","DNS resolution"],ans:1},
+  {q:"A 'trunk port' on a managed switch:",opts:["Connects only to one VLAN","Carries traffic for multiple VLANs tagged with 802.1Q","Blocks all VLAN traffic","Is used only for management"],ans:1},
+  {q:"IPsec Tunnel Mode differs from Transport Mode in that Tunnel Mode:",opts:["Only encrypts the payload","Encrypts the entire original IP packet and adds a new outer IP header","Is used for host-to-host encryption","Does not support authentication"],ans:1},
+];
+let quizScores={};
+function buildQuiz(){
+  document.getElementById('quiz-container').innerHTML=QUIZ.map((q,qi)=>`
+    <div class="card" style="margin-bottom:16px">
+      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">Q${qi+1}. ${q.q}</p>
+      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
+    </div>`).join('');
+}
+function answerQ(qi,oi){
+  if(quizScores[qi]!==undefined)return;
+  const q=QUIZ[qi];
+  document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('correct');});
+  if(oi!==q.ans)document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt')[oi].classList.add('incorrect');
+  quizScores[qi]=oi===q.ans?1:0;
+  document.getElementById('quiz-score').textContent=`Score: ${Object.values(quizScores).reduce((a,b)=>a+b,0)} / 12`;
+}
+buildQuiz();
+</script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 10 — Troubleshooting Methodology</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
+.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#f59e0b;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #2dd4bf;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#0f766e,#14b8a6);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#99f6e4}
+.site-author-block{text-align:right;border-left:1px solid rgba(255,255,255,.08);padding-left:18px;flex-shrink:0}
+.site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#2dd4bf;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(45,212,191,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(45,212,191,.1)}
+.tabs{display:flex;gap:0;background:#071020;border-bottom:1px solid #1e3a5c;padding:0 20px;overflow-x:auto}
+.tab{padding:14px 22px;cursor:pointer;color:#7ab3d4;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#2dd4bf}.tab.active{border-bottom-color:#2dd4bf;background:rgba(45,212,191,.05)}
+.tab-panel{display:none;padding:30px;max-width:960px;margin:0 auto}.tab-panel.active{display:block}
+h2{color:#2dd4bf;margin-bottom:8px;font-size:1.2rem}
+.subtitle{color:#7ab3d4;font-size:.85rem;margin-bottom:20px;line-height:1.7}
+.card{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
+.card h3{color:#2dd4bf;margin-bottom:12px;font-size:1rem}
+.btn{padding:9px 20px;border:none;border-radius:6px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
+.btn-teal{background:#0f766e;color:#fff}.btn-teal:hover{background:#0d9488}
+.btn-outline{background:transparent;border:1px solid #2dd4bf;color:#2dd4bf}.btn-outline:hover{background:rgba(45,212,191,.1)}
+.btn-sm{padding:5px 12px;font-size:.78rem}
+.alert{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.88rem;line-height:1.6}
+.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#34d399}
+.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
+.alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
+.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:#7ab3d4}
+.score-badge{display:inline-block;background:rgba(45,212,191,.1);border:1px solid rgba(45,212,191,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#2dd4bf;margin-bottom:16px}
+/* 7-step flowchart */
+.step-flow{display:flex;flex-direction:column;gap:0}
+.flow-step{background:#071020;border:2px solid #1e3a5c;border-radius:10px;padding:14px;cursor:pointer;transition:all .2s;margin-bottom:4px}
+.flow-step:hover,.flow-step.active-fs{border-color:#2dd4bf;background:rgba(45,212,191,.05)}
+.flow-step-num{width:32px;height:32px;border-radius:50%;background:#2dd4bf;color:#000;font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.flow-arrow{text-align:center;color:#1e3a5c;font-size:1.1rem;margin:-2px 0}
+/* Tool matcher */
+.tool-match{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.match-item{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px 14px;margin-bottom:8px;cursor:pointer;transition:all .2s;font-size:.85rem}
+.match-item:hover{border-color:#2dd4bf}.match-item.selected{border-color:#14b8a6;background:rgba(20,184,166,.1);color:#2dd4bf}.match-item.matched{border-color:#10b981;background:rgba(16,185,129,.1);color:#34d399}.match-item.wrong-m{border-color:#ef4444}
+/* Quiz */
+.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:left;width:100%;margin-bottom:8px}
+.quiz-opt:hover{border-color:#2dd4bf}.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
+.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
+.site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#f59e0b}
+</style>
+</head>
+<body>
+<div class="site-topbar">
+  <span>🖥️ Training Environment — Academic Use Only | CompTIA Server+</span>
+  <span class="author-tag">Eng. Abdullah Alasmari · م. عبدالله الأسمري</span>
+</div>
+<div class="site-header-bar">
+  <div class="site-logo-box">🔍</div>
+  <div class="site-lab-info">
+    <h2>Lab 10 — Troubleshooting Methodology</h2>
+    <span>CompTIA Server+ SK0-005 · Chapter 10</span>
+  </div>
+  <div class="site-author-block">
+    <div class="aname">Eng. Abdullah Alasmari</div>
+    <div class="abook">Server+ Interactive Labs</div>
+  </div>
+</div>
+<a href="index.html" class="back-btn">← Back to Labs</a>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('t1',this)">7-Step Methodology</div>
+  <div class="tab" onclick="showTab('t2',this)">Scenario Walk-Through</div>
+  <div class="tab" onclick="showTab('t3',this)">Diagnostic Tools</div>
+  <div class="tab" onclick="showTab('t4',this)">Quiz</div>
+</div>
+
+<!-- TAB 1 -->
+<div id="t1" class="tab-panel active">
+  <h2>CompTIA's 7-Step Troubleshooting Methodology</h2>
+  <p class="subtitle">Click each step to see its details and what actions to take. This process applies to ALL server problems.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div class="step-flow" id="step-flow"></div>
+    <div class="card" id="step-detail">
+      <h3>Select a step to learn more</h3>
+      <p class="subtitle">Click any of the 7 steps on the left to see detailed guidance for that stage of troubleshooting.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2 -->
+<div id="t2" class="tab-panel">
+  <h2>Troubleshooting Scenario Walk-Through</h2>
+  <p class="subtitle">Apply the 7-step methodology to real server problems. Choose what to do at each step.</p>
+  <div class="score-badge" id="scenario-score">Score: 0 / 0</div>
+  <div id="scenario-card" class="card"></div>
+</div>
+
+<!-- TAB 3 -->
+<div id="t3" class="tab-panel">
+  <h2>Diagnostic Tools Matching</h2>
+  <p class="subtitle">Click a tool on the LEFT, then its use case on the RIGHT. Match all 10 tools.</p>
+  <div class="score-badge" id="tool-score">Matched: 0 / 10</div>
+  <div class="tool-match">
+    <div>
+      <div style="font-size:.78rem;color:#7ab3d4;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">Tool / Command</div>
+      <div id="tool-left"></div>
+    </div>
+    <div>
+      <div style="font-size:.78rem;color:#7ab3d4;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">What it does</div>
+      <div id="tool-right"></div>
+    </div>
+  </div>
+  <button class="btn btn-outline btn-sm" onclick="resetTools()">Reset</button>
+  <div class="card" style="margin-top:16px">
+    <h3>📋 Common Server Troubleshooting Tools</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;font-size:.8rem">
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">ping</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Tests basic IP connectivity to a host</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">tracert / traceroute</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Shows each hop to destination, identifies where path breaks</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">ipconfig / ifconfig</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Shows IP configuration, gateway, DNS settings</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4ff">netstat</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Shows active connections and listening ports</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">nslookup / dig</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Tests DNS resolution for a hostname</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">Event Viewer</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Windows system/app/security event logs</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">Task Manager / top</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Real-time CPU, RAM, and process monitoring</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">diskpart / fdisk</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Disk partitioning and management</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">SMART tools</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Hard drive health and predictive failure analysis</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">Wireshark</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Full packet capture and protocol analysis</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4 -->
+<div id="t4" class="tab-panel">
+  <h2>Knowledge Quiz — Troubleshooting</h2>
+  <p class="subtitle">12 questions on the troubleshooting methodology, tools, and diagnostic scenarios.</p>
+  <div class="score-badge" id="quiz-score">Score: 0 / 12</div>
+  <div id="quiz-container"></div>
+</div>
+
+<div class="site-footer-bar">
+  <p>Designed by <strong>Eng. Abdullah Alasmari</strong> · CompTIA Server+ Interactive Labs</p>
+</div>
+
+<script>
+function showTab(id,el){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');el.classList.add('active');}
+
+// ---- 7-STEP METHODOLOGY ----
+const STEPS=[
+  {num:1,title:"Identify the Problem",color:"#2dd4bf",detail:"Gather information about the problem. Ask: What changed? When did it start? Who is affected? What error messages appear?",actions:["Interview users and affected parties","Collect error messages, screenshots, logs","Identify the scope (single user, department, entire company)","Check monitoring dashboards for alerts","Document all symptoms precisely"],dont:"Don't assume you know the cause before gathering data."},
+  {num:2,title:"Establish a Theory of Probable Cause",color:"#22d3ee",detail:"Based on symptoms, develop one or more theories about what might be causing the problem. Question the obvious first.",actions:["List possible causes from most to least likely","Consider recent changes (patches, config changes, hardware)","Use divide and conquer — eliminate halves of potential causes","Research error codes and symptoms online/in documentation"],dont:"Don't start making changes before you have a theory."},
+  {num:3,title:"Test the Theory",color:"#38bdf8",detail:"Test your theory to determine if it's the actual cause. This is a diagnostic step — not yet fixing, just confirming.",actions:["Run diagnostic tests relevant to your theory","Use appropriate tools (ping, Event Viewer, SMART checks)","Try to reproduce the problem consistently","If theory is confirmed — proceed to plan of action","If theory fails — return to step 2 with a new theory"],dont:"Don't test multiple theories simultaneously — you won't know which fix worked."},
+  {num:4,title:"Establish a Plan of Action",color:"#818cf8",detail:"Create a plan to resolve the problem. Consider impact, required approvals, rollback plan, and change window.",actions:["Document the planned fix steps","Identify potential impact to other systems","Get management/change board approval if needed","Plan a rollback strategy if the fix fails","Schedule a change window for production changes"],dont:"Don't make unplanned changes to production systems."},
+  {num:5,title:"Implement the Solution",color:"#a78bfa",detail:"Execute your plan of action. Make changes carefully and in a controlled manner.",actions:["Follow the documented plan step by step","Make one change at a time when possible","Document each change as you make it","Monitor systems during and after changes","Be prepared to roll back if needed"],dont:"Don't rush changes. One mistake can compound the problem."},
+  {num:6,title:"Verify Full System Functionality",color:"#c4b5fd",detail:"Confirm the problem is resolved AND that you haven't introduced new issues. Test all affected systems.",actions:["Test the specific problem that was reported","Test related systems that could be affected","Verify with the original reporter that it works","Run monitoring to check for new alerts","Test edge cases and secondary functions"],dont:"Don't close the ticket before thorough verification."},
+  {num:7,title:"Document Findings & Lessons Learned",color:"#e9d5ff",detail:"Create comprehensive documentation of the problem, cause, solution, and prevention steps for future reference.",actions:["Document root cause and contributing factors","Record the exact solution steps that worked","Update knowledge base articles","Implement preventive measures if possible","Share lessons learned with the team","Update monitoring thresholds if applicable"],dont:"Don't skip documentation — the same problem will occur again without it."},
+];
+function buildStepFlow(){
+  document.getElementById('step-flow').innerHTML=STEPS.map((s,i)=>`
+    <div class="flow-step" onclick="showStepDetail(${i})">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="flow-step-num" style="background:${s.color}">${s.num}</div>
+        <div style="font-size:.88rem;font-weight:600;color:#e0e6f0">${s.title}</div>
+      </div>
+    </div>
+    ${i<STEPS.length-1?'<div class="flow-arrow">↓</div>':''}`).join('');
+}
+function showStepDetail(i){
+  const s=STEPS[i];
+  document.querySelectorAll('.flow-step').forEach(el=>el.classList.remove('active-fs'));
+  document.querySelectorAll('.flow-step')[i*2].classList.add('active-fs');
+  document.getElementById('step-detail').innerHTML=`
+    <h3 style="color:${s.color}">Step ${s.num}: ${s.title}</h3>
+    <p style="color:#e0e6f0;line-height:1.7;margin:10px 0;font-size:.88rem">${s.detail}</p>
+    <div style="margin-top:12px">
+      <div style="font-size:.78rem;color:#2dd4bf;font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px">Actions:</div>
+      ${s.actions.map(a=>`<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:6px;font-size:.82rem"><span style="color:#2dd4bf;flex-shrink:0">→</span><span style="color:#7ab3d4;line-height:1.4">${a}</span></div>`).join('')}
+    </div>
+    <div style="margin-top:12px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:10px;font-size:.78rem;color:#f87171">
+      <strong>⚠️ Don't:</strong> ${s.dont}
+    </div>`;
+}
+buildStepFlow();
+
+// ---- SCENARIO WALK-THROUGH ----
+const SCENARIOS=[
+  {problem:"Users report they cannot access the company intranet website. Error: 'ERR_CONNECTION_REFUSED'. The website was working yesterday.",
+   steps:[
+     {q:"Step 1 — What's the FIRST thing you should do?",opts:["Restart the web server immediately","Ask users when it started and if anything changed","Check if the cable is unplugged","Reinstall the OS"],ans:1,explain:"Always gather information first. When did it start? What changed? How many users affected?"},
+     {q:"Step 2 — You learn the web service was restarted yesterday due to a patch. Your theory?",opts:["The patch broke the web service configuration","Someone deleted the website","The DNS server is down","The firewall blocked all traffic"],ans:0,explain:"Recent changes are the most common cause. The patch restart is the most probable cause to investigate first."},
+     {q:"Step 3 — How do you TEST your theory that the web service is down?",opts:["Uninstall the patch","Run 'netstat -an' to check if port 80/443 is listening","Restart the server immediately","Call the vendor"],ans:1,explain:"netstat -an shows if the web service is listening on ports 80/443. If not listening, the service isn't running."},
+     {q:"Step 5 — You confirm the web service stopped. What's the right implementation approach?",opts:["Delete the website files and redeploy","Start the service, check logs for errors, and monitor","Reinstall the web server software","Restore from backup immediately"],ans:1,explain:"Start the service, check application logs to understand why it stopped, and monitor it to ensure stability."},
+   ]},
+];
+let scStepIdx=0,scCorrect=0;
+function loadScenario(){
+  const sc=SCENARIOS[0];
+  const step=sc.steps[scStepIdx];
+  if(!step){document.getElementById('scenario-card').innerHTML=`<h3>Scenario Complete!</h3><div class="alert alert-success" style="margin-top:12px">Score: ${scCorrect}/${SCENARIOS[0].steps.length}. You successfully walked through this troubleshooting scenario!</div>`;return;}
+  document.getElementById('scenario-card').innerHTML=`
+    <h3>🔧 Scenario: Web Server Down</h3>
+    <div class="alert alert-info" style="margin-bottom:16px">${sc.problem}</div>
+    <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px">${step.q}</p>
+    <div style="display:grid;gap:8px">${step.opts.map((o,i)=>`<button style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;text-align:left;color:#e0e6f0;font-size:.88rem;width:100%;transition:all .2s" onclick="pickScStep(${i})">${o}</button>`).join('')}</div>
+    <div id="sc-step-fb" style="margin-top:12px"></div>`;
+  document.getElementById('scenario-score').textContent=`Step ${scStepIdx+1}/${sc.steps.length} | Score: ${scCorrect}`;
+}
+function pickScStep(i){
+  const step=SCENARIOS[0].steps[scStepIdx];const correct=i===step.ans;
+  if(correct)scCorrect++;
+  document.querySelectorAll('#scenario-card button').forEach((b,bi)=>{b.disabled=true;if(bi===step.ans)b.style.background='rgba(16,185,129,.15)';});
+  if(!correct)document.querySelectorAll('#scenario-card button')[i].style.background='rgba(239,68,68,.15)';
+  document.getElementById('sc-step-fb').innerHTML=`<div class="alert ${correct?'alert-success':'alert-warn'}">${correct?'✅':'💡'} ${step.explain}<br><button class="btn btn-outline btn-sm" onclick="nextScStep()" style="margin-top:10px">Next Step →</button></div>`;
+}
+function nextScStep(){scStepIdx++;loadScenario();}
+loadScenario();
+
+// ---- TOOL MATCHER ----
+const TOOLS=[
+  {tool:"ping",use:"Tests basic ICMP connectivity to a host by IP or hostname"},
+  {tool:"tracert / traceroute",use:"Shows the network path and latency at each hop to destination"},
+  {tool:"nslookup / dig",use:"Tests DNS name resolution — resolves a hostname to its IP address"},
+  {tool:"netstat",use:"Displays active TCP connections and ports currently listening"},
+  {tool:"ipconfig / ifconfig",use:"Shows IP address, subnet mask, gateway, and DNS configuration"},
+  {tool:"Event Viewer",use:"Windows centralized log viewer for system, security, and application events"},
+  {tool:"Task Manager / top",use:"Monitors real-time CPU, RAM, disk, and process usage"},
+  {tool:"SMART tools (smartctl)",use:"Checks hard drive health and predicts imminent drive failure"},
+  {tool:"Wireshark",use:"Captures and analyzes network packets at the protocol level"},
+  {tool:"diskpart / fdisk",use:"Creates, deletes, and manages disk partitions from command line"},
+];
+let toolLeft=null,toolMatched=0;
+function buildTools(){
+  toolLeft=null;toolMatched=0;
+  document.getElementById('tool-score').textContent='Matched: 0 / 10';
+  const shuffled=[...TOOLS].sort(()=>Math.random()-.5);
+  document.getElementById('tool-left').innerHTML=TOOLS.map((t,i)=>`<div class="match-item" id="tl-${i}" onclick="selectToolLeft(${i})" style="font-family:'Courier New',monospace;font-size:.82rem">${t.tool}</div>`).join('');
+  document.getElementById('tool-right').innerHTML=shuffled.map((t,i)=>`<div class="match-item" id="tr-${i}" onclick="selectToolRight(${i})" data-use="${t.use}" style="font-size:.8rem">${t.use}</div>`).join('');
+}
+function selectToolLeft(i){document.querySelectorAll('#tool-left .match-item').forEach(el=>el.classList.remove('selected'));document.getElementById('tl-'+i).classList.add('selected');toolLeft=i;}
+function selectToolRight(i){
+  if(toolLeft===null)return;
+  const use=document.getElementById('tr-'+i).dataset.use;const correct=use===TOOLS[toolLeft].use;
+  if(correct){
+    document.getElementById('tl-'+toolLeft).classList.remove('selected');document.getElementById('tl-'+toolLeft).classList.add('matched');document.getElementById('tl-'+toolLeft).style.pointerEvents='none';
+    document.getElementById('tr-'+i).classList.add('matched');document.getElementById('tr-'+i).style.pointerEvents='none';
+    toolMatched++;document.getElementById('tool-score').textContent=`Matched: ${toolMatched} / 10`;
+    if(toolMatched===10){document.getElementById('tool-score').textContent='🎉 All matched!';}
+  } else {
+    document.getElementById('tl-'+toolLeft).classList.add('wrong-m');document.getElementById('tr-'+i).classList.add('wrong-m');
+    setTimeout(()=>{document.getElementById('tl-'+toolLeft).classList.remove('wrong-m','selected');document.getElementById('tr-'+i).classList.remove('wrong-m');},700);
+  }
+  toolLeft=null;
+}
+function resetTools(){buildTools();}
+buildTools();
+
+// ---- QUIZ ----
+const QUIZ=[
+  {q:"What is the FIRST step in CompTIA's troubleshooting methodology?",opts:["Test a theory","Implement the solution","Identify the problem","Establish a theory"],ans:2},
+  {q:"After fixing a problem, which step ensures no new issues were introduced?",opts:["Document findings","Verify full system functionality","Establish a new theory","Implement the solution"],ans:1},
+  {q:"Which command shows if a service is listening on a specific TCP port?",opts:["ping","tracert","netstat","nslookup"],ans:2},
+  {q:"'Divide and conquer' in troubleshooting means:",opts:["Split the problem between two technicians","Eliminate half of potential causes at a time to narrow down the issue","Divide time equally between all possible solutions","Use two different tools simultaneously"],ans:1},
+  {q:"A server's SMART data shows 'Reallocated Sectors Count' increasing rapidly. This indicates:",opts:["CPU overheating","Imminent hard drive failure","Network packet loss","RAM errors"],ans:1},
+  {q:"Which troubleshooting approach tests from OSI Layer 1 (physical) up through Layer 7 (application)?",opts:["Top-down","Bottom-up","Divide and conquer","Follow the path"],ans:1},
+  {q:"You should document findings AFTER resolving a problem primarily because:",opts:["Documentation is required by law","The same problem will likely recur and documentation speeds future resolution","Managers require paperwork","It's the first step"],ans:1},
+  {q:"A server shows no video output on boot. Which is the most appropriate first diagnostic step?",opts:["Reinstall the OS","Check Event Viewer","Listen for POST beep codes","Replace the motherboard"],ans:2},
+  {q:"tracert/traceroute is most useful for diagnosing:",opts:["Drive failures","Where in the network path connectivity is lost","RAM errors","Service configuration issues"],ans:1},
+  {q:"Before implementing a solution in a production environment, you should:",opts:["Test it in isolation first and have a rollback plan","Implement it immediately to minimize downtime","Test it during business hours","Get verbal approval only"],ans:0},
+  {q:"Event Viewer in Windows primarily shows:",opts:["Network packet captures","Hardware SMART data","System, security, and application log events","Real-time CPU usage"],ans:2},
+  {q:"The goal of Step 2 (Establish Theory) in the CompTIA methodology is to:",opts:["Fix the problem","List and prioritize possible causes","Test all possible solutions","Document the problem"],ans:1},
+];
+let quizScores={};
+function buildQuiz(){
+  document.getElementById('quiz-container').innerHTML=QUIZ.map((q,qi)=>`
+    <div class="card" style="margin-bottom:16px">
+      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">Q${qi+1}. ${q.q}</p>
+      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
+    </div>`).join('');
+}
+function answerQ(qi,oi){
+  if(quizScores[qi]!==undefined)return;
+  const q=QUIZ[qi];
+  document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('correct');});
+  if(oi!==q.ans)document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt')[oi].classList.add('incorrect');
+  quizScores[qi]=oi===q.ans?1:0;
+  document.getElementById('quiz-score').textContent=`Score: ${Object.values(quizScores).reduce((a,b)=>a+b,0)} / 12`;
+}
+buildQuiz();
+</script>
+</body>
+</html>

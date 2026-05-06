@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 11 — Capstone Challenge</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
+.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#f59e0b;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #a3e635;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#3f6212,#65a30d);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#d9f99d}
+.site-author-block{text-align:right;border-left:1px solid rgba(255,255,255,.08);padding-left:18px;flex-shrink:0}
+.site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#a3e635;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(163,230,53,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(163,230,53,.1)}
+.phase-bar{display:flex;gap:4px;padding:16px 24px;background:#071020;border-bottom:1px solid #1e3a5c;flex-wrap:wrap}
+.phase-btn{padding:8px 16px;border:1px solid #1e3a5c;border-radius:8px;background:#071020;color:#64748b;font-size:.8rem;cursor:default;transition:all .2s;font-weight:600}
+.phase-btn.active-phase{border-color:#a3e635;color:#a3e635;background:rgba(163,230,53,.08)}
+.phase-btn.done-phase{border-color:#10b981;color:#34d399;background:rgba(16,185,129,.06)}
+.phase-content{padding:30px;max-width:960px;margin:0 auto}
+h2{color:#a3e635;margin-bottom:8px;font-size:1.2rem}
+.subtitle{color:#7ab3d4;font-size:.85rem;margin-bottom:20px;line-height:1.7}
+.card{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
+.card h3{color:#a3e635;margin-bottom:12px;font-size:1rem}
+.btn{padding:9px 20px;border:none;border-radius:6px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
+.btn-lime{background:#3f6212;color:#d9f99d}.btn-lime:hover{background:#365314}
+.btn-outline{background:transparent;border:1px solid #a3e635;color:#a3e635}.btn-outline:hover{background:rgba(163,230,53,.1)}
+.btn-sm{padding:5px 12px;font-size:.78rem}
+.alert{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.88rem;line-height:1.6}
+.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#34d399}
+.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
+.alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
+.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:#7ab3d4}
+.score-banner{background:linear-gradient(135deg,rgba(163,230,53,.05),rgba(16,185,129,.05));border:1px solid rgba(163,230,53,.2);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.score-main{font-size:1.8rem;font-weight:800;color:#a3e635}
+.score-label{font-size:.75rem;color:#64748b}
+/* Option cards */
+.option-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:16px 0}
+.opt-card{background:#071020;border:2px solid #1e3a5c;border-radius:10px;padding:16px;cursor:pointer;transition:all .2s}
+.opt-card:hover{border-color:#a3e635;transform:translateY(-2px)}.opt-card.selected-opt{border-color:#a3e635;background:rgba(163,230,53,.08)}
+.opt-card.correct-opt{border-color:#10b981;background:rgba(16,185,129,.1)}.opt-card.wrong-opt{border-color:#ef4444;background:rgba(239,68,68,.08)}
+.opt-icon{font-size:1.6rem;margin-bottom:8px}.opt-name{font-weight:700;color:#e0e6f0;font-size:.88rem;margin-bottom:3px}.opt-detail{font-size:.72rem;color:#64748b;line-height:1.4}
+.opt-price{font-size:.75rem;color:#a3e635;margin-top:6px;font-weight:700}
+/* Progress bar */
+.prog-track{background:#1e3a5c;border-radius:20px;height:8px;margin:8px 0;overflow:hidden}
+.prog-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#a3e635,#65a30d);transition:width .5s}
+/* Quiz */
+.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:left;width:100%;margin-bottom:8px}
+.quiz-opt:hover{border-color:#a3e635}.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
+.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
+.site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#f59e0b}
+</style>
+</head>
+<body>
+<div class="site-topbar">
+  <span>🖥️ Training Environment — Academic Use Only | CompTIA Server+</span>
+  <span class="author-tag">Eng. Abdullah Alasmari · م. عبدالله الأسمري</span>
+</div>
+<div class="site-header-bar">
+  <div class="site-logo-box">🏆</div>
+  <div class="site-lab-info">
+    <h2>Lab 11 — Capstone: Server+ Challenge</h2>
+    <span>CompTIA Server+ SK0-005 · All Chapters</span>
+  </div>
+  <div class="site-author-block">
+    <div class="aname">Eng. Abdullah Alasmari</div>
+    <div class="abook">Server+ Interactive Labs</div>
+  </div>
+</div>
+<a href="index.html" class="back-btn">← Back to Labs</a>
+
+<div class="phase-bar" id="phase-bar"></div>
+
+<div class="phase-content">
+  <div class="score-banner">
+    <div>
+      <div class="score-main" id="total-score">0 pts</div>
+      <div class="score-label">Total Score</div>
+    </div>
+    <div>
+      <div class="prog-track" style="width:200px">
+        <div class="prog-fill" id="total-prog" style="width:0%"></div>
+      </div>
+      <div class="score-label" id="prog-label">Phase 1 of 5</div>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="resetAll()">Start Over</button>
+  </div>
+
+  <div id="phase-container"></div>
+
+  <div id="exam-quiz" style="display:none">
+    <h2>📝 Final Exam — 20 Questions</h2>
+    <p class="subtitle">Mixed questions from all Server+ domains. Your final certification readiness score.</p>
+    <div id="exam-score-badge" style="display:inline-block;background:rgba(163,230,53,.1);border:1px solid rgba(163,230,53,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#a3e635;margin-bottom:16px">Score: 0 / 20</div>
+    <div id="exam-container"></div>
+    <div id="exam-result" style="margin-top:20px"></div>
+  </div>
+</div>
+
+<div class="site-footer-bar">
+  <p>Designed by <strong>Eng. Abdullah Alasmari</strong> · CompTIA Server+ Interactive Labs</p>
+</div>
+
+<script>
+// ---- PHASES ----
+const PHASES=[
+  {id:'p1',label:'1. Hardware',icon:'🔧',done:false},
+  {id:'p2',label:'2. Storage',icon:'💾',done:false},
+  {id:'p3',label:'3. Roles',icon:'🌐',done:false},
+  {id:'p4',label:'4. Security',icon:'🔒',done:false},
+  {id:'p5',label:'5. DR Plan',icon:'🔄',done:false},
+  {id:'exam',label:'Final Exam',icon:'📝',done:false},
+];
+let currentPhase=0;let totalScore=0;let maxScore=0;
+const phaseScores={};
+
+function buildPhaseBar(){
+  document.getElementById('phase-bar').innerHTML=PHASES.map((p,i)=>`<div class="phase-btn ${i===currentPhase?'active-phase':p.done?'done-phase':''}" id="pb-${i}">${p.done?'✅':p.icon} ${p.label}</div>`).join('');
+}
+
+function addScore(pts,max){totalScore+=pts;maxScore+=max;phaseScores[currentPhase]=(phaseScores[currentPhase]||0)+pts;updateScoreBanner();}
+function updateScoreBanner(){
+  document.getElementById('total-score').textContent=totalScore+' pts';
+  document.getElementById('total-prog').style.width=(maxScore?Math.round(totalScore/maxScore*100):0)+'%';
+  document.getElementById('prog-label').textContent=`Phase ${Math.min(currentPhase+1,6)} of 6`;
+}
+function nextPhase(){
+  PHASES[currentPhase].done=true;
+  currentPhase++;
+  buildPhaseBar();
+  if(currentPhase>=PHASES.length){showFinalResult();return;}
+  if(currentPhase===5){showExam();return;}
+  loadPhase(currentPhase);
+}
+function resetAll(){currentPhase=0;totalScore=0;maxScore=0;Object.keys(phaseScores).forEach(k=>delete phaseScores[k]);PHASES.forEach(p=>p.done=false);document.getElementById('exam-quiz').style.display='none';document.getElementById('phase-container').style.display='block';buildPhaseBar();loadPhase(0);updateScoreBanner();}
+
+// ---- PHASE CONTENT ----
+const PHASE_DATA=[
+  // Phase 1: Hardware
+  {title:"Phase 1: Choose Server Hardware",subtitle:"A hospital needs a new server for their patient records database. 200 concurrent users, 24/7 uptime required, 10TB data storage, must fit in existing 42U rack.",
+   questions:[
+     {q:"Which server form factor is best for this hospital rack environment?",opts:[{name:"Tower Server",icon:"🗼",detail:"Standalone unit, easy to service",price:"$3,000",ok:false,why:"Tower servers don't fit in rack cabinets and can't be managed centrally."},{name:"Rack Mount (2U)",icon:"🏢",detail:"Standard rack form factor, balanced density",price:"$8,000",ok:true,why:"Rack-mount servers fit in existing 42U racks, offer good density and enterprise management."},{name:"Blade Server",icon:"⚡",detail:"Highest density, shared infrastructure",price:"$25,000",ok:false,why:"Blade servers are over-engineered for a single application and very expensive for this use case."}],pts:20},
+     {q:"Which CPU configuration handles 200 concurrent database users best?",opts:[{name:"1x Intel Core i7 (8-core)",icon:"💻",detail:"Consumer-grade, no ECC RAM support",price:"+$500",ok:false,why:"Consumer CPUs don't support ECC RAM, which is essential for data integrity in a database server."},{name:"2x Intel Xeon Silver (32 cores total)",icon:"⚡",detail:"Dual-socket, ECC, enterprise reliability",price:"+$4,000",ok:true,why:"Dual Xeon provides 32 cores, ECC RAM support, and enterprise-grade reliability for 24/7 database workloads."},{name:"1x AMD Ryzen 7 (8-core)",icon:"💻",detail:"Desktop-grade, limited ECC support",price:"+$400",ok:false,why:"Desktop CPUs lack enterprise RAS (Reliability, Availability, Serviceability) features needed for hospitals."}],pts:20},
+   ]},
+  // Phase 2: Storage
+  {title:"Phase 2: Configure Storage &amp; RAID",subtitle:"The hospital server needs 10TB of usable storage for patient records. Performance is critical. They have a budget for 6 drives.",
+   questions:[
+     {q:"The hospital has 6x 4TB SAS drives. Which RAID level gives good performance AND survives 2 drive failures?",opts:[{name:"RAID 0 (Striping)",icon:"⚡",detail:"24TB usable, no fault tolerance",price:"",ok:false,why:"RAID 0 has zero fault tolerance. For patient records, any drive failure means data loss — completely unacceptable."},{name:"RAID 5 (Parity)",icon:"💾",detail:"20TB usable, survives 1 drive failure",price:"",ok:false,why:"RAID 5 only survives 1 drive failure. During rebuild, a second failure causes data loss — risky for large arrays."},{name:"RAID 6 (Double Parity)",icon:"🛡️",detail:"16TB usable, survives 2 drive failures",price:"",ok:true,why:"RAID 6 survives 2 simultaneous failures and provides 16TB usable — ideal for critical healthcare data."}],pts:20},
+     {q:"The hospital also needs shared storage for medical imaging files (100TB). What storage architecture is best?",opts:[{name:"DAS on the main server",icon:"💽",detail:"Direct attached, single server only",price:"",ok:false,why:"DAS can't be shared across multiple systems and 100TB of DAS would require too many drives in one server."},{name:"NAS (Network Attached Storage)",icon:"📁",detail:"File-level sharing over Ethernet NFS/SMB",price:"",ok:true,why:"NAS is perfect for large file repositories like medical images — accessible by multiple systems, scalable, and cost-effective."},{name:"USB External Drives",icon:"🔌",detail:"Consumer-grade external storage",price:"",ok:false,why:"USB drives are consumer grade, not suitable for 100TB enterprise storage — no redundancy, no management."}],pts:20},
+   ]},
+  // Phase 3: Server Roles
+  {title:"Phase 3: Assign Server Roles",subtitle:"The hospital network has 500 users, 50 servers, and needs a complete server infrastructure. Assign the right roles to each requirement.",
+   questions:[
+     {q:"All 500 hospital staff need to log in with a single username/password that works across all systems. Which server role?",opts:[{name:"File Server",icon:"📁",detail:"Shared file storage",ok:false,why:"File servers share files but don't provide centralized authentication for 500 users."},{name:"Active Directory Domain Services",icon:"👥",detail:"Centralized authentication & authorization",ok:true,why:"Active Directory provides centralized user accounts, authentication, and access control across all hospital systems."},{name:"DHCP Server",icon:"📡",detail:"IP address assignment",ok:false,why:"DHCP assigns IP addresses but has nothing to do with user authentication."}],pts:20},
+     {q:"Medical staff need to access patient records through a browser. The application logic runs on a separate server from the database. Which role handles the application logic?",opts:[{name:"Web Server",icon:"🌍",detail:"Serves static HTML/CSS pages",ok:false,why:"Web servers serve static content. Medical record systems require application logic — a web server alone isn't enough."},{name:"Application Server",icon:"⚙️",detail:"Processes business logic between web and database",ok:true,why:"Application servers process medical record business logic, sitting between the web interface and database server."},{name:"DNS Server",icon:"🌐",detail:"Hostname resolution",ok:false,why:"DNS resolves names to IPs — it doesn't serve applications."}],pts:20},
+   ]},
+  // Phase 4: Security
+  {title:"Phase 4: Apply Security Controls",subtitle:"The hospital must comply with healthcare data regulations (HIPAA). Apply the correct security controls.",
+   questions:[
+     {q:"Patient records must be protected from unauthorized access, even if a drive is physically stolen. What is the best control?",opts:[{name:"Strong passwords",icon:"🔑",detail:"Password protection only",ok:false,why:"Passwords protect OS-level access but do nothing if a drive is physically removed and read in another system."},{name:"Full disk encryption (BitLocker/LUKS)",icon:"🔒",detail:"Encrypts all data at rest",ok:true,why:"Disk encryption makes stolen drives unreadable without the encryption key — essential for healthcare compliance (HIPAA)."},{name:"Antivirus software",icon:"🛡️",detail:"Malware protection",ok:false,why:"Antivirus protects against malware but doesn't encrypt data at rest."}],pts:20},
+     {q:"Administrators need to access servers remotely. Which protocol should be used to replace insecure Telnet?",opts:[{name:"Telnet",icon:"💻",detail:"Port 23, cleartext, no encryption",ok:false,why:"Telnet transmits all data including passwords in cleartext — completely unacceptable for healthcare environments."},{name:"SSH (Secure Shell)",icon:"🔐",detail:"Port 22, encrypted, authenticated",ok:true,why:"SSH encrypts all remote administration traffic with strong cryptography — the standard replacement for Telnet."},{name:"FTP",icon:"📁",detail:"Port 21, cleartext file transfer",ok:false,why:"FTP is also cleartext and insecure. Use SFTP (SSH) or FTPS for secure file transfers."}],pts:20},
+   ]},
+  // Phase 5: DR
+  {title:"Phase 5: Design Disaster Recovery Plan",subtitle:"The hospital cannot afford more than 30 minutes of system downtime (RTO=30 min) and can lose maximum 15 minutes of patient data (RPO=15 min).",
+   questions:[
+     {q:"With RTO=30 minutes and RPO=15 minutes, which DR site type is required?",opts:[{name:"Cold Site",icon:"❄️",detail:"RTO: days to weeks, RPO: days",ok:false,why:"Cold sites require days to restore — completely incompatible with the hospital's 30-minute RTO requirement."},{name:"Warm Site",icon:"🌡️",detail:"RTO: hours, RPO: hours",ok:false,why:"Warm sites take hours to recover — still too slow for the hospital's 30-minute RTO in this life-critical environment."},{name:"Hot Site",icon:"🔥",detail:"RTO: minutes, RPO: near-zero with real-time replication",ok:true,why:"Only a hot site with real-time data replication can meet 30-minute RTO and 15-minute RPO for patient safety."}],pts:20},
+     {q:"The hospital needs to protect against losing patient data. Which backup strategy meets a 15-minute RPO?",opts:[{name:"Weekly full backup only",icon:"📼",detail:"RPO: up to 7 days of data loss",ok:false,why:"Weekly backups mean up to 7 days of data could be lost — completely unacceptable for patient safety."},{name:"Daily full + incremental backup",icon:"💾",detail:"RPO: up to 24 hours of data loss",ok:false,why:"Daily backups still result in up to 24 hours of potential data loss — too much for a 15-minute RPO."},{name:"Real-time replication to hot site",icon:"🔄",detail:"RPO: seconds to minutes",ok:true,why:"Real-time replication ensures minimal data loss (seconds to minutes) — meets the 15-minute RPO for patient safety."}],pts:20},
+   ]},
+];
+
+function loadPhase(idx){
+  document.getElementById('exam-quiz').style.display='none';
+  document.getElementById('phase-container').style.display='block';
+  const phase=PHASE_DATA[idx];
+  if(!phase)return;
+  let html=`<h2>${phase.title}</h2><p class="subtitle">${phase.subtitle}</p>`;
+  phase.questions.forEach((q,qi)=>{
+    html+=`<div class="card" id="pq-${qi}">
+      <h3>Decision ${qi+1}: ${q.q}</h3>
+      <div class="option-grid">${q.opts.map((o,oi)=>`<div class="opt-card" onclick="pickOption(${qi},${oi})">
+        <div class="opt-icon">${o.icon}</div>
+        <div class="opt-name">${o.name}</div>
+        <div class="opt-detail">${o.detail}</div>
+        ${o.price?`<div class="opt-price">${o.price}</div>`:''}
+      </div>`).join('')}</div>
+      <div id="pfb-${qi}" style="margin-top:12px"></div>
+    </div>`;
+  });
+  html+=`<button class="btn btn-lime" id="phase-next-btn" onclick="nextPhase()" style="display:none;margin-top:8px">Continue to Next Phase →</button>`;
+  document.getElementById('phase-container').innerHTML=html;
+  let answeredCount=0;
+  window._phaseAnswered=new Set();
+  window._phasePickOption=(qi,oi)=>{
+    if(window._phaseAnswered.has(qi))return;
+    window._phaseAnswered.add(qi);
+    const q=phase.questions[qi];const opt=q.opts[oi];
+    const cards=document.querySelectorAll(`#pq-${qi} .opt-card`);
+    cards.forEach((c,ci)=>{c.style.pointerEvents='none';if(q.opts[ci].ok)c.classList.add('correct-opt');});
+    if(!opt.ok)cards[oi].classList.add('wrong-opt');
+    document.getElementById('pfb-'+qi).innerHTML=`<div class="alert ${opt.ok?'alert-success':'alert-warn'}">${opt.ok?'✅':'💡'} ${opt.why}</div>`;
+    addScore(opt.ok?q.pts:0,q.pts);
+    answeredCount++;
+    if(answeredCount===phase.questions.length){
+      const btn=document.getElementById('phase-next-btn');
+      if(btn){btn.style.display='inline-block';btn.textContent=idx===PHASE_DATA.length-1?'Proceed to Final Exam →':'Continue to Next Phase →';}
+    }
+  };
+}
+window.pickOption=(qi,oi)=>window._phasePickOption&&window._phasePickOption(qi,oi);
+
+// ---- FINAL EXAM ----
+const EXAM_Q=[
+  {q:"A 1U server is approximately how tall?",opts:["44.45mm (1.75 inches)","88.9mm (3.5 inches)","25mm (1 inch)","133mm (5.25 inches)"],ans:0},
+  {q:"RAID 5 requires a minimum of how many drives?",opts:["2","3","4","5"],ans:1},
+  {q:"Which storage type provides block-level access over TCP/IP?",opts:["NAS","DAS","iSCSI","FTP"],ans:2},
+  {q:"A Type I hypervisor runs:",opts:["On a host OS","Directly on hardware","In a virtual machine","In the cloud only"],ans:1},
+  {q:"Which port does HTTPS use?",opts:["80","8080","443","8443"],ans:2},
+  {q:"RTO stands for:",opts:["Recovery Time Objective","Recovery Transfer Operation","Real-Time Output","Redundancy Time Object"],ans:0},
+  {q:"Which backup type includes only data changed since the last backup of ANY type?",opts:["Full","Differential","Incremental","Mirror"],ans:2},
+  {q:"Secure Boot is a feature of:",opts:["Legacy BIOS only","UEFI only","Both BIOS and UEFI","RAID controllers"],ans:1},
+  {q:"A hot spare drive in a RAID array:",opts:["Increases array capacity","Automatically replaces a failed drive","Speeds up data writes","Acts as a parity drive"],ans:1},
+  {q:"Which troubleshooting step comes AFTER 'Test the Theory'?",opts:["Identify the problem","Document findings","Establish a plan of action","Implement the solution"],ans:2},
+  {q:"NTP (Network Time Protocol) uses which port?",opts:["53","67","123","161"],ans:2},
+  {q:"IPsec Tunnel Mode is used for:",opts:["Host-to-host encryption","Network-to-network VPN tunnels","Encrypting email","SSL/TLS web traffic"],ans:1},
+  {q:"RAID 6 can survive the loss of how many drives?",opts:["1","2","3","0"],ans:1},
+  {q:"Which physical security control prevents unauthorized drive removal?",opts:["Server room camera","Locked server cabinet","BIOS password","Drive encryption"],ans:1},
+  {q:"A Certificate Authority (CA) is responsible for:",opts:["Encrypting web traffic","Issuing and signing digital certificates","Managing firewall rules","Assigning IP addresses"],ans:1},
+  {q:"DHCP uses which UDP ports?",opts:["53/54","67/68","80/443","110/143"],ans:1},
+  {q:"Active Directory primarily provides:",opts:["File sharing","Centralized authentication and directory services","Email routing","IP address management"],ans:1},
+  {q:"Which RAID level provides the best I/O performance WITH redundancy?",opts:["RAID 0","RAID 5","RAID 6","RAID 10"],ans:3},
+  {q:"A cold DR site provides:",opts:["Immediate failover in minutes","Failover in hours","Physical space and power only; hardware must be acquired","Real-time data replication"],ans:2},
+  {q:"Least privilege access means:",opts:["Users have no access to any resources","Users have only the minimum access required for their job","Only admins can log in","All users have equal access"],ans:1},
+];
+let examScores={};
+function showExam(){
+  document.getElementById('phase-container').style.display='none';
+  document.getElementById('exam-quiz').style.display='block';
+  buildExam();
+}
+function buildExam(){
+  document.getElementById('exam-container').innerHTML=EXAM_Q.map((q,qi)=>`
+    <div class="card" style="margin-bottom:16px">
+      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">Q${qi+1}. ${q.q}</p>
+      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerExam(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
+    </div>`).join('');
+}
+function answerExam(qi,oi){
+  if(examScores[qi]!==undefined)return;
+  const q=EXAM_Q[qi];const correct=oi===q.ans;
+  examScores[qi]=correct?1:0;
+  document.querySelectorAll('#exam-container .card')[qi].querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('correct');});
+  if(!correct)document.querySelectorAll('#exam-container .card')[qi].querySelectorAll('.quiz-opt')[oi].classList.add('incorrect');
+  const total=Object.values(examScores).reduce((a,b)=>a+b,0);
+  document.getElementById('exam-score-badge').textContent=`Score: ${total} / 20`;
+  addScore(correct?5:0,5);
+  if(Object.keys(examScores).length===EXAM_Q.length)showFinalResult();
+}
+function showFinalResult(){
+  const examTotal=Object.values(examScores).reduce((a,b)=>a+b,0);
+  const pct=maxScore?Math.round(totalScore/maxScore*100):0;
+  let grade,color,msg;
+  if(pct>=90){grade='A — Excellent!';color='#a3e635';msg='Outstanding performance! You have a solid grasp of all Server+ domains. You are well-prepared for the SK0-005 exam.';}
+  else if(pct>=80){grade='B — Good';color='#34d399';msg='Good performance! Review the areas where you lost points and you will be ready for the exam.';}
+  else if(pct>=70){grade='C — Needs Review';color='#fbbf24';msg='Review the chapters where you scored lower before attempting the certification exam.';}
+  else{grade='D — More Study Needed';color='#f87171';msg='Spend more time with the individual lab modules before the certification exam.';}
+  document.getElementById('exam-result').innerHTML=`
+    <div style="background:linear-gradient(135deg,rgba(163,230,53,.05),rgba(16,185,129,.05));border:2px solid ${color};border-radius:16px;padding:24px;text-align:center">
+      <div style="font-size:3rem;margin-bottom:8px">🏆</div>
+      <div style="font-size:1.6rem;font-weight:800;color:${color};margin-bottom:4px">${grade}</div>
+      <div style="font-size:1.1rem;color:#e0e6f0;margin-bottom:12px">Final Score: ${totalScore} / ${maxScore} points (${pct}%)</div>
+      <div style="font-size:.88rem;color:#7ab3d4;line-height:1.7;max-width:500px;margin:0 auto 16px">${msg}</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;text-align:left;margin-top:16px;font-size:.8rem">
+        ${PHASE_DATA.map((p,i)=>`<div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><div style="color:#a3e635;font-weight:700;margin-bottom:3px">${p.title.split(':')[0]}</div><div style="color:#e0e6f0">${phaseScores[i]||0} / ${p.questions.reduce((s,q)=>s+q.pts,0)} pts</div></div>`).join('')}
+        <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><div style="color:#a3e635;font-weight:700;margin-bottom:3px">Final Exam</div><div style="color:#e0e6f0">${examTotal} / 20 questions</div></div>
+      </div>
+      <button class="btn btn-outline" onclick="resetAll()" style="margin-top:20px">Try Again</button>
+    </div>`;
+}
+
+// ---- INIT ----
+buildPhaseBar();
+loadPhase(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 07 — Server Security &amp; Hardening</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
+.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#f59e0b;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #f87171;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#b91c1c,#ef4444);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#fca5a5}
+.site-author-block{text-align:right;border-left:1px solid rgba(255,255,255,.08);padding-left:18px;flex-shrink:0}
+.site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#f87171;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(248,113,113,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(248,113,113,.1)}
+.tabs{display:flex;gap:0;background:#071020;border-bottom:1px solid #1e3a5c;padding:0 20px;overflow-x:auto}
+.tab{padding:14px 22px;cursor:pointer;color:#7ab3d4;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#f87171}.tab.active{border-bottom-color:#f87171;background:rgba(248,113,113,.05)}
+.tab-panel{display:none;padding:30px;max-width:960px;margin:0 auto}.tab-panel.active{display:block}
+h2{color:#f87171;margin-bottom:8px;font-size:1.2rem}
+.subtitle{color:#7ab3d4;font-size:.85rem;margin-bottom:20px;line-height:1.7}
+.card{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
+.card h3{color:#f87171;margin-bottom:12px;font-size:1rem}
+.btn{padding:9px 20px;border:none;border-radius:6px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
+.btn-red{background:#b91c1c;color:#fff}.btn-red:hover{background:#991b1b}
+.btn-outline{background:transparent;border:1px solid #f87171;color:#f87171}.btn-outline:hover{background:rgba(248,113,113,.1)}
+.btn-sm{padding:5px 12px;font-size:.78rem}
+.alert{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.88rem;line-height:1.6}
+.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#34d399}
+.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
+.alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
+.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:#7ab3d4}
+.score-badge{display:inline-block;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#f87171;margin-bottom:16px}
+/* Checklist */
+.checklist-item{display:flex;align-items:flex-start;gap:12px;padding:12px;border:1px solid #1e3a5c;border-radius:8px;margin-bottom:8px;cursor:pointer;transition:all .2s}
+.checklist-item:hover{border-color:#f87171;background:rgba(248,113,113,.03)}
+.checklist-item.done{border-color:#10b981;background:rgba(16,185,129,.05)}
+.checklist-item.done .check-box{background:#10b981;border-color:#10b981}
+.check-box{width:22px;height:22px;border:2px solid #1e3a5c;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-top:1px}
+.check-text{flex:1}
+.check-title{font-weight:600;font-size:.88rem;color:#e0e6f0;margin-bottom:2px}
+.check-desc{font-size:.75rem;color:#64748b;line-height:1.4}
+/* PKI flow */
+.pki-flow{display:flex;flex-direction:column;gap:12px}
+.pki-step{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:14px;cursor:pointer;transition:all .2s;position:relative}
+.pki-step:hover,.pki-step.active-step{border-color:#f87171;background:rgba(248,113,113,.05)}
+.pki-step-num{width:28px;height:28px;border-radius:50%;background:#f87171;color:#fff;font-weight:700;font-size:.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pki-arrow{text-align:center;color:#1e3a5c;font-size:1.4rem;margin:-6px 0}
+/* Quiz */
+.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:left;width:100%;margin-bottom:8px}
+.quiz-opt:hover{border-color:#f87171}.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
+.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
+.site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#f59e0b}
+</style>
+</head>
+<body>
+<div class="site-topbar">
+  <span>🖥️ Training Environment — Academic Use Only | CompTIA Server+</span>
+  <span class="author-tag">Eng. Abdullah Alasmari · م. عبدالله الأسمري</span>
+</div>
+<div class="site-header-bar">
+  <div class="site-logo-box">🔒</div>
+  <div class="site-lab-info">
+    <h2>Lab 07 — Server Security &amp; Hardening</h2>
+    <span>CompTIA Server+ SK0-005 · Chapter 7</span>
+  </div>
+  <div class="site-author-block">
+    <div class="aname">Eng. Abdullah Alasmari</div>
+    <div class="abook">Server+ Interactive Labs</div>
+  </div>
+</div>
+<a href="index.html" class="back-btn">← Back to Labs</a>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('t1',this)">OS Hardening Checklist</div>
+  <div class="tab" onclick="showTab('t2',this)">Physical Security</div>
+  <div class="tab" onclick="showTab('t3',this)">PKI &amp; Certificates</div>
+  <div class="tab" onclick="showTab('t4',this)">Quiz</div>
+</div>
+
+<!-- TAB 1 -->
+<div id="t1" class="tab-panel active">
+  <h2>OS Hardening Checklist</h2>
+  <p class="subtitle">A newly deployed server needs to be hardened before going to production. Click each item to mark it complete. Aim for 100% before deploying!</p>
+  <div class="score-badge" id="harden-score">Completed: 0 / 15</div>
+  <div class="card">
+    <h3>🔒 Hardening Steps</h3>
+    <div id="checklist"></div>
+  </div>
+  <div id="harden-result"></div>
+</div>
+
+<!-- TAB 2 -->
+<div id="t2" class="tab-panel">
+  <h2>Physical Security Assessment</h2>
+  <p class="subtitle">You're reviewing a server room. Identify which physical security controls are MISSING from each scenario.</p>
+  <div class="score-badge" id="phys-score">Score: 0 / 6</div>
+  <div id="phys-card" class="card"></div>
+</div>
+
+<!-- TAB 3 -->
+<div id="t3" class="tab-panel">
+  <h2>PKI &amp; Certificate Chain</h2>
+  <p class="subtitle">Click each step in the PKI certificate lifecycle to learn how certificates work.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div>
+      <div class="pki-flow" id="pki-steps"></div>
+    </div>
+    <div class="card" id="pki-detail">
+      <h3>Select a step to learn more</h3>
+      <p class="subtitle">Click any step in the PKI flow to see details about that stage of the certificate lifecycle.</p>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>🔑 PKI Key Concepts Quick Reference</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;font-size:.8rem">
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f87171;font-weight:700;margin-bottom:4px">CA (Certificate Authority)</div><div style="color:#64748b;line-height:1.5">Trusted entity that issues and signs digital certificates. Root CA → Intermediate CA → End-entity cert.</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f87171;font-weight:700;margin-bottom:4px">Private Key</div><div style="color:#64748b;line-height:1.5">Secret key kept only on the server. Used to decrypt data and sign messages. Never shared.</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f87171;font-weight:700;margin-bottom:4px">Public Key</div><div style="color:#64748b;line-height:1.5">Shared in the certificate. Anyone can use it to encrypt data for the server or verify signatures.</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f87171;font-weight:700;margin-bottom:4px">CSR</div><div style="color:#64748b;line-height:1.5">Certificate Signing Request — server sends public key + identity info to CA requesting a certificate.</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f87171;font-weight:700;margin-bottom:4px">CRL / OCSP</div><div style="color:#64748b;line-height:1.5">Certificate Revocation List / Online Certificate Status Protocol — check if a cert has been revoked.</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f87171;font-weight:700;margin-bottom:4px">SSL/TLS</div><div style="color:#64748b;line-height:1.5">Protocol using PKI to encrypt communication. TLS 1.3 is current standard. Uses certificates for identity.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4 -->
+<div id="t4" class="tab-panel">
+  <h2>Knowledge Quiz — Server Security</h2>
+  <p class="subtitle">12 questions on OS hardening, physical security, PKI, and access control.</p>
+  <div class="score-badge" id="quiz-score">Score: 0 / 12</div>
+  <div id="quiz-container"></div>
+</div>
+
+<div class="site-footer-bar">
+  <p>Designed by <strong>Eng. Abdullah Alasmari</strong> · CompTIA Server+ Interactive Labs</p>
+</div>
+
+<script>
+function showTab(id,el){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');el.classList.add('active');}
+
+// ---- HARDENING CHECKLIST ----
+const CHECKLIST=[
+  {title:"Remove default accounts and passwords",desc:"Rename or disable built-in Administrator/root accounts. Change all default passwords immediately."},
+  {title:"Apply all security patches and updates",desc:"Run Windows Update / apt upgrade. Schedule automated monthly patch cycles for ongoing security."},
+  {title:"Disable unnecessary services",desc:"Stop and disable services not needed (e.g., Telnet, FTP, RPC if unused). Reduces attack surface."},
+  {title:"Close unnecessary ports",desc:"Use netstat/ss to list open ports. Block unneeded ports at host firewall level."},
+  {title:"Enable host-based firewall",desc:"Configure Windows Firewall or iptables with deny-all default inbound, allow only required ports."},
+  {title:"Configure account lockout policy",desc:"Lock accounts after 5 failed login attempts. Prevents brute-force attacks."},
+  {title:"Enable and configure audit logging",desc:"Log successful/failed logins, privilege use, and policy changes. Forward logs to SIEM."},
+  {title:"Enable disk encryption (BitLocker/LUKS)",desc:"Encrypt OS and data drives to protect against physical theft or drive removal."},
+  {title:"Install and configure antivirus/EDR",desc:"Real-time protection, scheduled scans, and endpoint detection and response."},
+  {title:"Configure minimum password complexity",desc:"Minimum 12 characters, uppercase, lowercase, numbers, symbols. No dictionary words."},
+  {title:"Implement least privilege access",desc:"Assign only minimum necessary permissions. No users should have standing admin rights."},
+  {title:"Enable Multi-Factor Authentication (MFA)",desc:"Require a second factor (authenticator app, hardware token) for all admin access."},
+  {title:"Disable USB/removable media boot",desc:"In BIOS: disable USB boot devices and set BIOS password to prevent bypass."},
+  {title:"Configure SNMP v3 (or disable SNMP)",desc:"SNMP v1/v2 use clear-text community strings. Use SNMPv3 with authentication and encryption."},
+  {title:"Document baseline configuration",desc:"Record initial state, installed software, open ports, and services. Required for change management."},
+];
+let completed=new Set();
+function buildChecklist(){
+  document.getElementById('checklist').innerHTML=CHECKLIST.map((item,i)=>`
+    <div class="checklist-item ${completed.has(i)?'done':''}" onclick="toggleCheck(${i})">
+      <div class="check-box">${completed.has(i)?'<span style="color:#fff;font-size:.8rem">✓</span>':''}</div>
+      <div class="check-text">
+        <div class="check-title">${item.title}</div>
+        <div class="check-desc">${item.desc}</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('harden-score').textContent=`Completed: ${completed.size} / ${CHECKLIST.length}`;
+  if(completed.size===CHECKLIST.length){
+    document.getElementById('harden-result').innerHTML='<div class="alert alert-success" style="margin-top:4px">🎉 Server hardening complete! This server meets baseline security requirements before production deployment.</div>';
+  } else if(completed.size>=10){
+    document.getElementById('harden-result').innerHTML='<div class="alert alert-warn">⚠️ Almost there! Complete all steps before deploying to production.</div>';
+  } else {
+    document.getElementById('harden-result').innerHTML='';
+  }
+}
+function toggleCheck(i){if(completed.has(i))completed.delete(i);else completed.add(i);buildChecklist();}
+buildChecklist();
+
+// ---- PHYSICAL SECURITY ----
+const PHYS_SC=[
+  {q:"Server room overview: The door has a standard key lock. Anyone with a key can enter at any time, and there is no log of who entered when.",missing:"Biometric/smart card access + access logging",opts:["Install biometric or smart card reader + access log","Add a second key lock","Install a security camera outside only","Put a 'No Entry' sign on the door"],ans:0,explain:"Physical access should use multi-factor (something you have + something you are) and log every entry with timestamp."},
+  {q:"The server rack is in an open office space shared with general staff. Any employee can walk up and touch the servers.",missing:"Locked server cabinet / cage",opts:["Lock the server rack or install a cage","Place a warning sign on the rack","Enable server passwords","Hide the servers behind furniture"],ans:0,explain:"Servers must be physically secured in locked cabinets or cages. Even with software security, physical access bypasses everything."},
+  {q:"A technician works in the data center alone with no supervision or monitoring. Servers have open USB ports.",missing:"Disable USB ports + two-person rule for sensitive areas",opts:["Disable USB ports in BIOS + two-person integrity rule","Trust the technician — they signed an NDA","Use only wireless keyboards","Enable BitLocker"],ans:0,explain:"USB ports on servers should be disabled in BIOS. Sensitive areas should require two-person access (two-person integrity rule)."},
+  {q:"The server room has power, networking, and cooling — but no fire suppression system.",missing:"Clean agent fire suppression system",opts:["Install clean agent fire suppression (FM-200/Halon replacement)","Put fire extinguishers at the door","Remove all paper from the room","Use water sprinklers"],ans:0,explain:"Server rooms need clean agent gas suppression systems (e.g., FM-200) — water sprinklers would destroy equipment."},
+  {q:"Old hard drives from decommissioned servers are placed in the dumpster outside without any special handling.",missing:"Secure drive destruction / degaussing",opts:["Secure wipe or physical destruction of drives before disposal","Encrypt the drives before discarding","Put the drives in a locked box","Return drives to manufacturer"],ans:0,explain:"Drives must be securely wiped (DoD 7-pass), degaussed, or physically destroyed before disposal. Data persists even on 'deleted' drives."},
+  {q:"The server room has a security camera, but its footage is only stored for 24 hours before being overwritten.",missing:"Adequate retention period for security footage",opts:["Increase retention to minimum 30-90 days","Add more cameras","Use higher resolution cameras","Enable motion detection only"],ans:0,explain:"Security footage should be retained for at minimum 30 days (often 90 days for compliance) to support incident investigations."},
+];
+let physIdx=0,physCorrect=0;
+function loadPhys(){
+  const sc=PHYS_SC[physIdx];
+  document.getElementById('phys-card').innerHTML=`
+    <h3>Scenario ${physIdx+1} of ${PHYS_SC.length}</h3>
+    <p style="color:#e0e6f0;line-height:1.7;margin:12px 0">${sc.q}</p>
+    <p style="color:#f87171;font-size:.82rem;margin-bottom:12px">⚠️ Missing control: <strong>${sc.missing}</strong></p>
+    <p style="color:#7ab3d4;font-size:.85rem;margin-bottom:10px">What should be done to fix this?</p>
+    <div style="display:grid;gap:8px">${sc.opts.map((o,i)=>`<button style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;text-align:left;color:#e0e6f0;font-size:.88rem;transition:all .2s;width:100%" onclick="pickPhys(${i})">${o}</button>`).join('')}</div>
+    <div id="phys-fb" style="margin-top:12px"></div>`;
+  document.getElementById('phys-score').textContent=`Score: ${physCorrect} / ${Math.min(physIdx,PHYS_SC.length)}`;
+}
+function pickPhys(i){
+  const sc=PHYS_SC[physIdx];const correct=i===sc.ans;
+  if(correct)physCorrect++;
+  document.querySelectorAll('#phys-card button').forEach((b,bi)=>{b.disabled=true;if(bi===sc.ans)b.style.background='rgba(16,185,129,.15)';});
+  document.getElementById('phys-score').textContent=`Score: ${physCorrect} / ${physIdx+1}`;
+  document.getElementById('phys-fb').innerHTML=`<div class="alert ${correct?'alert-success':'alert-warn'}">${correct?'✅':'💡'} ${sc.explain}<br><button class="btn btn-outline btn-sm" onclick="nextPhys()" style="margin-top:10px">${physIdx<PHYS_SC.length-1?'Next →':'Finish'}</button></div>`;
+}
+function nextPhys(){physIdx++;if(physIdx>=PHYS_SC.length){document.getElementById('phys-card').innerHTML=`<h3>Complete!</h3><div class="alert alert-success" style="margin-top:12px">Score: ${physCorrect}/${PHYS_SC.length}</div>`;return;}loadPhys();}
+loadPhys();
+
+// ---- PKI FLOW ----
+const PKI_STEPS=[
+  {num:1,title:"Generate Key Pair",icon:"🔑",detail:"The server generates a public/private key pair (e.g., RSA 2048-bit or ECC 256-bit). The private key is kept SECRET on the server and never leaves. The public key is shared in the certificate.",tech:"Tools: openssl genrsa, openssl ecparam"},
+  {num:2,title:"Create CSR (Certificate Signing Request)",icon:"📝",detail:"The server creates a CSR containing: the public key, domain name (CN/SAN), organization info. The CSR is signed with the private key to prove ownership, then sent to the Certificate Authority (CA).",tech:"Tools: openssl req -new"},
+  {num:3,title:"CA Validates Identity",icon:"✅",detail:"The CA verifies that the requester controls the domain (DV), or verifies organization identity (OV/EV). Methods: DNS record challenge, email verification, or in-person verification for EV certs.",tech:"Validation types: DV, OV, EV"},
+  {num:4,title:"CA Issues Signed Certificate",icon:"📜",detail:"The CA signs the certificate with its own private key, creating a chain of trust. Certificate contains: public key, validity period, issuer, subject, digital signature.",tech:"Format: X.509 v3, DER/PEM encoding"},
+  {num:5,title:"Install Certificate on Server",icon:"🖥️",detail:"Install the signed certificate and intermediate CA certificate(s) on the web server. Configure TLS binding on port 443. The certificate chain allows browsers to verify trust back to a Root CA.",tech:"Servers: IIS, Apache, Nginx"},
+  {num:6,title:"Browser Validates Certificate",icon:"🌐",detail:"Browser downloads server cert, verifies signature chain to trusted Root CA, checks expiry date, verifies hostname matches certificate CN/SAN, checks revocation status via OCSP or CRL.",tech:"If valid: HTTPS padlock shown"},
+  {num:7,title:"Certificate Expiry / Renewal",icon:"🔄",detail:"Certificates expire (typically 1 year for public certs). Before expiry, generate new CSR, submit for renewal, install new cert. Automate with Let's Encrypt / ACME protocol.",tech:"Tool: certbot (Let's Encrypt)"},
+];
+function buildPKI(){
+  document.getElementById('pki-steps').innerHTML=PKI_STEPS.map((s,i)=>`
+    <div class="pki-step" onclick="showPKIDetail(${i})">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="pki-step-num">${s.num}</div>
+        <div>
+          <div style="font-size:.85rem;color:#e0e6f0;font-weight:600">${s.icon} ${s.title}</div>
+        </div>
+      </div>
+    </div>
+    ${i<PKI_STEPS.length-1?'<div class="pki-arrow">↓</div>':''}`).join('');
+}
+function showPKIDetail(i){
+  const s=PKI_STEPS[i];
+  document.querySelectorAll('.pki-step').forEach(el=>el.classList.remove('active-step'));
+  document.querySelectorAll('.pki-step')[i].classList.add('active-step');
+  document.getElementById('pki-detail').innerHTML=`
+    <h3>${s.icon} Step ${s.num}: ${s.title}</h3>
+    <p style="color:#e0e6f0;line-height:1.7;margin:12px 0;font-size:.88rem">${s.detail}</p>
+    <div style="background:#071020;border:1px solid #1e3a5c;border-radius:6px;padding:10px;font-family:'Courier New',monospace;font-size:.75rem;color:#22d3ee">${s.tech}</div>`;
+}
+buildPKI();
+
+// ---- QUIZ ----
+const QUIZ=[
+  {q:"Which OS hardening step is MOST important immediately after deploying a new server?",opts:["Install antivirus","Change default passwords and rename admin accounts","Enable disk encryption","Configure SNMP"],ans:1},
+  {q:"The principle of 'least privilege' means:",opts:["All users have admin rights","Users have only the minimum permissions needed for their job","Privileged users get full access","Only IT staff can log in"],ans:1},
+  {q:"Which type of fire suppression is appropriate for server rooms?",opts:["Water sprinklers","Clean agent gas systems (FM-200)","Sand buckets","CO2 at floor level"],ans:1},
+  {q:"What is the purpose of a CSR (Certificate Signing Request)?",opts:["Renew an expired certificate automatically","Request a signed certificate from a CA, including the public key","Store the private key securely","Revoke a compromised certificate"],ans:1},
+  {q:"A certificate's chain of trust terminates at which type of CA?",opts:["Intermediate CA","Wildcard CA","Root CA","Domain Validation CA"],ans:2},
+  {q:"OCSP (Online Certificate Status Protocol) is used to:",opts:["Encrypt web traffic","Check if a certificate has been revoked","Generate new key pairs","Configure TLS version"],ans:1},
+  {q:"Multi-Factor Authentication (MFA) requires:",opts:["A complex password only","Two or more authentication factors from different categories","A hardware token only","Biometric scanning only"],ans:1},
+  {q:"Why should USB ports be disabled on production servers?",opts:["USB slows the server","Prevents unauthorized data exfiltration or malware introduction","USB is too old","USB causes hardware failures"],ans:1},
+  {q:"An audit log should capture which events?",opts:["Only successful logins","Only failed logins","Both successful and failed logins, plus privilege use and policy changes","Only system errors"],ans:2},
+  {q:"What is the 'two-person integrity rule' in physical security?",opts:["Two locks on every door","Two people must be present for access to sensitive areas","Two-factor authentication","Two security cameras per room"],ans:1},
+  {q:"Account lockout policy is primarily designed to prevent:",opts:["Phishing attacks","SQL injection","Brute-force password attacks","Privilege escalation"],ans:2},
+  {q:"Before disposing of decommissioned server drives, the secure approach is:",opts:["Delete all files","Format the drive","Degauss or physically destroy the drive","Encrypt the drive and discard"],ans:2},
+];
+let quizScores={};
+function buildQuiz(){
+  document.getElementById('quiz-container').innerHTML=QUIZ.map((q,qi)=>`
+    <div class="card" style="margin-bottom:16px">
+      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">Q${qi+1}. ${q.q}</p>
+      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
+    </div>`).join('');
+}
+function answerQ(qi,oi){
+  if(quizScores[qi]!==undefined)return;
+  const q=QUIZ[qi];
+  document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('correct');});
+  if(oi!==q.ans)document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt')[oi].classList.add('incorrect');
+  quizScores[qi]=oi===q.ans?1:0;
+  document.getElementById('quiz-score').textContent=`Score: ${Object.values(quizScores).reduce((a,b)=>a+b,0)} / 12`;
+}
+buildQuiz();
+</script>
+</body>
+</html>

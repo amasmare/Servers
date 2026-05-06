@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 06 — Virtualization</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
+.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#f59e0b;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #818cf8;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#4338ca,#6366f1);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#c7d2fe}
+.site-author-block{text-align:right;border-left:1px solid rgba(255,255,255,.08);padding-left:18px;flex-shrink:0}
+.site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#818cf8;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(129,140,248,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(129,140,248,.1)}
+.tabs{display:flex;gap:0;background:#071020;border-bottom:1px solid #1e3a5c;padding:0 20px;overflow-x:auto}
+.tab{padding:14px 22px;cursor:pointer;color:#7ab3d4;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#818cf8}.tab.active{border-bottom-color:#818cf8;background:rgba(129,140,248,.05)}
+.tab-panel{display:none;padding:30px;max-width:960px;margin:0 auto}.tab-panel.active{display:block}
+h2{color:#818cf8;margin-bottom:8px;font-size:1.2rem}
+.subtitle{color:#7ab3d4;font-size:.85rem;margin-bottom:20px;line-height:1.7}
+.card{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
+.card h3{color:#818cf8;margin-bottom:12px;font-size:1rem}
+.btn{padding:9px 20px;border:none;border-radius:6px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
+.btn-indigo{background:#4338ca;color:#fff}.btn-indigo:hover{background:#3730a3}
+.btn-outline{background:transparent;border:1px solid #818cf8;color:#818cf8}.btn-outline:hover{background:rgba(129,140,248,.1)}
+.btn-sm{padding:5px 12px;font-size:.78rem}
+.alert{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.88rem;line-height:1.6}
+.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#34d399}
+.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
+.alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
+.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:#7ab3d4}
+.score-badge{display:inline-block;background:rgba(129,140,248,.1);border:1px solid rgba(129,140,248,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#818cf8;margin-bottom:16px}
+/* Hypervisor comparison */
+.hyper-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:16px 0}
+.hyper-card{border-radius:12px;padding:20px}
+.hyper-card.type1{background:rgba(129,140,248,.05);border:2px solid rgba(129,140,248,.3)}
+.hyper-card.type2{background:rgba(16,185,129,.05);border:2px solid rgba(16,185,129,.3)}
+.hyper-title{font-weight:800;font-size:1.1rem;margin-bottom:4px}
+.hyper-card.type1 .hyper-title{color:#818cf8}
+.hyper-card.type2 .hyper-title{color:#34d399}
+.hyper-subtitle{font-size:.78rem;color:#64748b;margin-bottom:12px}
+.hyper-example{background:#071020;border-radius:6px;padding:8px 12px;font-size:.8rem;color:#7ab3d4;margin-bottom:6px}
+/* VM Allocator */
+.host-box{background:#071020;border:2px solid #1e3a5c;border-radius:12px;padding:20px;min-height:200px}
+.host-title{font-size:.85rem;color:#818cf8;font-weight:700;margin-bottom:12px}
+.resource-bar{margin-bottom:10px}
+.resource-label{display:flex;justify-content:space-between;font-size:.78rem;color:#7ab3d4;margin-bottom:4px}
+.res-track{background:#1e3a5c;border-radius:20px;height:12px;overflow:hidden}
+.res-fill{height:100%;border-radius:20px;transition:width .4s}
+.res-cpu{background:linear-gradient(90deg,#818cf8,#6366f1)}
+.res-ram{background:linear-gradient(90deg,#34d399,#10b981)}
+.res-over{background:linear-gradient(90deg,#f87171,#ef4444)!important}
+.vm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:12px}
+.vm-item{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:8px;padding:10px;text-align:center}
+.vm-item .vm-icon{font-size:1.5rem;margin-bottom:4px}
+.vm-item .vm-name{font-size:.72rem;color:#e0e6f0;font-weight:600}
+.vm-item .vm-spec{font-size:.68rem;color:#64748b}
+/* Feature cards */
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:16px 0}
+.feat-card{background:#071020;border:2px solid #1e3a5c;border-radius:10px;padding:14px;cursor:pointer;transition:all .2s}
+.feat-card:hover{border-color:#818cf8}.feat-card.revealed{border-color:#818cf8;background:rgba(129,140,248,.05)}
+/* Quiz */
+.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:left;width:100%;margin-bottom:8px}
+.quiz-opt:hover{border-color:#818cf8}.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
+.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
+.site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#f59e0b}
+@media(max-width:600px){.hyper-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="site-topbar">
+  <span>🖥️ Training Environment — Academic Use Only | CompTIA Server+</span>
+  <span class="author-tag">Eng. Abdullah Alasmari · م. عبدالله الأسمري</span>
+</div>
+<div class="site-header-bar">
+  <div class="site-logo-box">🖥️</div>
+  <div class="site-lab-info">
+    <h2>Lab 06 — Virtualization</h2>
+    <span>CompTIA Server+ SK0-005 · Chapter 6</span>
+  </div>
+  <div class="site-author-block">
+    <div class="aname">Eng. Abdullah Alasmari</div>
+    <div class="abook">Server+ Interactive Labs</div>
+  </div>
+</div>
+<a href="index.html" class="back-btn">← Back to Labs</a>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('t1',this)">Hypervisor Types</div>
+  <div class="tab" onclick="showTab('t2',this)">VM Resource Planner</div>
+  <div class="tab" onclick="showTab('t3',this)">Virt Features</div>
+  <div class="tab" onclick="showTab('t4',this)">Quiz</div>
+</div>
+
+<!-- TAB 1 -->
+<div id="t1" class="tab-panel active">
+  <h2>Hypervisor Type Identification</h2>
+  <p class="subtitle">Learn the difference between Type I (bare-metal) and Type II (hosted) hypervisors, then classify each product below.</p>
+  <div class="hyper-grid">
+    <div class="hyper-card type1">
+      <div class="hyper-title">Type I — Bare Metal</div>
+      <div class="hyper-subtitle">Hypervisor runs directly on hardware. No host OS required. Higher performance.</div>
+      <div class="hyper-example">🖥️ Hardware → Hypervisor → VMs</div>
+      <div style="font-size:.78rem;color:#64748b;line-height:1.6;margin-top:8px">
+        ✅ Best for production servers<br>✅ Lower overhead, better performance<br>✅ Enterprise-grade management<br>❌ More complex setup
+      </div>
+    </div>
+    <div class="hyper-card type2">
+      <div class="hyper-title">Type II — Hosted</div>
+      <div class="hyper-subtitle">Hypervisor runs as an application on top of a host OS. Easier to use, less performant.</div>
+      <div class="hyper-example">💻 Hardware → OS → Hypervisor → VMs</div>
+      <div style="font-size:.78rem;color:#64748b;line-height:1.6;margin-top:8px">
+        ✅ Easy to install and use<br>✅ Great for development/testing<br>❌ Extra OS layer adds latency<br>❌ Not for production workloads
+      </div>
+    </div>
+  </div>
+  <div class="score-badge" id="hyper-score">Score: 0 / 8</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px" id="hyper-grid"></div>
+  <div id="hyper-feedback" style="margin-top:12px"></div>
+</div>
+
+<!-- TAB 2 -->
+<div id="t2" class="tab-panel">
+  <h2>VM Resource Planner</h2>
+  <p class="subtitle">A physical server has 32 vCPUs and 128 GB RAM. Add VMs and watch the resource bars. Avoid over-provisioning RAM (CPU over-provisioning is normal).</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div>
+      <div class="card">
+        <h3>Host Resources</h3>
+        <div class="resource-bar">
+          <div class="resource-label"><span>vCPU</span><span id="cpu-label">0 / 32 allocated</span></div>
+          <div class="res-track"><div class="res-fill res-cpu" id="cpu-bar" style="width:0%"></div></div>
+        </div>
+        <div class="resource-bar">
+          <div class="resource-label"><span>RAM</span><span id="ram-label">0 / 128 GB allocated</span></div>
+          <div class="res-track"><div class="res-fill res-ram" id="ram-bar" style="width:0%"></div></div>
+        </div>
+        <div id="overp-warn" style="margin-top:8px"></div>
+      </div>
+      <div class="card">
+        <h3>Add VM</h3>
+        <div style="margin-bottom:10px">
+          <label style="font-size:.8rem;color:#7ab3d4;display:block;margin-bottom:4px">VM Type</label>
+          <select id="vm-type" style="width:100%;background:#071020;border:1px solid #1e3a5c;border-radius:6px;color:#e0e6f0;padding:8px;font-size:.85rem" onchange="updateVMPreset()">
+            <option value="web">Web Server (2 vCPU, 4GB RAM)</option>
+            <option value="db">Database Server (8 vCPU, 32GB RAM)</option>
+            <option value="mail">Mail Server (4 vCPU, 8GB RAM)</option>
+            <option value="file">File Server (2 vCPU, 16GB RAM)</option>
+            <option value="dev">Dev/Test VM (2 vCPU, 4GB RAM)</option>
+            <option value="custom">Custom...</option>
+          </select>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+          <div><label style="font-size:.78rem;color:#7ab3d4;display:block;margin-bottom:3px">vCPU</label><input type="number" id="vm-cpu" value="2" min="1" max="16" style="width:100%;background:#071020;border:1px solid #1e3a5c;border-radius:6px;color:#e0e6f0;padding:7px"></div>
+          <div><label style="font-size:.78rem;color:#7ab3d4;display:block;margin-bottom:3px">RAM (GB)</label><input type="number" id="vm-ram" value="4" min="1" max="64" style="width:100%;background:#071020;border:1px solid #1e3a5c;border-radius:6px;color:#e0e6f0;padding:7px"></div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-indigo" onclick="addVM()">Add VM</button>
+          <button class="btn btn-outline btn-sm" onclick="clearVMs()">Clear All</button>
+        </div>
+      </div>
+    </div>
+    <div class="host-box">
+      <div class="host-title">🖥️ Physical Host — Running VMs</div>
+      <div class="vm-grid" id="vm-list"><div style="color:#64748b;font-size:.8rem;text-align:center;padding:20px">No VMs added yet</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3 -->
+<div id="t3" class="tab-panel">
+  <h2>Virtualization Features Explorer</h2>
+  <p class="subtitle">Click each feature card to reveal its definition and use case.</p>
+  <div class="feature-grid" id="feature-grid"></div>
+  <div class="card" style="margin-top:8px">
+    <h3>📊 Virtualization Scenarios Quiz</h3>
+    <div id="virt-scenarios"></div>
+  </div>
+</div>
+
+<!-- TAB 4 -->
+<div id="t4" class="tab-panel">
+  <h2>Knowledge Quiz — Virtualization</h2>
+  <p class="subtitle">10 questions on hypervisors, VM management, and virtualization concepts.</p>
+  <div class="score-badge" id="quiz-score">Score: 0 / 10</div>
+  <div id="quiz-container"></div>
+</div>
+
+<div class="site-footer-bar">
+  <p>Designed by <strong>Eng. Abdullah Alasmari</strong> · CompTIA Server+ Interactive Labs</p>
+</div>
+
+<script>
+function showTab(id,el){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');el.classList.add('active');}
+
+// ---- HYPERVISOR CLASSIFICATION ----
+const HYPER_PRODUCTS=[
+  {name:"VMware ESXi",type:"Type I",icon:"🟦",hint:"Enterprise bare-metal hypervisor from VMware"},
+  {name:"Microsoft Hyper-V (Server)",type:"Type I",icon:"🪟",hint:"Windows Server role that runs as bare-metal"},
+  {name:"KVM (Linux)",type:"Type I",icon:"🐧",hint:"Kernel-based, built into the Linux kernel"},
+  {name:"Citrix XenServer",type:"Type I",icon:"🟠",hint:"Enterprise bare-metal Xen hypervisor"},
+  {name:"VMware Workstation",type:"Type II",icon:"💻",hint:"Runs as an app on Windows/Linux desktop"},
+  {name:"Oracle VirtualBox",type:"Type II",icon:"📦",hint:"Free hosted hypervisor for any desktop OS"},
+  {name:"Parallels Desktop (Mac)",type:"Type II",icon:"🍎",hint:"Runs Windows VMs on macOS as an app"},
+  {name:"QEMU (userspace)",type:"Type II",icon:"⚙️",hint:"Software emulator running in userspace"},
+];
+let hyperScores={};
+function buildHyperGrid(){
+  document.getElementById('hyper-grid').innerHTML=HYPER_PRODUCTS.map((p,i)=>`
+    <div style="background:#071020;border:1px solid #1e3a5c;border-radius:10px;padding:14px" id="hg-${i}">
+      <div style="font-size:1.4rem;margin-bottom:6px">${p.icon}</div>
+      <div style="font-weight:700;color:#e0e6f0;margin-bottom:4px;font-size:.88rem">${p.name}</div>
+      <div style="font-size:.72rem;color:#64748b;margin-bottom:10px">${p.hint}</div>
+      <div style="display:flex;gap:6px">
+        <button style="flex:1;padding:5px;border:1px solid #1e3a5c;border-radius:6px;background:#071020;color:#7ab3d4;cursor:pointer;font-size:.75rem;transition:all .2s" onclick="classifyHyper(${i},'Type I')">Type I</button>
+        <button style="flex:1;padding:5px;border:1px solid #1e3a5c;border-radius:6px;background:#071020;color:#7ab3d4;cursor:pointer;font-size:.75rem;transition:all .2s" onclick="classifyHyper(${i},'Type II')">Type II</button>
+      </div>
+      <div id="hf-${i}" style="margin-top:6px;font-size:.72rem"></div>
+    </div>`).join('');
+}
+function classifyHyper(i,choice){
+  if(hyperScores[i]!==undefined)return;
+  const p=HYPER_PRODUCTS[i];const correct=choice===p.type;
+  hyperScores[i]=correct?1:0;
+  document.getElementById('hg-'+i).querySelectorAll('button').forEach(b=>{b.disabled=true;if(b.textContent===p.type)b.style.background=correct&&b.textContent===choice?'rgba(16,185,129,.2)':'rgba(129,140,248,.2)';});
+  document.getElementById('hf-'+i).innerHTML=`<span style="color:${correct?'#34d399':'#f87171'}">${correct?'✓ '+p.type:'✗ '+p.type}</span>`;
+  document.getElementById('hyper-score').textContent=`Score: ${Object.values(hyperScores).reduce((a,b)=>a+b,0)} / 8`;
+}
+buildHyperGrid();
+
+// ---- VM RESOURCE PLANNER ----
+const VM_PRESETS={web:{cpu:2,ram:4},db:{cpu:8,ram:32},mail:{cpu:4,ram:8},file:{cpu:2,ram:16},dev:{cpu:2,ram:4},custom:{cpu:2,ram:4}};
+let vms=[],totalCPU=32,totalRAM=128;
+function updateVMPreset(){const t=document.getElementById('vm-type').value;const p=VM_PRESETS[t];document.getElementById('vm-cpu').value=p.cpu;document.getElementById('vm-ram').value=p.ram;}
+function addVM(){
+  const type=document.getElementById('vm-type').options[document.getElementById('vm-type').selectedIndex].text.split(' (')[0];
+  const cpu=parseInt(document.getElementById('vm-cpu').value)||2;
+  const ram=parseInt(document.getElementById('vm-ram').value)||4;
+  vms.push({name:type,cpu,ram,id:Date.now()});
+  updateResourceDisplay();
+}
+function clearVMs(){vms=[];updateResourceDisplay();}
+function updateResourceDisplay(){
+  const usedCPU=vms.reduce((s,v)=>s+v.cpu,0);
+  const usedRAM=vms.reduce((s,v)=>s+v.ram,0);
+  const cpuPct=Math.min((usedCPU/totalCPU)*100,100);
+  const ramPct=Math.min((usedRAM/totalRAM)*100,100);
+  document.getElementById('cpu-bar').style.width=cpuPct+'%';
+  document.getElementById('ram-bar').style.width=ramPct+'%';
+  document.getElementById('cpu-label').textContent=`${usedCPU} / ${totalCPU} vCPUs allocated`;
+  document.getElementById('ram-label').textContent=`${usedRAM} / ${totalRAM} GB allocated`;
+  const cpuBar=document.getElementById('cpu-bar');const ramBar=document.getElementById('ram-bar');
+  cpuBar.className='res-fill '+(usedCPU>totalCPU*2?'res-over':'res-cpu');
+  ramBar.className='res-fill '+(usedRAM>totalRAM?'res-over':'res-ram');
+  let warn='';
+  if(usedRAM>totalRAM)warn+=`<div class="alert alert-danger">⚠️ RAM over-provisioned! ${usedRAM}GB allocated but only ${totalRAM}GB physical. VMs will swap to disk — severe performance degradation.</div>`;
+  else if(usedCPU>totalCPU)warn+=`<div class="alert alert-warn">ℹ️ CPU over-committed (${usedCPU}/${totalCPU} vCPUs). Normal for light workloads — VMs share physical cores. Monitor CPU ready time.</div>`;
+  document.getElementById('overp-warn').innerHTML=warn;
+  const icons={Web:'🌐',Database:'🗄️',Mail:'📧',File:'📁','Dev/Test':'🧪'};
+  document.getElementById('vm-list').innerHTML=vms.length?vms.map(v=>`<div class="vm-item"><div class="vm-icon">${Object.keys(icons).find(k=>v.name.includes(k))?icons[Object.keys(icons).find(k=>v.name.includes(k))]:'🖥️'}</div><div class="vm-name">${v.name}</div><div class="vm-spec">${v.cpu}vCPU · ${v.ram}GB</div></div>`).join(''):'<div style="color:#64748b;font-size:.8rem;text-align:center;padding:20px">No VMs added yet</div>';
+}
+
+// ---- VIRT FEATURES ----
+const FEATURES=[
+  {name:"Live Migration / vMotion",icon:"🔄",def:"Move a running VM between physical hosts with zero downtime. Requires shared storage (SAN/NAS) between hosts.",use:"Load balancing, host maintenance without outages"},
+  {name:"Snapshots",icon:"📸",def:"Point-in-time capture of a VM's disk and memory state. Can revert to snapshot if update fails.",use:"Before patching, software testing, rollback capability"},
+  {name:"Resource Pools",icon:"🏊",def:"Logically group VMs and set CPU/RAM limits, reservations, and shares across the group.",use:"QoS for different departments or tenant isolation"},
+  {name:"High Availability (HA)",icon:"🛡️",def:"Automatically restarts VMs on another host if the current host fails. Requires shared storage.",use:"Reducing downtime for non-critical VMs without clustering"},
+  {name:"Fault Tolerance (FT)",icon:"⚡",def:"Maintains a real-time mirror VM on a second host. If host fails, mirror takes over instantly (zero downtime).",use:"Mission-critical VMs that cannot tolerate any interruption"},
+  {name:"Template / Golden Image",icon:"🏆",def:"A pre-configured VM image used to rapidly deploy identical VMs. All settings pre-configured.",use:"Rapid provisioning, consistent deployments, OS standardization"},
+  {name:"Virtual Switch (vSwitch)",icon:"🌐",def:"Software-based network switch inside the hypervisor. Connects VMs to each other and to physical NICs.",use:"Network segmentation between VMs, port groups, VLANs"},
+  {name:"Thin vs Thick Provisioning",icon:"💾",def:"Thin: allocates only used disk space. Thick: pre-allocates all disk space immediately.",use:"Thin for flexible storage; Thick for guaranteed I/O performance"},
+];
+function buildFeatures(){
+  document.getElementById('feature-grid').innerHTML=FEATURES.map((f,i)=>`
+    <div class="feat-card" id="fc-${i}" onclick="revealFeat(${i})">
+      <div style="font-size:1.5rem;margin-bottom:6px">${f.icon}</div>
+      <div style="font-weight:700;color:#818cf8;margin-bottom:4px;font-size:.85rem">${f.name}</div>
+      <div id="fd-${i}" style="font-size:.75rem;color:#64748b;display:none;line-height:1.5">${f.def}<br><br><strong style="color:#818cf8">Use case:</strong> ${f.use}</div>
+      <div id="fp-${i}" style="font-size:.72rem;color:#64748b;margin-top:4px">Click to reveal →</div>
+    </div>`).join('');
+}
+function revealFeat(i){
+  document.getElementById('fc-'+i).classList.add('revealed');
+  document.getElementById('fd-'+i).style.display='block';
+  document.getElementById('fp-'+i).style.display='none';
+}
+buildFeatures();
+
+const VIRT_SC=[
+  {q:"You need to take a physical host offline for RAM upgrade. The VMs on it must stay running. Which feature do you use?",opts:["Snapshot","Live Migration","High Availability","Fault Tolerance"],ans:1},
+  {q:"You're about to install a major OS update on a VM. If it breaks, you want to roll back quickly. What do you do first?",opts:["Live Migration","Snapshot","Backup","Thin Provision"],ans:1},
+  {q:"A VM's host server crashes. The VM automatically restarts on another host within minutes. This is:",opts:["Fault Tolerance","High Availability","Live Migration","Resource Pool"],ans:1},
+  {q:"A mission-critical payment processing VM cannot tolerate even 1 second of downtime during a host failure. Which feature provides instant failover?",opts:["High Availability","Live Migration","Snapshot","Fault Tolerance"],ans:3},
+];
+let virtScScores={};
+function buildVirtSc(){
+  document.getElementById('virt-scenarios').innerHTML=VIRT_SC.map((q,qi)=>`
+    <div style="margin-bottom:16px;padding:14px;background:#071020;border:1px solid #1e3a5c;border-radius:8px">
+      <p style="font-weight:600;color:#e0e6f0;margin-bottom:10px;font-size:.88rem;line-height:1.5">Q${qi+1}. ${q.q}</p>
+      <div style="display:grid;gap:6px">${q.opts.map((o,oi)=>`<button style="background:#0d1b2a;border:1px solid #1e3a5c;border-radius:6px;padding:8px 12px;cursor:pointer;text-align:left;color:#e0e6f0;font-size:.82rem;transition:all .2s;width:100%" onclick="answerVS(${qi},${oi})">${o}</button>`).join('')}</div>
+    </div>`).join('');
+}
+function answerVS(qi,oi){
+  if(virtScScores[qi]!==undefined)return;
+  const q=VIRT_SC[qi];
+  document.querySelectorAll('#virt-scenarios > div')[qi].querySelectorAll('button').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.style.background='rgba(16,185,129,.2)';});
+  if(oi!==q.ans)document.querySelectorAll('#virt-scenarios > div')[qi].querySelectorAll('button')[oi].style.background='rgba(239,68,68,.2)';
+  virtScScores[qi]=oi===q.ans?1:0;
+}
+buildVirtSc();
+
+// ---- QUIZ ----
+const QUIZ=[
+  {q:"A Type I hypervisor runs:",opts:["On top of a host operating system","Directly on hardware, no host OS needed","Inside a virtual machine","As a cloud service"],ans:1},
+  {q:"Which of the following is a Type II hypervisor?",opts:["VMware ESXi","Microsoft Hyper-V (Server Core)","Oracle VirtualBox","KVM"],ans:2},
+  {q:"Live Migration (vMotion) requires:",opts:["The VM to be powered off first","Shared storage accessible by both hosts","Internet connectivity","Identical CPU brands on both hosts"],ans:1},
+  {q:"What is the purpose of a VM snapshot?",opts:["Back up the VM to tape","Capture a point-in-time state for rollback","Migrate the VM to another host","Monitor VM performance"],ans:1},
+  {q:"High Availability (HA) restarts a failed VM on another host within:",opts:["Milliseconds","Minutes","Hours","Days"],ans:1},
+  {q:"Fault Tolerance differs from HA in that FT:",opts:["Is cheaper to implement","Provides zero downtime by mirroring the VM in real time","Only works with SAN storage","Restarts VMs faster"],ans:1},
+  {q:"CPU over-provisioning in virtualization means:",opts:["Assigning more physical CPUs than cores available","Allocating more vCPUs across VMs than physical cores exist","Clocking CPUs beyond spec","Removing CPU limits from VMs"],ans:1},
+  {q:"A virtual switch (vSwitch) in a hypervisor is used to:",opts:["Replace physical network switches","Connect VMs to each other and to physical NICs","Increase VM RAM allocation","Load balance CPU across VMs"],ans:1},
+  {q:"Thin provisioning for VM disk means:",opts:["The disk is fully allocated upfront","Storage is consumed only as data is written","The disk cannot be expanded","Data is compressed before writing"],ans:1},
+  {q:"Which virtualization feature groups VMs to apply shared CPU/RAM limits and priorities?",opts:["VM Template","Snapshot","Resource Pool","Virtual Switch"],ans:2},
+];
+let quizScores={};
+function buildQuiz(){
+  document.getElementById('quiz-container').innerHTML=QUIZ.map((q,qi)=>`
+    <div class="card" style="margin-bottom:16px">
+      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">Q${qi+1}. ${q.q}</p>
+      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
+    </div>`).join('');
+}
+function answerQ(qi,oi){
+  if(quizScores[qi]!==undefined)return;
+  const q=QUIZ[qi];
+  document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('correct');});
+  if(oi!==q.ans)document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt')[oi].classList.add('incorrect');
+  quizScores[qi]=oi===q.ans?1:0;
+  document.getElementById('quiz-score').textContent=`Score: ${Object.values(quizScores).reduce((a,b)=>a+b,0)} / 10`;
+}
+buildQuiz();
+</script>
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>CompTIA Server+ Interactive Labs</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+[onclick]{cursor:pointer}
+input,select,textarea,button{font-size:16px;touch-action:manipulation}
+:root{
+  --bg:#0a0e1a;--surface:#111827;--surface2:#1a2236;--border:#1e3a5f;
+  --accent:#00d4ff;--accent2:#7c3aed;--accent3:#10b981;--accent4:#f59e0b;--accent5:#ef4444;
+  --text:#e2e8f0;--muted:#64748b;
+}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-text-size-adjust:100%}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:0}
+.container{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:20px}
+.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#f59e0b;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#0a1628 0%,#0d2145 100%);border-bottom:3px solid #2563eb;padding:18px 30px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.site-logo-box{width:60px;height:60px;background:linear-gradient(135deg,#1d4ed8,#3b82f6);border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;box-shadow:0 4px 20px rgba(37,99,235,.4)}
+.site-lab-info{flex:1;min-width:0}
+.site-lab-info h2{font-size:1.25rem;font-weight:800;color:#fff;margin:0 0 3px;line-height:1.3}
+.site-lab-info span{font-size:.75rem;color:#93c5fd;letter-spacing:.5px}
+.site-author-block{text-align:right;border-left:1px solid rgba(255,255,255,.08);padding-left:20px;flex-shrink:0}
+.site-author-block .aname{font-size:1.05rem;font-weight:700;color:#f59e0b;line-height:1.4}
+.site-author-block .abook{font-size:.7rem;color:#64748b;margin-top:2px}
+header{text-align:center;padding:50px 20px 40px;position:relative}
+.header-badge{display:inline-block;background:linear-gradient(135deg,rgba(0,212,255,0.1),rgba(124,58,237,0.1));border:1px solid var(--border);border-radius:30px;padding:6px 20px;font-size:12px;color:var(--accent);letter-spacing:2px;margin-bottom:20px;text-transform:uppercase}
+header h1{font-size:clamp(28px,5vw,52px);font-weight:800;background:linear-gradient(135deg,#fff 30%,var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;line-height:1.2}
+header p{color:var(--muted);font-size:clamp(14px,2.5vw,18px);max-width:600px;margin:0 auto 30px;line-height:1.7}
+.stats-bar{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-bottom:20px}
+.stat{text-align:center}
+.stat-num{display:block;font-size:28px;font-weight:800;color:var(--accent)}
+.stat-label{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.book-banner{background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--border);border-radius:16px;padding:20px 30px;display:flex;align-items:center;gap:20px;margin-bottom:40px;flex-wrap:wrap}
+.book-icon{font-size:48px;flex-shrink:0}
+.book-info h3{font-size:16px;color:var(--accent);margin-bottom:4px}
+.book-info p{font-size:14px;color:var(--muted);line-height:1.6}
+.section-title{font-size:20px;font-weight:700;color:var(--text);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+.labs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;margin-bottom:50px}
+.lab-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;text-decoration:none;color:var(--text);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s,border-color .2s;position:relative}
+.lab-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.4)}
+.lab-card-header{padding:24px 24px 16px;display:flex;align-items:flex-start;gap:16px}
+.lab-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.lab-card-title{flex:1}
+.lab-number{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;opacity:.7}
+.lab-card-title h2{font-size:18px;font-weight:700;line-height:1.3;margin-bottom:2px}
+.lab-card-title p{font-size:13px;color:var(--muted)}
+.lab-card-body{padding:0 24px 16px;flex:1}
+.lab-card-body p{font-size:14px;color:var(--muted);line-height:1.7}
+.lab-topics{padding:0 24px;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.topic-tag{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:3px 10px;font-size:11px;color:var(--muted)}
+.lab-card-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.chapter-badge{font-size:12px;color:var(--muted)}
+.open-btn{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:6px 14px;border-radius:8px;transition:background .2s}
+.card-blue{border-color:rgba(0,212,255,.3)}.card-blue:hover{border-color:rgba(0,212,255,.7);box-shadow:0 12px 40px rgba(0,212,255,.1)}.card-blue .lab-icon{background:rgba(0,212,255,.1)}.card-blue .lab-number,.card-blue .open-btn{color:#00d4ff}.card-blue .open-btn:hover{background:rgba(0,212,255,.1)}
+.card-purple{border-color:rgba(124,58,237,.3)}.card-purple:hover{border-color:rgba(124,58,237,.7);box-shadow:0 12px 40px rgba(124,58,237,.1)}.card-purple .lab-icon{background:rgba(124,58,237,.1)}.card-purple .lab-number,.card-purple .open-btn{color:#a78bfa}.card-purple .open-btn:hover{background:rgba(124,58,237,.1)}
+.card-green{border-color:rgba(16,185,129,.3)}.card-green:hover{border-color:rgba(16,185,129,.7);box-shadow:0 12px 40px rgba(16,185,129,.1)}.card-green .lab-icon{background:rgba(16,185,129,.1)}.card-green .lab-number,.card-green .open-btn{color:#34d399}.card-green .open-btn:hover{background:rgba(16,185,129,.1)}
+.card-amber{border-color:rgba(245,158,11,.3)}.card-amber:hover{border-color:rgba(245,158,11,.7);box-shadow:0 12px 40px rgba(245,158,11,.1)}.card-amber .lab-icon{background:rgba(245,158,11,.1)}.card-amber .lab-number,.card-amber .open-btn{color:#fbbf24}.card-amber .open-btn:hover{background:rgba(245,158,11,.1)}
+.card-red{border-color:rgba(239,68,68,.3)}.card-red:hover{border-color:rgba(239,68,68,.7);box-shadow:0 12px 40px rgba(239,68,68,.1)}.card-red .lab-icon{background:rgba(239,68,68,.1)}.card-red .lab-number,.card-red .open-btn{color:#f87171}.card-red .open-btn:hover{background:rgba(239,68,68,.1)}
+.card-cyan{border-color:rgba(6,182,212,.3)}.card-cyan:hover{border-color:rgba(6,182,212,.7);box-shadow:0 12px 40px rgba(6,182,212,.1)}.card-cyan .lab-icon{background:rgba(6,182,212,.1)}.card-cyan .lab-number,.card-cyan .open-btn{color:#22d3ee}.card-cyan .open-btn:hover{background:rgba(6,182,212,.1)}
+.card-orange{border-color:rgba(249,115,22,.3)}.card-orange:hover{border-color:rgba(249,115,22,.7);box-shadow:0 12px 40px rgba(249,115,22,.1)}.card-orange .lab-icon{background:rgba(249,115,22,.1)}.card-orange .lab-number,.card-orange .open-btn{color:#fb923c}.card-orange .open-btn:hover{background:rgba(249,115,22,.1)}
+.card-pink{border-color:rgba(236,72,153,.3)}.card-pink:hover{border-color:rgba(236,72,153,.7);box-shadow:0 12px 40px rgba(236,72,153,.1)}.card-pink .lab-icon{background:rgba(236,72,153,.1)}.card-pink .lab-number,.card-pink .open-btn{color:#f472b6}.card-pink .open-btn:hover{background:rgba(236,72,153,.1)}
+.card-teal{border-color:rgba(20,184,166,.3)}.card-teal:hover{border-color:rgba(20,184,166,.7);box-shadow:0 12px 40px rgba(20,184,166,.1)}.card-teal .lab-icon{background:rgba(20,184,166,.1)}.card-teal .lab-number,.card-teal .open-btn{color:#2dd4bf}.card-teal .open-btn:hover{background:rgba(20,184,166,.1)}
+.card-indigo{border-color:rgba(99,102,241,.3)}.card-indigo:hover{border-color:rgba(99,102,241,.7);box-shadow:0 12px 40px rgba(99,102,241,.1)}.card-indigo .lab-icon{background:rgba(99,102,241,.1)}.card-indigo .lab-number,.card-indigo .open-btn{color:#818cf8}.card-indigo .open-btn:hover{background:rgba(99,102,241,.1)}
+.card-lime{border-color:rgba(132,204,22,.3)}.card-lime:hover{border-color:rgba(132,204,22,.7);box-shadow:0 12px 40px rgba(132,204,22,.1)}.card-lime .lab-icon{background:rgba(132,204,22,.1)}.card-lime .lab-number,.card-lime .open-btn{color:#a3e635}.card-lime .open-btn:hover{background:rgba(132,204,22,.1)}
+.coverage-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:50px}
+.chapter-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.ch-num{width:32px;height:32px;border-radius:8px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--accent);flex-shrink:0}
+.ch-info{flex:1;min-width:0}
+.ch-info h4{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ch-info span{font-size:11px;color:var(--muted)}
+.ch-check{color:#10b981;font-size:16px;flex-shrink:0}
+.quickstart{background:linear-gradient(135deg,rgba(0,212,255,.05),rgba(124,58,237,.05));border:1px solid var(--border);border-radius:16px;padding:30px;margin-bottom:50px}
+.quickstart h3{font-size:18px;color:var(--accent);margin-bottom:16px}
+.qs-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.qs-step{display:flex;align-items:flex-start;gap:12px}
+.qs-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#000;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.qs-text{font-size:14px;color:var(--muted);line-height:1.5}
+footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);color:var(--muted);font-size:13px;line-height:1.8}
+.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:28px 30px;text-align:center}
+.site-footer-bar p{color:#475569;font-size:.8rem;line-height:2.2;margin:0}
+.site-footer-bar strong{color:#f59e0b}
+@media(max-width:600px){.labs-grid{grid-template-columns:1fr}.stats-bar{gap:20px}.book-banner{flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+<div class="site-topbar">
+  <span>🖥️ Training Environment — Academic Use Only &nbsp;|&nbsp; CompTIA Server+ Interactive Labs</span>
+  <span class="author-tag">Eng. Abdullah Alasmari &nbsp;·&nbsp; م. عبدالله الأسمري</span>
+</div>
+<div class="site-header-bar">
+  <div class="site-logo-box">🖥️</div>
+  <div class="site-lab-info">
+    <h2>CompTIA Server+ Interactive Labs</h2>
+    <span>SK0-005 · Server Administration &amp; Infrastructure</span>
+  </div>
+  <div class="site-author-block">
+    <div class="aname">Eng. Abdullah Alasmari</div>
+    <div class="abook">Based on: CompTIA Server+ Certification (SK0-005)</div>
+  </div>
+</div>
+
+<div class="container">
+  <header>
+    <div class="header-badge">🖥️ Server+ Lab Suite · SK0-005</div>
+    <h1>CompTIA Server+ Interactive Labs</h1>
+    <p>Hands-on interactive simulations for every Server+ domain · <strong style="color:#f59e0b">Eng. Abdullah Alasmari</strong> · CompTIA SK0-005</p>
+    <div class="stats-bar">
+      <div class="stat"><span class="stat-num">11</span><span class="stat-label">Interactive Labs</span></div>
+      <div class="stat"><span class="stat-num">11</span><span class="stat-label">Book Chapters</span></div>
+      <div class="stat"><span class="stat-num">60+</span><span class="stat-label">Hands-on Exercises</span></div>
+      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Works Offline</span></div>
+      <div class="stat"><span class="stat-num" id="total-score">0 pts</span><span class="stat-label">Your Score</span></div>
+    </div>
+  </header>
+
+  <div class="book-banner">
+    <div class="book-icon">📚</div>
+    <div class="book-info">
+      <h3>Reference: CompTIA Server+ Certification SK0-005</h3>
+      <p>These labs cover all 11 chapters of the Server+ curriculum — from hardware identification and RAID configuration to security hardening, disaster recovery, and troubleshooting. Every concept is turned into a hands-on browser simulation. No internet or software installation required.</p>
+    </div>
+  </div>
+
+  <div class="section-title">🧪 Interactive Labs</div>
+  <div class="labs-grid">
+
+    <a href="hardware-lab.html" class="lab-card card-blue">
+      <div class="lab-card-header">
+        <div class="lab-icon">🔧</div>
+        <div class="lab-card-title">
+          <div class="lab-number">Lab 01</div>
+          <h2>Server Hardware Identification</h2>
+          <p>Form factors, components &amp; specs</p>
+        </div>
+      </div>
+      <div class="lab-card-body"><p>Identify server form factors, label internal components on a diagram, and match hardware specs to real-world use cases.</p></div>
+      <div class="lab-topics">
+        <span class="topic-tag">Rack / Tower / Blade</span><span class="topic-tag">CPU / RAM</span>
+        <span class="topic-tag">NIC / HBA</span><span class="topic-tag">PSU</span><span class="topic-tag">RAID Card</span>
+      </div>
+      <div class="lab-card-footer">
+        <span class="chapter-badge">Chapter 1</span>
+        <span class="open-btn">Open Lab →</span>
+      </div>
+    </a>
+
+    <a href="bios-setup-lab.html" class="lab-card card-purple">
+      <div class="lab-card-header">
+        <div class="lab-icon">⚙️</div>
+        <div class="lab-card-title">
+          <div class="lab-number">Lab 02</div>
+          <h2>BIOS/UEFI &amp; Server Setup</h2>
+          <p>Simulated firmware configuration</p>
+        </div>
+      </div>
+      <div class="lab-card-body"><p>Navigate a simulated BIOS/UEFI interface, configure boot order, enable virtualization, and diagnose POST error codes.</p></div>
+      <div class="lab-topics">
+        <span class="topic-tag">BIOS vs UEFI</span><span class="topic-tag">Boot Order</span>
+        <span class="topic-tag">POST Codes</span><span class="topic-tag">Secure Boot</span><span class="topic-tag">IPMI</span>
+      </div>
+      <div class="lab-card-footer">
+        <span class="chapter-badge">Chapter 2</span>
+        <span class="open-btn">Open Lab →</span>
+      </div>
+    </a>
+
+    <a href="raid-lab.html" class="lab-card card-green">
+      <div class="lab-card-header">
+        <div class="lab-icon">💾</div>
+        <div class="lab-card-title">
+          <div class="lab-number">Lab 03</div>
+          <h2>RAID Configuration &amp; Storage Math</h2>
+          <p>Capacity calculator &amp; fault tolerance</p>
+        </div>
+      </div>
+      <div class="lab-card-body"><p>Visualize how data stripes and mirrors across RAID levels, calculate usable capacity, and decide which RAID fits a scenario.</p></div>
+      <div class="lab-topics">
+        <span class="topic-tag">RAID 0/1/5/6/10</span><span class="topic-tag">Capacity Math</span>
+        <span class="topic-tag">Fault Tolerance</span><span class="topic-tag">Hot Spare</span><span class="topic-tag">JBOD</span>
+      </div>
+      <div class="lab-card-footer">
+        <span class="chapter-badge">Chapter 3</span>
+        <span class="open-btn">Open Lab →</span>
+      </div>
+    </a>
+
+    <a href="storage-lab.html" class="lab-card card-amber">
+      <div class="lab-card-header">
+        <div class="lab-icon">🗄️</div>
+        <div class="lab-card-title">
+          <div class="lab-number">Lab 04</div>
+          <h2>Storage Technologies</h2>
+          <p>DAS, NAS, SAN &amp; connectors</p>
+        </div>
+      </div>
+      <div class="lab-card-body"><p>Match storage architectures to scenarios, identify connectors, build a SAN/NAS topology, and compare iSCSI vs FCoE.</p></div>
+      <div class="lab-topics">
+        <span class="topic-tag">DAS / NAS / SAN</span><span class="topic-tag">iSCSI / FCoE</span>
+        <span class="topic-tag">SAS / SATA / NVMe</span><span class="topic-tag">FC Topology</span>
+      </div>
+      <div class="lab-card-footer">
+        <span class="chapter-badge">Chapter 4</span>
+        <span class="open-btn">Open Lab →</span>
+      </div>
+    </a>
+
+    <a href="server-roles-lab.html" class="lab-card card-cyan">
+      <div class="lab-card-header">
+        <div class="lab-icon">🌐</div>
+        <div class="lab-card-title">
+          <div class="lab-number">Lab 05</div>
+          <h2>Server Roles &amp; Services</h2>
+          <p>Role identification &amp; port mapping</p>
+        </div>
+      </div>
+      <div class="lab-card-body"><p>Match server roles to functions, assign correct ports, and deploy the right services for a given company scenario.</p></div>
+      <div class="lab-topics">
+        <span class="topic-tag">DNS / DHCP / AD</span><span class="topic-tag">Web / DB / Mail</span>
+        <span class="topic-tag">NTP / Print</span><span class="topic-tag">Port Numbers</span>
+      </div>
+      <div class="lab-card-footer">
+        <span class="chapter-badge">Chapter 5</span>
+        <span class="open-btn">Open Lab →</span>
+      </div>
+    </a>
+
+    <a href="virtualization-lab.html" class="lab-card card-indigo">
+      <div class="lab-card-header">
+        <div class="lab-icon">🖥️</div>
+        <div class="lab-card-title">
+          <div class="lab-number">Lab 06</div>
+          <h2>Virtualization</h2>
+          <p>Hypervisors, VMs &amp; resource planning</p>
+        </div>
+      </div>
+      <div class="lab-card-body"><p>Compare Type I vs Type II hypervisors, allocate VMs to a host, detect over-provisioning, and explore live migration concepts.</p></div>
+      <div class="lab-topics">
+        <span class="topic-tag">Type I / II Hypervisor</span><span class="topic-tag">vCPU / vRAM</span>
+        <span class="topic-tag">Live Migration</span><span class="topic-tag">Snapshots</span>
+      </div>
+      <div class="lab-card-footer">
+        <span class="chapter-badge">Chapter 6</span>
+        <span class="open-btn">Open Lab →</span>
+      </div>
+    </a>
+
+    <a href="security-hardening-lab.html" class="lab-card card-red">
+      <div class="lab-card-header">
+        <div class="lab-icon">🔒</div>
+        <div class="lab-card-title">
+          <div class="lab-number">Lab 07</div>
+          <h2>Server Security &amp; Hardening</h2>
+          <p>OS hardening &amp; physical security</p>
+        </div>
+      </div>
+      <div class="lab-card-body"><p>Complete an OS hardening checklist, secure a server room, trace a PKI certificate chain, and configure user access controls.</p></div>
+      <div class="lab-topics">
+        <span class="topic-tag">OS Hardening</span><span class="topic-tag">PKI / Certificates</span>
+        <span class="topic-tag">Physical Security</span><span class="topic-tag">ACLs</span><span class="topic-tag">MFA</span>
+      </div>
+      <div class="lab-card-footer">
+        <span class="chapter-badge">Chapter 7</span>
+        <span class="open-btn">Open Lab →</span>
+      </div>
+    </a>
+
+    <a href="network-security-lab.html" class="lab-card card-orange">
+      <div class="lab-card-header">
+        <div class="lab-icon">🛡️</div>
+        <div class="lab-card-title">
+          <div class="lab-number">Lab 08</div>
+          <h2>Network Security</h2>
+          <p>Firewalls, VLANs, VPN &amp; DMZ</p>
+        </div>
+      </div>
+      <div class="lab-card-body"><p>Build firewall rules, segment VLANs, place IDS/IPS, design a DMZ, and compare VPN types including IPsec tunnel vs transport mode.</p></div>
+      <div class="lab-topics">
+        <span class="topic-tag">Firewall Rules</span><span class="topic-tag">VLANs</span>
+        <span class="topic-tag">VPN / IPsec</span><span class="topic-tag">DMZ</span><span class="topic-tag">IDS/IPS</span>
+      </div>
+      <div class="lab-card-footer">
+        <span class="chapter-badge">Chapter 8</span>
+        <span class="open-btn">Open Lab →</span>
+      </div>
+    </a>
+
+    <a href="disaster-recovery-lab.html" class="lab-card card-pink">
+      <div class="lab-card-header">
+        <div class="lab-icon">🔄</div>
+        <div class="lab-card-title">
+          <div class="lab-number">Lab 09</div>
+          <h2>Disaster Recovery &amp; Backup</h2>
+          <p>RTO/RPO, sites &amp; backup strategies</p>
+        </div>
+      </div>
+      <div class="lab-card-body"><p>Compare hot/warm/cold sites with RTO/RPO sliders, design backup rotation schedules, and walk through a restore scenario.</p></div>
+      <div class="lab-topics">
+        <span class="topic-tag">Hot / Warm / Cold Site</span><span class="topic-tag">RTO / RPO</span>
+        <span class="topic-tag">Full / Incremental</span><span class="topic-tag">BCP / DRP</span>
+      </div>
+      <div class="lab-card-footer">
+        <span class="chapter-badge">Chapter 9</span>
+        <span class="open-btn">Open Lab →</span>
+      </div>
+    </a>
+
+    <a href="troubleshooting-lab.html" class="lab-card card-teal">
+      <div class="lab-card-header">
+        <div class="lab-icon">🔍</div>
+        <div class="lab-card-title">
+          <div class="lab-number">Lab 10</div>
+          <h2>Troubleshooting Methodology</h2>
+          <p>7-step process &amp; diagnostic tools</p>
+        </div>
+      </div>
+      <div class="lab-card-body"><p>Walk through CompTIA's 7-step troubleshooting methodology with real scenarios, diagnose hardware faults, and match tools to tasks.</p></div>
+      <div class="lab-topics">
+        <span class="topic-tag">7-Step Process</span><span class="topic-tag">POST / Beep Codes</span>
+        <span class="topic-tag">ping / tracert</span><span class="topic-tag">Event Viewer</span>
+      </div>
+      <div class="lab-card-footer">
+        <span class="chapter-badge">Chapter 10</span>
+        <span class="open-btn">Open Lab →</span>
+      </div>
+    </a>
+
+    <a href="capstone-lab.html" class="lab-card card-lime">
+      <div class="lab-card-header">
+        <div class="lab-icon">🏆</div>
+        <div class="lab-card-title">
+          <div class="lab-number">Lab 11</div>
+          <h2>Capstone — Server+ Challenge</h2>
+          <p>Build a server environment end-to-end</p>
+        </div>
+      </div>
+      <div class="lab-card-body"><p>Multi-phase scenario: select hardware → configure storage → assign roles → apply security → plan disaster recovery. Scored throughout.</p></div>
+      <div class="lab-topics">
+        <span class="topic-tag">All Domains</span><span class="topic-tag">Scenario Engine</span>
+        <span class="topic-tag">Scoring</span><span class="topic-tag">Exam Prep</span>
+      </div>
+      <div class="lab-card-footer">
+        <span class="chapter-badge">All Chapters</span>
+        <span class="open-btn">Open Lab →</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-title">📖 Chapter Coverage</div>
+  <div class="coverage-grid">
+    <div class="chapter-item"><div class="ch-num">1</div><div class="ch-info"><h4>Server Hardware &amp; Form Factors</h4><span>Lab 01 — Hardware ID</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">2</div><div class="ch-info"><h4>Server Installation &amp; Configuration</h4><span>Lab 02 — BIOS/UEFI Setup</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">3</div><div class="ch-info"><h4>RAID &amp; Storage Management</h4><span>Lab 03 — RAID Config</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">4</div><div class="ch-info"><h4>Storage Technologies</h4><span>Lab 04 — Storage Tech</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">5</div><div class="ch-info"><h4>Server Roles &amp; Services</h4><span>Lab 05 — Server Roles</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">6</div><div class="ch-info"><h4>Virtualization</h4><span>Lab 06 — Virtualization</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">7</div><div class="ch-info"><h4>Server Security &amp; Hardening</h4><span>Lab 07 — Security</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">8</div><div class="ch-info"><h4>Network Security</h4><span>Lab 08 — Network Security</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">9</div><div class="ch-info"><h4>Disaster Recovery &amp; Backup</h4><span>Lab 09 — DR &amp; Backup</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">10</div><div class="ch-info"><h4>Troubleshooting</h4><span>Lab 10 — Troubleshooting</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">11</div><div class="ch-info"><h4>Capstone / Exam Prep</h4><span>Lab 11 — Capstone Challenge</span></div><span class="ch-check">✓</span></div>
+  </div>
+
+  <div class="quickstart">
+    <h3>🚀 How to Use These Labs</h3>
+    <div class="qs-steps">
+      <div class="qs-step"><div class="qs-num">1</div><div class="qs-text">Start with Lab 01 to get familiar with server hardware before moving to configuration labs</div></div>
+      <div class="qs-step"><div class="qs-num">2</div><div class="qs-text">Follow the labs in order to match your lecture schedule, or jump directly to the relevant topic</div></div>
+      <div class="qs-step"><div class="qs-num">3</div><div class="qs-text">All labs run in your browser — no internet connection or software installation required</div></div>
+      <div class="qs-step"><div class="qs-num">4</div><div class="qs-text">Works on Windows, Mac, iPad, iPhone, and Android with any modern browser</div></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>CompTIA Server+ Interactive Labs — SK0-005 Training Environment</p>
+    <p style="margin-top:6px;font-size:11px;opacity:.5">All simulations are for educational purposes only · لأغراض تعليمية فقط</p>
+  </footer>
+</div>
+
+<div class="site-footer-bar">
+  <p>Designed by <strong>Eng. Abdullah Alasmari · م. عبدالله الأسمري</strong></p>
+  <p>Based on: <strong>CompTIA Server+ Certification (SK0-005)</strong></p>
+  <p style="font-size:.7rem;color:#334155;margin-top:4px">© 2025 · All content for academic educational purposes · Server+ Interactive Labs</p>
+</div>
+
+<script>
+(function(){
+  var sx=0,sy=0;
+  document.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+  document.addEventListener('touchend',function(e){
+    var dx=Math.abs(e.changedTouches[0].clientX-sx),dy=Math.abs(e.changedTouches[0].clientY-sy);
+    if(dx>10||dy>10)return;
+    var el=e.target;
+    while(el&&el!==document.body){if(el.tagName==='A'){return;}el=el.parentElement;}
+  },false);
+})();
+</script>
+</body>
+</html>

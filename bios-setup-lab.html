@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 02 — BIOS/UEFI &amp; Server Setup</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
+.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#f59e0b;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #a78bfa;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#6d28d9,#8b5cf6);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#c4b5fd}
+.site-author-block{text-align:right;border-left:1px solid rgba(255,255,255,.08);padding-left:18px;flex-shrink:0}
+.site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#a78bfa;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(167,139,250,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(167,139,250,.1)}
+.tabs{display:flex;gap:0;background:#071020;border-bottom:1px solid #1e3a5c;padding:0 20px;overflow-x:auto}
+.tab{padding:14px 22px;cursor:pointer;color:#7ab3d4;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#a78bfa}.tab.active{border-bottom-color:#a78bfa;background:rgba(167,139,250,.05)}
+.tab-panel{display:none;padding:30px;max-width:960px;margin:0 auto}.tab-panel.active{display:block}
+h2{color:#a78bfa;margin-bottom:8px;font-size:1.2rem}
+.subtitle{color:#7ab3d4;font-size:.85rem;margin-bottom:20px;line-height:1.7}
+.card{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
+.card h3{color:#a78bfa;margin-bottom:12px;font-size:1rem}
+.btn{padding:9px 20px;border:none;border-radius:6px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
+.btn-purple{background:#7c3aed;color:#fff}.btn-purple:hover{background:#6d28d9}
+.btn-outline{background:transparent;border:1px solid #a78bfa;color:#a78bfa}.btn-outline:hover{background:rgba(167,139,250,.1)}
+.btn-sm{padding:5px 12px;font-size:.78rem}
+.alert{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.88rem;line-height:1.6}
+.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:#7ab3d4}
+.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#34d399}
+.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
+.alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
+.score-badge{display:inline-block;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#a78bfa;margin-bottom:16px}
+/* BIOS Sim */
+.bios-screen{background:#000080;border:4px solid #c0c0c0;border-radius:4px;padding:20px;font-family:'Courier New',monospace;color:#fff;min-height:420px;position:relative}
+.bios-title{text-align:center;background:#aaaaaa;color:#000;padding:4px;margin-bottom:16px;font-weight:bold;font-size:.9rem}
+.bios-menu{display:flex;gap:20px;margin-bottom:16px;flex-wrap:wrap}
+.bios-tab{padding:4px 12px;cursor:pointer;font-size:.82rem;border:1px solid transparent;transition:all .2s}
+.bios-tab:hover,.bios-tab.bios-active{background:#aaaaaa;color:#000}
+.bios-content{min-height:260px}
+.bios-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:.82rem}
+.bios-row:last-child{border:none}
+.bios-key{color:#aaaaff}
+.bios-val{color:#ffff00;cursor:pointer;padding:2px 8px;border:1px solid transparent;transition:all .2s}
+.bios-val:hover{border-color:#ffff00}
+.bios-val.changed{color:#00ff00;border-color:#00ff00}
+.bios-footer{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:.72rem;color:#aaaaaa}
+/* POST simulator */
+.post-screen{background:#000;padding:20px;font-family:'Courier New',monospace;font-size:.8rem;border-radius:8px;min-height:300px;color:#33ff33}
+.post-line{margin:2px 0;animation:typein .1s ease}
+@keyframes typein{from{opacity:0}to{opacity:1}}
+.post-error{color:#ff4444}
+.post-warn{color:#ffaa00}
+/* Boot order drag */
+.boot-list{list-style:none;padding:0}
+.boot-item{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:grab;transition:all .2s;font-size:.88rem}
+.boot-item:hover{border-color:#a78bfa}
+.boot-item.dragging{opacity:.5;border-color:#a78bfa}
+.boot-priority{width:24px;height:24px;border-radius:50%;background:#1e3a5c;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#a78bfa;flex-shrink:0}
+/* Quiz */
+.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:left;width:100%;margin-bottom:8px}
+.quiz-opt:hover{border-color:#a78bfa}.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
+.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
+.site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}
+.site-footer-bar strong{color:#f59e0b}
+</style>
+</head>
+<body>
+<div class="site-topbar">
+  <span>🖥️ Training Environment — Academic Use Only | CompTIA Server+</span>
+  <span class="author-tag">Eng. Abdullah Alasmari · م. عبدالله الأسمري</span>
+</div>
+<div class="site-header-bar">
+  <div class="site-logo-box">⚙️</div>
+  <div class="site-lab-info">
+    <h2>Lab 02 — BIOS/UEFI &amp; Server Setup</h2>
+    <span>CompTIA Server+ SK0-005 · Chapter 2</span>
+  </div>
+  <div class="site-author-block">
+    <div class="aname">Eng. Abdullah Alasmari</div>
+    <div class="abook">Server+ Interactive Labs</div>
+  </div>
+</div>
+<a href="index.html" class="back-btn">← Back to Labs</a>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('t1',this)">BIOS Simulator</div>
+  <div class="tab" onclick="showTab('t2',this)">POST Codes</div>
+  <div class="tab" onclick="showTab('t3',this)">Boot Order</div>
+  <div class="tab" onclick="showTab('t4',this)">BIOS vs UEFI</div>
+  <div class="tab" onclick="showTab('t5',this)">Quiz</div>
+</div>
+
+<!-- TAB 1: BIOS Sim -->
+<div id="t1" class="tab-panel active">
+  <h2>BIOS/UEFI Simulator</h2>
+  <p class="subtitle">Navigate the simulated BIOS interface. Click values (in yellow) to toggle them. Complete the 3 tasks shown below.</p>
+  <div class="card">
+    <h3>📋 Tasks to Complete</h3>
+    <div id="task-list">
+      <div id="task1" style="padding:6px 0;font-size:.88rem">⬜ 1. Enable Virtualization Technology (VT-x)</div>
+      <div id="task2" style="padding:6px 0;font-size:.88rem">⬜ 2. Enable Secure Boot</div>
+      <div id="task3" style="padding:6px 0;font-size:.88rem">⬜ 3. Set Admin Password</div>
+    </div>
+  </div>
+  <div class="bios-screen">
+    <div class="bios-title">PHOENIX SecureCore BIOS Setup Utility v3.2 — Server+ Training Edition</div>
+    <div class="bios-menu">
+      <span class="bios-tab bios-active" onclick="showBIOS('main',this)">Main</span>
+      <span class="bios-tab" onclick="showBIOS('advanced',this)">Advanced</span>
+      <span class="bios-tab" onclick="showBIOS('security',this)">Security</span>
+      <span class="bios-tab" onclick="showBIOS('boot',this)">Boot</span>
+      <span class="bios-tab" onclick="showBIOS('power',this)">Power</span>
+    </div>
+    <div class="bios-content" id="bios-content"></div>
+    <div class="bios-footer">↑↓ Select Item &nbsp;|&nbsp; Enter: Select &nbsp;|&nbsp; F10: Save &amp; Exit &nbsp;|&nbsp; ESC: Exit</div>
+  </div>
+  <div id="bios-feedback" style="margin-top:12px"></div>
+</div>
+
+<!-- TAB 2: POST Codes -->
+<div id="t2" class="tab-panel">
+  <h2>POST Error Code Simulator</h2>
+  <p class="subtitle">Select a POST scenario to see the simulated startup sequence and learn what each error means.</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+    <button class="btn btn-outline btn-sm" onclick="runPOST('ok')">✅ Normal Boot</button>
+    <button class="btn btn-outline btn-sm" onclick="runPOST('noram')">❌ RAM Failure</button>
+    <button class="btn btn-outline btn-sm" onclick="runPOST('novga')">❌ Video Failure</button>
+    <button class="btn btn-outline btn-sm" onclick="runPOST('nodisk')">⚠️ No Boot Device</button>
+    <button class="btn btn-outline btn-sm" onclick="runPOST('cmos')">⚠️ CMOS Error</button>
+  </div>
+  <div class="post-screen" id="post-output"><span style="color:#888">Click a scenario above to start POST simulation...</span></div>
+  <div id="post-explain" style="margin-top:12px"></div>
+  <div class="card" style="margin-top:16px">
+    <h3>🔊 Common POST Beep Codes (AMI BIOS)</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:.82rem">
+      <thead><tr><th style="padding:8px;text-align:left;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Beep Pattern</th><th style="padding:8px;text-align:left;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Meaning</th><th style="padding:8px;text-align:left;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Action</th></tr></thead>
+      <tbody>
+        <tr><td style="padding:8px;border-bottom:1px solid #1e3a5c;color:#34d399">1 short</td><td style="padding:8px;border-bottom:1px solid #1e3a5c">POST successful</td><td style="padding:8px;border-bottom:1px solid #1e3a5c;color:#64748b">Normal — proceed</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #1e3a5c;color:#f87171">2 short</td><td style="padding:8px;border-bottom:1px solid #1e3a5c">POST error</td><td style="padding:8px;border-bottom:1px solid #1e3a5c;color:#64748b">Check BIOS error code on screen</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #1e3a5c;color:#f87171">1 long, 2 short</td><td style="padding:8px;border-bottom:1px solid #1e3a5c">Video adapter failure</td><td style="padding:8px;border-bottom:1px solid #1e3a5c;color:#64748b">Reseat/replace GPU or use iGPU</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #1e3a5c;color:#f87171">1 long, 3 short</td><td style="padding:8px;border-bottom:1px solid #1e3a5c">Video/memory error</td><td style="padding:8px;border-bottom:1px solid #1e3a5c;color:#64748b">Reseat RAM and video card</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #1e3a5c;color:#f87171">Continuous</td><td style="padding:8px;border-bottom:1px solid #1e3a5c">Power supply failure or RAM</td><td style="padding:8px;border-bottom:1px solid #1e3a5c;color:#64748b">Test PSU, reseat RAM</td></tr>
+        <tr><td style="padding:8px;color:#fbbf24">No beep, no display</td><td style="padding:8px">Power or motherboard failure</td><td style="padding:8px;color:#64748b">Check power connections, CPU</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TAB 3: Boot Order -->
+<div id="t3" class="tab-panel">
+  <h2>Boot Order Configuration</h2>
+  <p class="subtitle">Drag and drop the boot devices into the correct order for each scenario. The server tries each device from top to bottom.</p>
+  <div class="card">
+    <h3>Scenario: Set up a server to boot from the internal OS drive, but allow USB boot for maintenance</h3>
+    <p class="subtitle" style="margin-top:4px">Correct order: 1) Internal SSD, 2) USB Drive, 3) Network (PXE), 4) DVD-ROM</p>
+    <ul class="boot-list" id="boot-order">
+      <li class="boot-item" draggable="true" data-device="Network (PXE Boot)"><span class="boot-priority">?</span>🌐 Network (PXE Boot)</li>
+      <li class="boot-item" draggable="true" data-device="Internal NVMe SSD"><span class="boot-priority">?</span>💾 Internal NVMe SSD</li>
+      <li class="boot-item" draggable="true" data-device="DVD-ROM Drive"><span class="boot-priority">?</span>💿 DVD-ROM Drive</li>
+      <li class="boot-item" draggable="true" data-device="USB Flash Drive"><span class="boot-priority">?</span>🔌 USB Flash Drive</li>
+    </ul>
+    <button class="btn btn-purple" onclick="checkBootOrder()">Check Boot Order</button>
+    <div id="boot-feedback" style="margin-top:12px"></div>
+  </div>
+  <div class="card">
+    <h3>💡 Boot Order Best Practices</h3>
+    <div style="font-size:.85rem;color:#7ab3d4;line-height:2">
+      • <strong style="color:#a78bfa">Production servers</strong>: Internal drive first, all others disabled<br>
+      • <strong style="color:#a78bfa">Development/maintenance</strong>: USB or PXE before internal drive<br>
+      • <strong style="color:#a78bfa">Security</strong>: Disable removable media boot and set BIOS password<br>
+      • <strong style="color:#a78bfa">Network boot (PXE)</strong>: Used for diskless workstations or OS deployment<br>
+      • <strong style="color:#a78bfa">UEFI vs Legacy</strong>: UEFI supports GPT disks &gt;2TB; Legacy (CSM) uses MBR
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4: BIOS vs UEFI -->
+<div id="t4" class="tab-panel">
+  <h2>BIOS vs UEFI Comparison</h2>
+  <p class="subtitle">Click each feature card to reveal whether it belongs to legacy BIOS, UEFI, or both. Score points for each correct answer.</p>
+  <div class="score-badge" id="compare-score">Score: 0 / 10</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:16px" id="compare-grid"></div>
+  <div class="card">
+    <h3>📊 BIOS vs UEFI Summary</h3>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:.82rem">
+        <thead><tr><th style="padding:9px;text-align:left;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Feature</th><th style="padding:9px;color:#f87171;border-bottom:2px solid #1e3a5c">Legacy BIOS</th><th style="padding:9px;color:#34d399;border-bottom:2px solid #1e3a5c">UEFI</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#e0e6f0">Max boot disk size</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#f87171">2 TB (MBR)</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#34d399">9.4 ZB (GPT)</td></tr>
+          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#e0e6f0">Interface</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#f87171">Text only</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#34d399">GUI + mouse</td></tr>
+          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#e0e6f0">Secure Boot</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#f87171">No</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#34d399">Yes</td></tr>
+          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#e0e6f0">Boot speed</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#f87171">Slower</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#34d399">Faster (pre-init)</td></tr>
+          <tr><td style="padding:9px;color:#e0e6f0">Max partitions</td><td style="padding:9px;text-align:center;color:#f87171">4 primary (MBR)</td><td style="padding:9px;text-align:center;color:#34d399">128 (GPT)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 5: Quiz -->
+<div id="t5" class="tab-panel">
+  <h2>Knowledge Quiz — BIOS/UEFI &amp; Server Setup</h2>
+  <p class="subtitle">10 questions on firmware, POST, and boot configuration.</p>
+  <div class="score-badge" id="quiz-score">Score: 0 / 10</div>
+  <div id="quiz-container"></div>
+</div>
+
+<div class="site-footer-bar">
+  <p>Designed by <strong>Eng. Abdullah Alasmari</strong> · CompTIA Server+ Interactive Labs</p>
+</div>
+
+<script>
+function showTab(id,el){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');el.classList.add('active');}
+
+// ---- BIOS SIMULATOR ----
+let biosState={vt:false,secureboot:false,password:false,htt:true,speedstep:true,fan:'Auto',mode:'UEFI'};
+const biosPages={
+  main:`<div class="bios-row"><span class="bios-key">System Date</span><span class="bios-val">${new Date().toLocaleDateString()}</span></div>
+    <div class="bios-row"><span class="bios-key">System Time</span><span class="bios-val">${new Date().toLocaleTimeString()}</span></div>
+    <div class="bios-row"><span class="bios-key">BIOS Version</span><span style="color:#aaaaff">v3.2.1 (2024)</span></div>
+    <div class="bios-row"><span class="bios-key">CPU</span><span style="color:#aaaaff">Intel Xeon E-2374G @ 3.70GHz</span></div>
+    <div class="bios-row"><span class="bios-key">Memory Installed</span><span style="color:#aaaaff">64 GB DDR4 ECC</span></div>
+    <div class="bios-row"><span class="bios-key">Boot Mode</span><span class="bios-val" onclick="toggle('mode')" id="bv-mode"></span></div>`,
+  advanced:`<div class="bios-row"><span class="bios-key">Virtualization Technology (VT-x)</span><span class="bios-val" onclick="toggle('vt')" id="bv-vt"></span></div>
+    <div class="bios-row"><span class="bios-key">Hyper-Threading Technology</span><span class="bios-val" onclick="toggle('htt')" id="bv-htt"></span></div>
+    <div class="bios-row"><span class="bios-key">Intel SpeedStep</span><span class="bios-val" onclick="toggle('speedstep')" id="bv-speedstep"></span></div>
+    <div class="bios-row"><span class="bios-key">Fan Control Mode</span><span class="bios-val" onclick="cycleFan()" id="bv-fan"></span></div>
+    <div class="bios-row"><span class="bios-key">IPMI Over LAN</span><span class="bios-val">Enabled</span></div>`,
+  security:`<div class="bios-row"><span class="bios-key">Secure Boot</span><span class="bios-val" onclick="toggle('secureboot')" id="bv-secureboot"></span></div>
+    <div class="bios-row"><span class="bios-key">Administrator Password</span><span class="bios-val" onclick="setPassword()" id="bv-password"></span></div>
+    <div class="bios-row"><span class="bios-key">TPM Device</span><span class="bios-val">Enabled</span></div>
+    <div class="bios-row"><span class="bios-key">Execute Disable Bit</span><span class="bios-val">Enabled</span></div>`,
+  boot:`<div class="bios-row"><span class="bios-key">1st Boot Device</span><span class="bios-val">NVMe SSD</span></div>
+    <div class="bios-row"><span class="bios-key">2nd Boot Device</span><span class="bios-val">USB Storage</span></div>
+    <div class="bios-row"><span class="bios-key">3rd Boot Device</span><span class="bios-val">LAN (PXE)</span></div>
+    <div class="bios-row"><span class="bios-key">Boot Retry on Failure</span><span class="bios-val">Enabled</span></div>
+    <div class="bios-row"><span class="bios-key">Fast Boot</span><span class="bios-val">Enabled</span></div>`,
+  power:`<div class="bios-row"><span class="bios-key">Power On After Power Loss</span><span class="bios-val">Last State</span></div>
+    <div class="bios-row"><span class="bios-key">Wake on LAN</span><span class="bios-val">Enabled</span></div>
+    <div class="bios-row"><span class="bios-key">Power Supply 1</span><span style="color:#aaaaff">1200W Active</span></div>
+    <div class="bios-row"><span class="bios-key">Power Supply 2</span><span style="color:#aaaaff">1200W Standby</span></div>`,
+};
+let currentBIOSPage='main';
+function showBIOS(page,el){
+  document.querySelectorAll('.bios-tab').forEach(t=>t.classList.remove('bios-active'));
+  el.classList.add('bios-active');
+  currentBIOSPage=page;
+  renderBIOS();
+}
+function renderBIOS(){
+  document.getElementById('bios-content').innerHTML=biosPages[currentBIOSPage];
+  const map={vt:biosState.vt?'Enabled':'Disabled',htt:biosState.htt?'Enabled':'Disabled',speedstep:biosState.speedstep?'Enabled':'Disabled',secureboot:biosState.secureboot?'Enabled':'Disabled',password:biosState.password?'Set':'Not Set',fan:biosState.fan,mode:biosState.mode};
+  Object.keys(map).forEach(k=>{const el=document.getElementById('bv-'+k);if(el){el.textContent=map[k];el.classList.toggle('changed',biosState[k]&&biosState[k]!==false&&biosState[k]!=='Not Set');}});
+  checkTasks();
+}
+function toggle(key){biosState[key]=!biosState[key];renderBIOS();}
+function cycleFan(){const modes=['Auto','Silent','Performance','Full Speed'];biosState.fan=modes[(modes.indexOf(biosState.fan)+1)%modes.length];renderBIOS();}
+function setPassword(){biosState.password=true;renderBIOS();}
+function checkTasks(){
+  const t1=document.getElementById('task1');const t2=document.getElementById('task2');const t3=document.getElementById('task3');
+  if(t1)t1.textContent=(biosState.vt?'✅':'⬜')+' 1. Enable Virtualization Technology (VT-x)';
+  if(t2)t2.textContent=(biosState.secureboot?'✅':'⬜')+' 2. Enable Secure Boot';
+  if(t3)t3.textContent=(biosState.password?'✅':'⬜')+' 3. Set Admin Password';
+  if(biosState.vt&&biosState.secureboot&&biosState.password){
+    document.getElementById('bios-feedback').innerHTML='<div class="alert alert-success">🎉 All tasks complete! Your server is now configured with virtualization, secure boot, and password protection.</div>';
+  }
+}
+renderBIOS();
+
+// ---- POST SIMULATOR ----
+const POST_SCRIPTS={
+  ok:{lines:['BIOS POST v3.2.1','Checking CPU... Intel Xeon E-2374G detected. PASS','Checking Memory... 64 GB ECC DDR4 detected. PASS','Checking PCI devices... PASS','Checking NVMe SSD... 960GB detected. PASS','Checking NIC... Dual 10GbE detected. PASS','Checking IPMI... Active. PASS','All POST tests passed. 1 short beep.','Loading boot sector from NVMe SSD...','OS bootloader detected. Handing off to OS...'],types:['n','n','n','n','n','n','n','s','n','n'],explain:'<div class="alert alert-success">✅ Normal POST sequence — all hardware detected and passed self-test. 1 short beep indicates success.</div>'},
+  noram:{lines:['BIOS POST v3.2.1','Checking CPU... Intel Xeon E-2374G detected. PASS','Checking Memory...','ERROR: No memory detected in any DIMM slot!','Continuous beeping detected...','POST halted. System cannot boot without RAM.','Possible causes: unseated DIMM, failed RAM module, incompatible RAM'],types:['n','n','n','e','e','e','w'],explain:'<div class="alert alert-danger">❌ RAM failure — continuous beeps. Fix: reseat RAM modules, test each DIMM individually, check compatibility with QVL list.</div>'},
+  novga:{lines:['BIOS POST v3.2.1','Checking CPU... PASS','Checking Memory... 64GB ECC. PASS','Checking Video adapter...','ERROR: No video output detected!','Beep code: 1 long, 2 short','POST cannot display output. Check video card or use iKVM/IPMI for remote access.'],types:['n','n','n','n','e','e','w'],explain:'<div class="alert alert-danger">❌ Video failure (1 long, 2 short beeps). Fix: reseat GPU, check PCIe slot, or use server IPMI/iDRAC for headless management.</div>'},
+  nodisk:{lines:['BIOS POST v3.2.1','Checking CPU... PASS','Checking Memory... 64GB ECC. PASS','Checking NVMe SSD...','WARNING: No bootable device found!','Trying USB storage... No bootable USB found.','Trying PXE network boot... No PXE server found.','ERROR: Boot failure. Insert bootable media or check boot order in BIOS.'],types:['n','n','n','w','w','w','w','e'],explain:'<div class="alert alert-warn">⚠️ No boot device found. Fix: verify OS is installed, check SATA/NVMe cables, confirm correct boot order in BIOS, or boot from OS installation media.</div>'},
+  cmos:{lines:['BIOS POST v3.2.1','WARNING: CMOS checksum error!','CMOS battery failure detected.','BIOS settings have been reset to defaults.','Date/Time reset to: 01/01/2000 00:00:00','Checking Memory... PASS','Checking storage... PASS','WARNING: Please enter BIOS setup and reconfigure system settings.'],types:['n','w','w','w','w','n','n','w'],explain:'<div class="alert alert-warn">⚠️ CMOS battery dead. Fix: replace the CR2032 CMOS battery on the motherboard, then reconfigure BIOS settings and set correct date/time.</div>'},
+};
+function runPOST(scenario){
+  const s=POST_SCRIPTS[scenario];
+  const el=document.getElementById('post-output');
+  el.innerHTML='';
+  document.getElementById('post-explain').innerHTML='';
+  let delay=0;
+  s.lines.forEach((line,i)=>{
+    setTimeout(()=>{
+      const div=document.createElement('div');
+      div.className='post-line '+(s.types[i]==='e'?'post-error':s.types[i]==='w'?'post-warn':'');
+      div.textContent='> '+line;
+      el.appendChild(div);
+      el.scrollTop=el.scrollHeight;
+      if(i===s.lines.length-1)document.getElementById('post-explain').innerHTML=s.explain;
+    },delay);
+    delay+=150+Math.random()*80;
+  });
+}
+
+// ---- BOOT ORDER DRAG ----
+const CORRECT_ORDER=['Internal NVMe SSD','USB Flash Drive','Network (PXE Boot)','DVD-ROM Drive'];
+let dragSrc=null;
+function initDrag(){
+  const items=document.querySelectorAll('.boot-item');
+  items.forEach(item=>{
+    item.addEventListener('dragstart',()=>{dragSrc=item;item.classList.add('dragging');});
+    item.addEventListener('dragend',()=>{item.classList.remove('dragging');updatePriorities();});
+    item.addEventListener('dragover',e=>{e.preventDefault();const r=item.getBoundingClientRect();const mid=r.top+r.height/2;if(e.clientY<mid)item.parentNode.insertBefore(dragSrc,item);else item.parentNode.insertBefore(dragSrc,item.nextSibling);});
+  });
+}
+function updatePriorities(){document.querySelectorAll('.boot-item').forEach((el,i)=>{el.querySelector('.boot-priority').textContent=i+1;});}
+function checkBootOrder(){
+  const current=[...document.querySelectorAll('.boot-item')].map(el=>el.dataset.device);
+  const correct=JSON.stringify(current)===JSON.stringify(CORRECT_ORDER);
+  document.getElementById('boot-feedback').innerHTML=correct?
+    '<div class="alert alert-success">✅ Correct boot order! The server will try the NVMe SSD first (fast OS boot), USB second (maintenance), PXE third (network deploy), DVD last.</div>':
+    `<div class="alert alert-warn">⚠️ Not quite. Correct order: 1) Internal NVMe SSD, 2) USB Flash Drive, 3) Network (PXE), 4) DVD-ROM<br>Current: ${current.map((d,i)=>`${i+1}) ${d}`).join(', ')}</div>`;
+}
+initDrag();updatePriorities();
+
+// ---- BIOS vs UEFI Cards ----
+const compareItems=[
+  {feature:'Supports disks larger than 2TB',ans:'UEFI',opts:['BIOS Only','UEFI Only','Both']},
+  {feature:'Text-only interface (no mouse)',ans:'BIOS Only',opts:['BIOS Only','UEFI Only','Both']},
+  {feature:'Secure Boot feature',ans:'UEFI Only',opts:['BIOS Only','UEFI Only','Both']},
+  {feature:'GPT partition table support',ans:'UEFI Only',opts:['BIOS Only','UEFI Only','Both']},
+  {feature:'Administrator password protection',ans:'Both',opts:['BIOS Only','UEFI Only','Both']},
+  {feature:'Network (PXE) boot support',ans:'Both',opts:['BIOS Only','UEFI Only','Both']},
+  {feature:'Faster boot initialization',ans:'UEFI Only',opts:['BIOS Only','UEFI Only','Both']},
+  {feature:'MBR partition table support',ans:'BIOS Only',opts:['BIOS Only','UEFI Only','Both']},
+  {feature:'Supports up to 128 GPT partitions',ans:'UEFI Only',opts:['BIOS Only','UEFI Only','Both']},
+  {feature:'Available on modern server hardware',ans:'Both',opts:['BIOS Only','UEFI Only','Both']},
+];
+let compScores={};
+function buildCompare(){
+  document.getElementById('compare-grid').innerHTML=compareItems.map((item,i)=>`
+    <div class="card" style="padding:14px" id="cc-${i}">
+      <p style="font-size:.82rem;color:#e0e6f0;margin-bottom:10px;font-weight:600">${item.feature}</p>
+      <div style="display:flex;flex-direction:column;gap:6px">${item.opts.map(o=>`<button style="padding:5px 8px;border:1px solid #1e3a5c;border-radius:6px;background:#071020;color:#7ab3d4;cursor:pointer;font-size:.75rem;transition:all .2s" onclick="answerCompare(${i},'${o}')">${o}</button>`).join('')}</div>
+      <div id="cf-${i}" style="margin-top:6px;font-size:.75rem"></div>
+    </div>`).join('');
+}
+function answerCompare(i,choice){
+  if(compScores[i]!==undefined)return;
+  const item=compareItems[i];const correct=choice===item.ans;
+  compScores[i]=correct?1:0;
+  document.getElementById('cc-'+i).querySelectorAll('button').forEach(b=>{b.disabled=true;if(b.textContent===item.ans)b.style.background='rgba(16,185,129,.2)';});
+  document.getElementById('cf-'+i).innerHTML=`<span style="color:${correct?'#34d399':'#f87171'}">${correct?'✓':item.ans}</span>`;
+  document.getElementById('compare-score').textContent=`Score: ${Object.values(compScores).reduce((a,b)=>a+b,0)} / 10`;
+}
+buildCompare();
+
+// ---- QUIZ ----
+const QUIZ=[
+  {q:"What does POST stand for?",opts:["Power-On Self-Test","Power-Off System Transfer","Primary OS Startup Test","Peripheral Output System Test"],ans:0},
+  {q:"UEFI supports boot drives up to what maximum size?",opts:["2 TB","4 TB","9.4 ZB (practically unlimited)","16 TB"],ans:2},
+  {q:"Legacy BIOS uses which partition table format?",opts:["GPT","MBR","NTFS","FAT32"],ans:1},
+  {q:"Which BIOS feature prevents unauthorized OS from booting?",opts:["IPMI","VT-x","Secure Boot","SpeedStep"],ans:2},
+  {q:"What is IPMI used for in server management?",opts:["Increasing CPU performance","Out-of-band remote management","Configuring RAID arrays","Network traffic shaping"],ans:1},
+  {q:"A CMOS battery failure causes which symptom?",opts:["Server won't power on","Date/time and settings reset on reboot","Disk read errors","Network connectivity loss"],ans:1},
+  {q:"POST beep code '1 long, 2 short' typically indicates:",opts:["Successful boot","RAM failure","Video adapter failure","Keyboard failure"],ans:2},
+  {q:"Virtualization Technology (VT-x) must be enabled in BIOS for:",opts:["Secure Boot","Running virtual machines (hypervisors)","RAID configuration","Network bonding"],ans:1},
+  {q:"PXE booting allows a server to:",opts:["Boot faster from NVMe","Boot an OS from the network","Bypass the POST process","Enable UEFI Secure Boot"],ans:1},
+  {q:"Which is a benefit of ECC RAM in servers?",opts:["Higher clock speeds","Detects and corrects single-bit memory errors","Reduces power consumption","Cheaper than standard RAM"],ans:1},
+];
+let quizScores={};
+function buildQuiz(){
+  document.getElementById('quiz-container').innerHTML=QUIZ.map((q,qi)=>`
+    <div class="card" style="margin-bottom:16px">
+      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">Q${qi+1}. ${q.q}</p>
+      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
+    </div>`).join('');
+}
+function answerQ(qi,oi){
+  if(quizScores[qi]!==undefined)return;
+  const q=QUIZ[qi];
+  document.querySelectorAll(`#quiz-container .card`)[qi].querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('correct');});
+  if(oi!==q.ans)document.querySelectorAll(`#quiz-container .card`)[qi].querySelectorAll('.quiz-opt')[oi].classList.add('incorrect');
+  quizScores[qi]=oi===q.ans?1:0;
+  document.getElementById('quiz-score').textContent=`Score: ${Object.values(quizScores).reduce((a,b)=>a+b,0)} / 10`;
+}
+buildQuiz();
+</script>
+</body>
+</html>

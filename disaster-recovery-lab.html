@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 09 — Disaster Recovery &amp; Backup</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
+.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#f59e0b;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #f472b6;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#9d174d,#ec4899);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#fbcfe8}
+.site-author-block{text-align:right;border-left:1px solid rgba(255,255,255,.08);padding-left:18px;flex-shrink:0}
+.site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#f472b6;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(244,114,182,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(244,114,182,.1)}
+.tabs{display:flex;gap:0;background:#071020;border-bottom:1px solid #1e3a5c;padding:0 20px;overflow-x:auto}
+.tab{padding:14px 22px;cursor:pointer;color:#7ab3d4;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#f472b6}.tab.active{border-bottom-color:#f472b6;background:rgba(244,114,182,.05)}
+.tab-panel{display:none;padding:30px;max-width:960px;margin:0 auto}.tab-panel.active{display:block}
+h2{color:#f472b6;margin-bottom:8px;font-size:1.2rem}
+.subtitle{color:#7ab3d4;font-size:.85rem;margin-bottom:20px;line-height:1.7}
+.card{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
+.card h3{color:#f472b6;margin-bottom:12px;font-size:1rem}
+.btn{padding:9px 20px;border:none;border-radius:6px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
+.btn-pink{background:#9d174d;color:#fff}.btn-pink:hover{background:#831843}
+.btn-outline{background:transparent;border:1px solid #f472b6;color:#f472b6}.btn-outline:hover{background:rgba(244,114,182,.1)}
+.btn-sm{padding:5px 12px;font-size:.78rem}
+.alert{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.88rem;line-height:1.6}
+.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#34d399}
+.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
+.alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
+.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:#7ab3d4}
+.score-badge{display:inline-block;background:rgba(244,114,182,.1);border:1px solid rgba(244,114,182,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#f472b6;margin-bottom:16px}
+/* Site comparison */
+.site-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:16px 0}
+.site-card{border-radius:12px;padding:18px;border:2px solid}
+.site-hot{background:rgba(244,114,182,.05);border-color:rgba(244,114,182,.3)}
+.site-warm{background:rgba(245,158,11,.05);border-color:rgba(245,158,11,.3)}
+.site-cold{background:rgba(100,116,139,.05);border-color:rgba(100,116,139,.3)}
+.site-label{font-weight:800;font-size:1rem;margin-bottom:4px}
+.site-hot .site-label{color:#f472b6}.site-warm .site-label{color:#fbbf24}.site-cold .site-label{color:#94a3b8}
+.site-detail{font-size:.78rem;color:#64748b;line-height:1.6}
+/* RTO/RPO sliders */
+.slider-wrap{margin:16px 0}
+.slider-label{display:flex;justify-content:space-between;font-size:.8rem;color:#7ab3d4;margin-bottom:6px}
+input[type=range]{width:100%;accent-color:#f472b6;height:6px}
+/* Backup calendar */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:12px 0}
+.cal-day{height:44px;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.65rem;border:1px solid #1e3a5c;transition:all .2s}
+.cal-day.full-b{background:rgba(244,114,182,.2);border-color:#f472b6;color:#f472b6}
+.cal-day.incr-b{background:rgba(0,212,255,.15);border-color:#00d4ff;color:#00d4ff}
+.cal-day.diff-b{background:rgba(245,158,11,.15);border-color:#fbbf24;color:#fbbf24}
+.cal-day.empty{background:#071020;color:#475569}
+.cal-label{font-weight:700;font-size:.6rem}
+.cal-type{font-size:.55rem;margin-top:1px}
+/* Quiz */
+.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:left;width:100%;margin-bottom:8px}
+.quiz-opt:hover{border-color:#f472b6}.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
+.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
+.site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#f59e0b}
+@media(max-width:600px){.site-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="site-topbar">
+  <span>🖥️ Training Environment — Academic Use Only | CompTIA Server+</span>
+  <span class="author-tag">Eng. Abdullah Alasmari · م. عبدالله الأسمري</span>
+</div>
+<div class="site-header-bar">
+  <div class="site-logo-box">🔄</div>
+  <div class="site-lab-info">
+    <h2>Lab 09 — Disaster Recovery &amp; Backup</h2>
+    <span>CompTIA Server+ SK0-005 · Chapter 9</span>
+  </div>
+  <div class="site-author-block">
+    <div class="aname">Eng. Abdullah Alasmari</div>
+    <div class="abook">Server+ Interactive Labs</div>
+  </div>
+</div>
+<a href="index.html" class="back-btn">← Back to Labs</a>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('t1',this)">DR Sites &amp; RTO/RPO</div>
+  <div class="tab" onclick="showTab('t2',this)">Backup Strategies</div>
+  <div class="tab" onclick="showTab('t3',this)">Restore Scenario</div>
+  <div class="tab" onclick="showTab('t4',this)">Quiz</div>
+</div>
+
+<!-- TAB 1 -->
+<div id="t1" class="tab-panel active">
+  <h2>Disaster Recovery Sites &amp; RTO/RPO</h2>
+  <p class="subtitle">Understand the three types of DR sites and use the sliders to see how RTO/RPO requirements map to site choices.</p>
+  <div class="site-grid">
+    <div class="site-card site-hot">
+      <div class="site-label">🔥 Hot Site</div>
+      <div class="site-detail">
+        Fully operational mirror of production. Real-time data replication. Failover in minutes.<br><br>
+        <strong style="color:#f472b6">RTO:</strong> Minutes<br>
+        <strong style="color:#f472b6">RPO:</strong> Near-zero<br>
+        <strong style="color:#f472b6">Cost:</strong> Highest<br>
+        <strong style="color:#f472b6">Use:</strong> Banks, hospitals, stock exchanges
+      </div>
+    </div>
+    <div class="site-card site-warm">
+      <div class="site-label">🌡️ Warm Site</div>
+      <div class="site-detail">
+        Hardware is installed and ready but data must be restored. Failover in hours.<br><br>
+        <strong style="color:#fbbf24">RTO:</strong> Hours<br>
+        <strong style="color:#fbbf24">RPO:</strong> Hours to 1 day<br>
+        <strong style="color:#fbbf24">Cost:</strong> Medium<br>
+        <strong style="color:#fbbf24">Use:</strong> Most enterprises
+      </div>
+    </div>
+    <div class="site-card site-cold">
+      <div class="site-label">❄️ Cold Site</div>
+      <div class="site-detail">
+        Physical space and power only. Must procure and configure all equipment after disaster.<br><br>
+        <strong style="color:#94a3b8">RTO:</strong> Days to weeks<br>
+        <strong style="color:#94a3b8">RPO:</strong> Days<br>
+        <strong style="color:#94a3b8">Cost:</strong> Lowest<br>
+        <strong style="color:#94a3b8">Use:</strong> Non-critical systems
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>⏱️ RTO / RPO Calculator</h3>
+    <p class="subtitle" style="margin-bottom:16px">Adjust the sliders to set your business requirements, and see which DR site type is recommended.</p>
+    <div class="slider-wrap">
+      <div class="slider-label"><span>RTO (Recovery Time Objective)</span><span id="rto-val">4 hours</span></div>
+      <input type="range" id="rto-slider" min="1" max="168" value="4" oninput="updateDR()">
+      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#475569;margin-top:2px"><span>1 min</span><span>1 day</span><span>1 week</span></div>
+    </div>
+    <div class="slider-wrap" style="margin-top:16px">
+      <div class="slider-label"><span>RPO (Recovery Point Objective)</span><span id="rpo-val">1 hour</span></div>
+      <input type="range" id="rpo-slider" min="0" max="168" value="1" oninput="updateDR()">
+      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#475569;margin-top:2px"><span>0 (no loss)</span><span>1 day</span><span>1 week</span></div>
+    </div>
+    <div id="dr-recommendation" style="margin-top:16px"></div>
+  </div>
+
+  <div class="card">
+    <h3>📖 Key DR Terminology</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;font-size:.82rem">
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">RTO</div><div style="color:#64748b;line-height:1.5">Recovery Time Objective — maximum acceptable time for systems to be restored after a disaster.</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">RPO</div><div style="color:#64748b;line-height:1.5">Recovery Point Objective — maximum acceptable data loss measured in time (e.g., 4-hour RPO = restore from backup max 4 hours old).</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">BCP</div><div style="color:#64748b;line-height:1.5">Business Continuity Plan — comprehensive plan to keep business operations running during/after disaster.</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">DRP</div><div style="color:#64748b;line-height:1.5">Disaster Recovery Plan — technical plan for restoring IT systems specifically. Subset of BCP.</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">MTTR</div><div style="color:#64748b;line-height:1.5">Mean Time To Repair — average time to restore a failed component or system.</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">MTBF</div><div style="color:#64748b;line-height:1.5">Mean Time Between Failures — average time between hardware failures. Measure of reliability.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2 -->
+<div id="t2" class="tab-panel">
+  <h2>Backup Strategies</h2>
+  <p class="subtitle">Select a backup strategy to see a 4-week calendar showing which backups run each day and how much data would be backed up.</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+    <button class="btn btn-outline btn-sm" onclick="showBackup('full')">Full Only (Daily)</button>
+    <button class="btn btn-outline btn-sm" onclick="showBackup('fi')">Full + Incremental</button>
+    <button class="btn btn-outline btn-sm" onclick="showBackup('fd')">Full + Differential</button>
+  </div>
+  <div class="card" id="backup-card">
+    <h3>Select a strategy above to see the backup calendar</h3>
+  </div>
+  <div class="card">
+    <h3>📊 Backup Type Comparison</h3>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:.82rem">
+        <thead><tr style="background:#071020"><th style="padding:9px;text-align:left;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Type</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c">What it backs up</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Resets archive bit?</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Backup size</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Restore complexity</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#f472b6;font-weight:700">Full</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">All selected data, always</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#34d399">Yes</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">Largest</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#34d399">Simplest (1 tape)</td></tr>
+          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#00d4ff;font-weight:700">Incremental</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">Data changed since last backup of ANY type</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#34d399">Yes</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">Smallest</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#f87171">Most complex (full + all incrementals)</td></tr>
+          <tr><td style="padding:9px;color:#fbbf24;font-weight:700">Differential</td><td style="padding:9px">Data changed since last FULL backup</td><td style="padding:9px;text-align:center;color:#f87171">No</td><td style="padding:9px">Grows each day</td><td style="padding:9px;color:#fbbf24">Medium (full + latest differential)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3 -->
+<div id="t3" class="tab-panel">
+  <h2>Restore Scenario</h2>
+  <p class="subtitle">A disaster occurs on Wednesday at 2pm. Based on the backup schedule shown, which tapes do you need to restore? Answer 4 scenarios.</p>
+  <div class="score-badge" id="restore-score">Score: 0 / 4</div>
+  <div id="restore-card" class="card"></div>
+</div>
+
+<!-- TAB 4 -->
+<div id="t4" class="tab-panel">
+  <h2>Knowledge Quiz — DR &amp; Backup</h2>
+  <p class="subtitle">12 questions on disaster recovery, backup types, and business continuity.</p>
+  <div class="score-badge" id="quiz-score">Score: 0 / 12</div>
+  <div id="quiz-container"></div>
+</div>
+
+<div class="site-footer-bar">
+  <p>Designed by <strong>Eng. Abdullah Alasmari</strong> · CompTIA Server+ Interactive Labs</p>
+</div>
+
+<script>
+function showTab(id,el){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');el.classList.add('active');}
+
+// ---- RTO/RPO SLIDER ----
+function updateDR(){
+  const rto=parseInt(document.getElementById('rto-slider').value);
+  const rpo=parseInt(document.getElementById('rpo-slider').value);
+  document.getElementById('rto-val').textContent=rto<24?rto+' hour(s)':Math.round(rto/24)+' day(s)';
+  document.getElementById('rpo-val').textContent=rpo===0?'Near-zero (no data loss)':rpo<24?rpo+' hour(s)':Math.round(rpo/24)+' day(s)';
+  let site,color,desc;
+  if(rto<=2&&rpo<=1){site='🔥 Hot Site';color='#f472b6';desc='Your requirements demand near-instant failover and minimal data loss. A fully mirrored hot site with real-time replication is required.';}
+  else if(rto<=24&&rpo<=8){site='🌡️ Warm Site';color='#fbbf24';desc='Your requirements allow a few hours of recovery time. A warm site with pre-deployed hardware and scheduled backups meets these needs at lower cost.';}
+  else{site='❄️ Cold Site';color='#94a3b8';desc='Your requirements allow days of downtime and significant data loss tolerance. A cold site (facilities only) is cost-effective for non-critical systems.';}
+  document.getElementById('dr-recommendation').innerHTML=`<div style="background:rgba(244,114,182,.05);border:2px solid ${color};border-radius:10px;padding:16px"><div style="font-size:1.1rem;font-weight:800;color:${color};margin-bottom:6px">Recommended: ${site}</div><div style="font-size:.84rem;color:#7ab3d4;line-height:1.6">${desc}</div></div>`;
+}
+updateDR();
+
+// ---- BACKUP CALENDAR ----
+const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const BACKUP_TYPES={
+  full:{name:'Full Only (Daily)',data:Array(28).fill('full'),desc:'Simple but uses the most storage. Every day backs up all 100GB. Restore: just one tape.',storage:Array(28).fill(100),restore:'1 tape (latest full)'},
+  fi:{name:'Full + Incremental',data:['full','incr','incr','incr','incr','incr','incr','full','incr','incr','incr','incr','incr','incr','full','incr','incr','incr','incr','incr','incr','full','incr','incr','incr','incr','incr','incr'],desc:'Full on Mondays, incremental every other day. Smallest daily backup, but restore requires full tape + all incrementals since last full.',storage:[100,5,8,6,7,9,5,100,6,5,8,7,5,9,100,5,7,6,8,5,9,100,6,5,8,7,5,9],restore:'Full + all incrementals since last full'},
+  fd:{name:'Full + Differential',data:['full','diff','diff','diff','diff','diff','diff','full','diff','diff','diff','diff','diff','diff','full','diff','diff','diff','diff','diff','diff','full','diff','diff','diff','diff','diff','diff'],desc:'Full on Mondays, differential every other day. Differential grows each day (includes all changes since last full). Restore: full + latest differential only.',storage:[100,20,35,45,52,60,65,100,18,32,48,55,63,70,100,22,38,50,58,65,72,100,25,40,55,62,68,75],restore:'Full + latest differential only'},
+};
+function showBackup(type){
+  const b=BACKUP_TYPES[type];
+  const colorClass={full:'full-b',incr:'incr-b',diff:'diff-b'};
+  const label={full:'FULL',incr:'INCR',diff:'DIFF'};
+  const totalStorage=b.storage.reduce((a,v)=>a+v,0);
+  document.getElementById('backup-card').innerHTML=`
+    <h3>${b.name}</h3>
+    <p style="color:#7ab3d4;font-size:.84rem;margin-bottom:12px;line-height:1.6">${b.desc}</p>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px">${DAYS.map(d=>`<div style="text-align:center;font-size:.72rem;color:#64748b;padding:4px;font-weight:700">${d}</div>`).join('')}</div>
+    <div class="cal-grid">${b.data.map((t,i)=>`<div class="cal-day ${colorClass[t]}"><div class="cal-label">Day ${i+1}</div><div class="cal-type">${label[t]}</div><div style="font-size:.55rem;margin-top:2px">${b.storage[i]}GB</div></div>`).join('')}</div>
+    <div style="display:flex;gap:16px;margin-top:10px;flex-wrap:wrap;font-size:.8rem">
+      <span><span style="display:inline-block;width:12px;height:12px;background:rgba(244,114,182,.4);border-radius:2px;vertical-align:middle;margin-right:4px"></span>Full Backup</span>
+      ${type==='fi'?'<span><span style="display:inline-block;width:12px;height:12px;background:rgba(0,212,255,.4);border-radius:2px;vertical-align:middle;margin-right:4px"></span>Incremental</span>':''}
+      ${type==='fd'?'<span><span style="display:inline-block;width:12px;height:12px;background:rgba(245,158,11,.4);border-radius:2px;vertical-align:middle;margin-right:4px"></span>Differential</span>':''}
+    </div>
+    <div class="alert alert-info" style="margin-top:12px">Total storage used (4 weeks): <strong>${totalStorage} GB</strong> | Restore tapes needed: <strong>${b.restore}</strong></div>`;
+}
+
+// ---- RESTORE SCENARIOS ----
+const RESTORE_SC=[
+  {q:"Schedule: Full backup every Sunday, incremental every other day. Disaster occurs Wednesday at 3pm. Which tapes do you restore?",ans:"Sunday Full + Monday Incr + Tuesday Incr + Wednesday Incr",opts:["Sunday Full only","Sunday Full + Monday Incr + Tuesday Incr + Wednesday Incr","Wednesday Incr only","Latest differential only"],explain:"With incremental backup, you need the last full PLUS every incremental since that full to rebuild to the disaster point."},
+  {q:"Schedule: Full backup every Sunday, differential every other day. Disaster occurs Thursday at 10am. Which tapes do you restore?",ans:"Sunday Full + Wednesday Differential",opts:["Sunday Full only","Sunday Full + Monday Diff + Tuesday Diff + Wednesday Diff","Sunday Full + Wednesday Differential","Thursday Diff only"],explain:"With differential backup, you only need the last full PLUS the most recent differential (Wednesday) — much simpler than incremental!"},
+  {q:"A hot site with real-time replication fails over during a network outage. The last replication completed 30 seconds ago. The RPO is:",opts:["30 seconds","1 hour","0 seconds","24 hours"],ans:0,explain:"RPO is measured by time since last good backup/replication. 30 seconds of replication lag = 30-second RPO."},
+  {q:"A company's BCP states RTO = 4 hours. During a fire drill test, restoration took 6 hours. This means:",opts:["The test passed — 6 hours is close enough","The RTO was not met — the DRP needs improvement","The RPO was exceeded","The hot site needs to be upgraded"],ans:1,explain:"RTO is the MAXIMUM acceptable recovery time. If testing shows 6 hours but RTO is 4 hours, the disaster recovery plan must be improved to meet the business requirement."},
+];
+let restoreIdx=0,restoreCorrect=0;
+function loadRestore(){
+  const sc=RESTORE_SC[restoreIdx];
+  document.getElementById('restore-card').innerHTML=`
+    <h3>Scenario ${restoreIdx+1} of ${RESTORE_SC.length}</h3>
+    <p style="color:#e0e6f0;line-height:1.7;margin:12px 0">${sc.q}</p>
+    <div style="display:grid;gap:8px">${sc.opts.map((o,i)=>`<button style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;text-align:left;color:#e0e6f0;font-size:.88rem;transition:all .2s;width:100%" onclick="pickRestore(${i})">${o}</button>`).join('')}</div>
+    <div id="restore-fb" style="margin-top:12px"></div>`;
+  document.getElementById('restore-score').textContent=`Score: ${restoreCorrect} / ${Math.min(restoreIdx,RESTORE_SC.length)}`;
+}
+function pickRestore(i){
+  const sc=RESTORE_SC[restoreIdx];const correct=sc.opts[i]===sc.ans;
+  if(correct)restoreCorrect++;
+  document.getElementById('restore-score').textContent=`Score: ${restoreCorrect} / ${restoreIdx+1}`;
+  document.querySelectorAll('#restore-card button').forEach((b,bi)=>{b.disabled=true;if(sc.opts[bi]===sc.ans)b.style.background='rgba(16,185,129,.15)';});
+  if(!correct)document.querySelectorAll('#restore-card button')[i].style.background='rgba(239,68,68,.15)';
+  document.getElementById('restore-fb').innerHTML=`<div class="alert ${correct?'alert-success':'alert-warn'}">${correct?'✅':'💡'} ${sc.explain}<br><button class="btn btn-outline btn-sm" onclick="nextRestore()" style="margin-top:10px">${restoreIdx<RESTORE_SC.length-1?'Next →':'Finish'}</button></div>`;
+}
+function nextRestore(){restoreIdx++;if(restoreIdx>=RESTORE_SC.length){document.getElementById('restore-card').innerHTML=`<h3>Complete!</h3><div class="alert alert-success" style="margin-top:12px">Score: ${restoreCorrect}/${RESTORE_SC.length}</div>`;return;}loadRestore();}
+loadRestore();
+
+// ---- QUIZ ----
+const QUIZ=[
+  {q:"RTO (Recovery Time Objective) defines:",opts:["Maximum acceptable data loss","Maximum time to restore systems after a disaster","Cost of backup storage","Frequency of backup testing"],ans:1},
+  {q:"RPO (Recovery Point Objective) defines:",opts:["How long recovery can take","Maximum acceptable amount of data loss (measured in time)","Number of backup copies","Backup rotation schedule"],ans:1},
+  {q:"A hot site provides failover in approximately:",opts:["Days","Weeks","Minutes to hours","Months"],ans:2},
+  {q:"Which backup type grows in size each day as it includes all changes since the last full backup?",opts:["Incremental","Full","Differential","Mirror"],ans:2},
+  {q:"Incremental backup requires which tapes for a full restore?",opts:["Latest full only","Latest full + latest incremental","Latest full + ALL incrementals since last full","All incrementals only"],ans:2},
+  {q:"The 3-2-1 backup rule states: 3 copies, 2 different media types, and:",opts:["1 offsite copy","1 encrypted copy","1 daily backup","1 full backup weekly"],ans:0},
+  {q:"MTTR (Mean Time To Repair) measures:",opts:["Average time between hardware failures","Average time to restore a failed system","Backup completion time","Network latency"],ans:1},
+  {q:"A BCP (Business Continuity Plan) differs from a DRP (Disaster Recovery Plan) in that BCP:",opts:["Only covers IT systems","Covers the entire business operations, not just IT","Is only for natural disasters","Is a subset of DRP"],ans:1},
+  {q:"Which DR site type provides the lowest RTO but highest cost?",opts:["Cold site","Warm site","Hot site","Colocation site"],ans:2},
+  {q:"Backup tapes should be stored offsite primarily because:",opts:["Tapes last longer in a different location","A disaster at the primary site could destroy both production data and backups","Offsite storage is cheaper","Regulations require it in all cases"],ans:1},
+  {q:"A differential backup does NOT reset the archive bit, which means:",opts:["Data is not actually backed up","Each differential includes all changes since the last full backup","Incremental backups will skip these files","The backup is unencrypted"],ans:1},
+  {q:"MTBF (Mean Time Between Failures) is a measure of:",opts:["Recovery time","Hardware reliability / expected lifespan","Backup frequency","RTO compliance"],ans:1},
+];
+let quizScores={};
+function buildQuiz(){
+  document.getElementById('quiz-container').innerHTML=QUIZ.map((q,qi)=>`
+    <div class="card" style="margin-bottom:16px">
+      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">Q${qi+1}. ${q.q}</p>
+      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
+    </div>`).join('');
+}
+function answerQ(qi,oi){
+  if(quizScores[qi]!==undefined)return;
+  const q=QUIZ[qi];
+  document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('correct');});
+  if(oi!==q.ans)document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt')[oi].classList.add('incorrect');
+  quizScores[qi]=oi===q.ans?1:0;
+  document.getElementById('quiz-score').textContent=`Score: ${Object.values(quizScores).reduce((a,b)=>a+b,0)} / 12`;
+}
+buildQuiz();
+</script>
+</body>
+</html>

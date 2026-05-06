@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 04 — Storage Technologies</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
+.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#f59e0b;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #fbbf24;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#b45309,#f59e0b);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#fde68a}
+.site-author-block{text-align:right;border-left:1px solid rgba(255,255,255,.08);padding-left:18px;flex-shrink:0}
+.site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#fbbf24;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(251,191,36,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(251,191,36,.1)}
+.tabs{display:flex;gap:0;background:#071020;border-bottom:1px solid #1e3a5c;padding:0 20px;overflow-x:auto}
+.tab{padding:14px 22px;cursor:pointer;color:#7ab3d4;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#fbbf24}.tab.active{border-bottom-color:#fbbf24;background:rgba(251,191,36,.05)}
+.tab-panel{display:none;padding:30px;max-width:960px;margin:0 auto}.tab-panel.active{display:block}
+h2{color:#fbbf24;margin-bottom:8px;font-size:1.2rem}
+.subtitle{color:#7ab3d4;font-size:.85rem;margin-bottom:20px;line-height:1.7}
+.card{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
+.card h3{color:#fbbf24;margin-bottom:12px;font-size:1rem}
+.btn{padding:9px 20px;border:none;border-radius:6px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
+.btn-amber{background:#d97706;color:#fff}.btn-amber:hover{background:#b45309}
+.btn-outline{background:transparent;border:1px solid #fbbf24;color:#fbbf24}.btn-outline:hover{background:rgba(251,191,36,.1)}
+.btn-sm{padding:5px 12px;font-size:.78rem}
+.alert{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.88rem;line-height:1.6}
+.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:#7ab3d4}
+.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#34d399}
+.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
+.alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
+.score-badge{display:inline-block;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#fbbf24;margin-bottom:16px}
+/* Storage type cards */
+.storage-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:16px 0}
+.storage-card{background:#071020;border:2px solid #1e3a5c;border-radius:12px;padding:18px;cursor:pointer;transition:all .2s}
+.storage-card:hover{border-color:#fbbf24;transform:translateY(-2px)}
+.storage-card.selected{border-color:#f59e0b;background:rgba(245,158,11,.08)}
+.storage-card.correct-pick{border-color:#10b981;background:rgba(16,185,129,.08)}
+.storage-card.wrong-pick{border-color:#ef4444;background:rgba(239,68,68,.08)}
+.sc-icon{font-size:2rem;margin-bottom:8px}
+.sc-name{font-weight:700;color:#fbbf24;margin-bottom:4px}
+.sc-desc{font-size:.75rem;color:#64748b;line-height:1.4}
+/* Connector quiz */
+.connector-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin:16px 0}
+.conn-card{background:#071020;border:2px solid #1e3a5c;border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .2s}
+.conn-card:hover{border-color:#fbbf24}.conn-card.selected{border-color:#f59e0b}.conn-card.matched{border-color:#10b981;background:rgba(16,185,129,.08)}.conn-card.wrong-c{border-color:#ef4444}
+/* Topology */
+.topo-container{background:#071020;border:1px solid #1e3a5c;border-radius:10px;padding:20px;min-height:300px;position:relative;overflow-x:auto}
+.topo-node{display:inline-block;background:#0d1b2a;border:2px solid #1e3a5c;border-radius:8px;padding:8px 12px;font-size:.75rem;text-align:center;cursor:pointer;transition:all .2s;margin:4px;vertical-align:middle}
+.topo-node:hover{border-color:#fbbf24}
+.topo-arrow{color:#1e3a5c;font-size:1.2rem;vertical-align:middle;margin:0 4px}
+/* Quiz */
+.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:left;width:100%;margin-bottom:8px}
+.quiz-opt:hover{border-color:#fbbf24}.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
+.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
+.site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#f59e0b}
+@media(max-width:600px){.storage-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="site-topbar">
+  <span>🖥️ Training Environment — Academic Use Only | CompTIA Server+</span>
+  <span class="author-tag">Eng. Abdullah Alasmari · م. عبدالله الأسمري</span>
+</div>
+<div class="site-header-bar">
+  <div class="site-logo-box">🗄️</div>
+  <div class="site-lab-info">
+    <h2>Lab 04 — Storage Technologies</h2>
+    <span>CompTIA Server+ SK0-005 · Chapter 4</span>
+  </div>
+  <div class="site-author-block">
+    <div class="aname">Eng. Abdullah Alasmari</div>
+    <div class="abook">Server+ Interactive Labs</div>
+  </div>
+</div>
+<a href="index.html" class="back-btn">← Back to Labs</a>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('t1',this)">Storage Types</div>
+  <div class="tab" onclick="showTab('t2',this)">Connectors</div>
+  <div class="tab" onclick="showTab('t3',this)">SAN vs NAS</div>
+  <div class="tab" onclick="showTab('t4',this)">Quiz</div>
+</div>
+
+<!-- TAB 1: Storage Types -->
+<div id="t1" class="tab-panel active">
+  <h2>Storage Architecture Matching</h2>
+  <p class="subtitle">Read each scenario, then click the best storage technology that matches. Score points for each correct choice.</p>
+  <div class="score-badge" id="st-score">Score: 0 / 0</div>
+  <div class="card" id="st-card"></div>
+  <div class="card">
+    <h3>📋 Storage Architecture Reference</h3>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:.8rem">
+        <thead><tr style="background:#071020"><th style="padding:9px;text-align:left;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Type</th><th style="padding:9px;text-align:left;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Protocol</th><th style="padding:9px;text-align:left;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Access</th><th style="padding:9px;text-align:left;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Best For</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#fbbf24;font-weight:700">DAS</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">SAS/SATA/NVMe</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">Direct block</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#64748b">Single server, high performance</td></tr>
+          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#fbbf24;font-weight:700">NAS</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">NFS/SMB/CIFS</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">File-level</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#64748b">File sharing, home dirs, backups</td></tr>
+          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#fbbf24;font-weight:700">SAN (FC)</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">Fibre Channel</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">Block-level</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#64748b">High-perf databases, enterprise</td></tr>
+          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#fbbf24;font-weight:700">iSCSI</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">TCP/IP</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">Block-level</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#64748b">SAN over Ethernet, cost-effective</td></tr>
+          <tr><td style="padding:9px;color:#fbbf24;font-weight:700">FCoE</td><td style="padding:9px">Ethernet (10GbE+)</td><td style="padding:9px">Block-level</td><td style="padding:9px;color:#64748b">Converge LAN+SAN on one cable</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2: Connectors -->
+<div id="t2" class="tab-panel">
+  <h2>Storage Connector Identification</h2>
+  <p class="subtitle">Click a connector name on the LEFT, then click its matching description on the RIGHT.</p>
+  <div class="score-badge" id="conn-score">Matched: 0 / 7</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div>
+      <div style="font-size:.82rem;color:#7ab3d4;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">Connector / Interface</div>
+      <div id="conn-left"></div>
+    </div>
+    <div>
+      <div style="font-size:.82rem;color:#7ab3d4;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">Description</div>
+      <div id="conn-right"></div>
+    </div>
+  </div>
+  <button class="btn btn-outline btn-sm" onclick="resetConn()" style="margin-top:12px">Reset</button>
+  <div id="conn-feedback" style="margin-top:12px"></div>
+</div>
+
+<!-- TAB 3: SAN vs NAS -->
+<div id="t3" class="tab-panel">
+  <h2>SAN vs NAS Architecture</h2>
+  <p class="subtitle">Compare the two most common enterprise storage architectures. Click each statement to sort it correctly.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+    <div class="card">
+      <h3>🌐 NAS — Network Attached Storage</h3>
+      <div id="nas-drop" style="min-height:120px;padding:8px;border:2px dashed #1e3a5c;border-radius:8px"></div>
+    </div>
+    <div class="card">
+      <h3>🔌 SAN — Storage Area Network</h3>
+      <div id="san-drop" style="min-height:120px;padding:8px;border:2px dashed #1e3a5c;border-radius:8px"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Statements — Click to assign:</h3>
+    <div id="sort-items"></div>
+    <button class="btn btn-amber" onclick="checkSort()" style="margin-top:12px">Check Answers</button>
+    <div id="sort-feedback" style="margin-top:12px"></div>
+  </div>
+  <div class="card">
+    <h3>📊 iSCSI vs Fibre Channel vs FCoE</h3>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:.8rem">
+        <thead><tr style="background:#071020"><th style="padding:9px;text-align:left;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Feature</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c;text-align:center">iSCSI</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c;text-align:center">Fibre Channel</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c;text-align:center">FCoE</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#e0e6f0">Transport</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#7ab3d4">TCP/IP Ethernet</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#7ab3d4">Dedicated FC fabric</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#7ab3d4">10GbE Ethernet</td></tr>
+          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#e0e6f0">Cost</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#34d399">Low</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#f87171">High</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#fbbf24">Medium</td></tr>
+          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#e0e6f0">Performance</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#fbbf24">Good</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#34d399">Excellent</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#34d399">Excellent</td></tr>
+          <tr><td style="padding:9px;color:#e0e6f0">Complexity</td><td style="padding:9px;text-align:center;color:#34d399">Low</td><td style="padding:9px;text-align:center;color:#f87171">High</td><td style="padding:9px;text-align:center;color:#fbbf24">Medium</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4: Quiz -->
+<div id="t4" class="tab-panel">
+  <h2>Knowledge Quiz — Storage Technologies</h2>
+  <p class="subtitle">10 questions on storage architectures, protocols, and connectors.</p>
+  <div class="score-badge" id="quiz-score">Score: 0 / 10</div>
+  <div id="quiz-container"></div>
+</div>
+
+<div class="site-footer-bar">
+  <p>Designed by <strong>Eng. Abdullah Alasmari</strong> · CompTIA Server+ Interactive Labs</p>
+</div>
+
+<script>
+function showTab(id,el){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');el.classList.add('active');}
+
+// ---- STORAGE TYPE SCENARIOS ----
+const ST_SCENARIOS=[
+  {q:"A small accounting firm needs shared storage so all 5 workstations can access the same financial spreadsheets simultaneously over their existing Ethernet network.",ans:"NAS",opts:["DAS","NAS","SAN (FC)","iSCSI"],explain:"NAS uses file-level protocols (SMB/CIFS) over existing Ethernet — perfect for shared file access in small environments."},
+  {q:"A single high-performance database server needs the fastest possible storage directly connected without going through a network.",ans:"DAS",opts:["DAS","NAS","SAN (FC)","FCoE"],explain:"DAS (Direct Attached Storage) connects directly to the server via SAS/NVMe — no network overhead, maximum performance."},
+  {q:"A large enterprise needs block-level storage for 50 servers with the highest possible performance and reliability. Budget is not a concern.",ans:"SAN (FC)",opts:["DAS","NAS","SAN (FC)","iSCSI"],explain:"Fibre Channel SAN provides the highest performance block storage with dedicated fabric — the enterprise standard for mission-critical workloads."},
+  {q:"A medium business wants SAN-like block storage but cannot afford a dedicated Fibre Channel infrastructure. They have a 10GbE network.",ans:"iSCSI",opts:["DAS","NAS","SAN (FC)","iSCSI"],explain:"iSCSI delivers block-level storage over standard TCP/IP Ethernet — SAN functionality at Ethernet cost."},
+  {q:"A data center wants to reduce cabling by combining storage (FC) and network (LAN) traffic on a single 10GbE cable.",ans:"FCoE",opts:["NAS","SAN (FC)","iSCSI","FCoE"],explain:"FCoE (Fibre Channel over Ethernet) encapsulates FC frames in Ethernet — one cable for both LAN and SAN traffic."},
+];
+let stIdx=0,stCorrect=0;
+function loadST(){
+  const sc=ST_SCENARIOS[stIdx];
+  document.getElementById('st-card').innerHTML=`
+    <h3>Scenario ${stIdx+1} of ${ST_SCENARIOS.length}</h3>
+    <p style="color:#e0e6f0;line-height:1.7;margin:12px 0">${sc.q}</p>
+    <div class="storage-grid">${sc.opts.map(o=>`<div class="storage-card" onclick="pickStorage('${o}')"><div class="sc-icon">${{DAS:'💽',NAS:'📁','SAN (FC)':'⚡',iSCSI:'🌐',FCoE:'🔗'}[o]||'🗄️'}</div><div class="sc-name">${o}</div></div>`).join('')}</div>
+    <div id="st-fb"></div>`;
+  updateSTScore();
+}
+function pickStorage(choice){
+  const sc=ST_SCENARIOS[stIdx];
+  document.querySelectorAll('.storage-card').forEach(c=>{c.style.pointerEvents='none';if(c.querySelector('.sc-name').textContent===sc.ans)c.classList.add('correct-pick');});
+  const correct=choice===sc.ans;
+  if(correct)stCorrect++;
+  document.getElementById('st-fb').innerHTML=`<div class="alert ${correct?'alert-success':'alert-warn'}">${correct?'✅ Correct!':'💡'} ${sc.explain}<br><button class="btn btn-outline btn-sm" onclick="nextST()" style="margin-top:10px">${stIdx<ST_SCENARIOS.length-1?'Next Scenario →':'Finish'}</button></div>`;
+  updateSTScore();
+}
+function nextST(){stIdx++;if(stIdx>=ST_SCENARIOS.length){document.getElementById('st-card').innerHTML=`<h3>Complete!</h3><div class="alert alert-success" style="margin-top:12px">Score: ${stCorrect}/${ST_SCENARIOS.length} <button class="btn btn-outline btn-sm" onclick="stIdx=0;stCorrect=0;loadST()" style="margin-left:10px">Retry</button></div>`;return;}loadST();}
+function updateSTScore(){document.getElementById('st-score').textContent=`Score: ${stCorrect} / ${Math.min(stIdx,ST_SCENARIOS.length)}`;}
+loadST();
+
+// ---- CONNECTORS ----
+const CONN_DATA=[
+  {conn:"SATA III",desc:"6 Gbps interface; most common for HDDs and SSDs in desktop/budget servers"},
+  {conn:"SAS (Serial Attached SCSI)",desc:"12 Gbps; enterprise-grade, supports longer cables and dual-porting"},
+  {conn:"NVMe (M.2/PCIe)",desc:"Fastest storage interface; directly uses PCIe lanes, sub-100μs latency"},
+  {conn:"Fibre Channel (FC)",desc:"Dedicated storage network protocol; 8/16/32 Gbps, requires HBA"},
+  {conn:"USB 3.0",desc:"External storage only; 5 Gbps; not suitable for production server storage"},
+  {conn:"SFP+ (10GbE)",desc:"Small form-factor pluggable; used for 10 Gigabit Ethernet and iSCSI"},
+  {conn:"LC Fiber Optic",desc:"Fiber connector used in Fibre Channel and 10GbE fiber SAN connections"},
+];
+let connLeft=null,connMatched=0;
+function buildConn(){
+  connLeft=null;connMatched=0;
+  document.getElementById('conn-score').textContent='Matched: 0 / 7';
+  document.getElementById('conn-feedback').innerHTML='';
+  const shuffled=[...CONN_DATA].sort(()=>Math.random()-.5);
+  document.getElementById('conn-left').innerHTML=CONN_DATA.map((d,i)=>`<div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px 14px;margin-bottom:8px;cursor:pointer;transition:all .2s;font-size:.85rem" id="cl-${i}" onclick="selectConnLeft(${i})">${d.conn}</div>`).join('');
+  document.getElementById('conn-right').innerHTML=shuffled.map((d,i)=>`<div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px 14px;margin-bottom:8px;cursor:pointer;transition:all .2s;font-size:.82rem;color:#7ab3d4" id="cr-${i}" onclick="selectConnRight(${i})" data-desc="${d.desc}">${d.desc}</div>`).join('');
+}
+function selectConnLeft(i){document.querySelectorAll('#conn-left div').forEach(el=>el.style.borderColor='#1e3a5c');document.getElementById('cl-'+i).style.borderColor='#fbbf24';connLeft=i;}
+function selectConnRight(i){
+  if(connLeft===null)return;
+  const desc=document.getElementById('cr-'+i).dataset.desc;
+  const correct=desc===CONN_DATA[connLeft].desc;
+  if(correct){
+    document.getElementById('cl-'+connLeft).style.borderColor='#10b981';document.getElementById('cl-'+connLeft).style.color='#34d399';document.getElementById('cl-'+connLeft).style.pointerEvents='none';
+    document.getElementById('cr-'+i).style.borderColor='#10b981';document.getElementById('cr-'+i).style.color='#34d399';document.getElementById('cr-'+i).style.pointerEvents='none';
+    connMatched++;document.getElementById('conn-score').textContent=`Matched: ${connMatched} / 7`;
+    if(connMatched===7)document.getElementById('conn-feedback').innerHTML='<div class="alert alert-success">🎉 All connectors matched!</div>';
+  } else {
+    document.getElementById('cl-'+connLeft).style.borderColor='#ef4444';document.getElementById('cr-'+i).style.borderColor='#ef4444';
+    setTimeout(()=>{document.getElementById('cl-'+connLeft).style.borderColor='#1e3a5c';document.getElementById('cr-'+i).style.borderColor='#1e3a5c';},600);
+  }
+  connLeft=null;
+}
+function resetConn(){buildConn();}
+buildConn();
+
+// ---- NAS vs SAN SORT ----
+const SORT_ITEMS=[
+  {text:"Uses file-level protocols (SMB, NFS)",ans:"NAS"},
+  {text:"Uses block-level protocols (SCSI, FC)",ans:"SAN"},
+  {text:"Appears to client as shared folder",ans:"NAS"},
+  {text:"Appears to client as local disk",ans:"SAN"},
+  {text:"Requires HBA for connection",ans:"SAN"},
+  {text:"Uses standard Ethernet NIC",ans:"NAS"},
+  {text:"Best for file sharing and collaboration",ans:"NAS"},
+  {text:"Best for high-performance databases",ans:"SAN"},
+];
+let sortAssigned={};
+function buildSort(){
+  document.getElementById('sort-items').innerHTML=SORT_ITEMS.map((item,i)=>`
+    <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:10px" id="si-${i}">
+      <span style="font-size:.85rem;flex:1">${item.text}</span>
+      <div style="display:flex;gap:6px;flex-shrink:0">
+        <button style="padding:4px 10px;border:1px solid #1e3a5c;border-radius:6px;background:#071020;color:#7ab3d4;cursor:pointer;font-size:.75rem;transition:all .2s" onclick="assignSort(${i},'NAS')">NAS</button>
+        <button style="padding:4px 10px;border:1px solid #1e3a5c;border-radius:6px;background:#071020;color:#7ab3d4;cursor:pointer;font-size:.75rem;transition:all .2s" onclick="assignSort(${i},'SAN')">SAN</button>
+      </div>
+      <span id="sa-${i}" style="font-size:.75rem;min-width:30px;text-align:right"></span>
+    </div>`).join('');
+}
+function assignSort(i,type){
+  sortAssigned[i]=type;
+  const item=document.getElementById('si-'+i);
+  item.querySelectorAll('button').forEach(b=>{b.style.background='#071020';b.style.color='#7ab3d4';b.style.borderColor='#1e3a5c';if(b.textContent===type){b.style.background='rgba(251,191,36,.15)';b.style.color='#fbbf24';b.style.borderColor='#fbbf24';}});
+  document.getElementById('sa-'+i).textContent='';
+}
+function checkSort(){
+  let correct=0;
+  SORT_ITEMS.forEach((item,i)=>{
+    const el=document.getElementById('sa-'+i);
+    if(sortAssigned[i]===item.ans){correct++;el.innerHTML='<span style="color:#34d399">✓</span>';}
+    else if(sortAssigned[i]){el.innerHTML=`<span style="color:#f87171">✗${item.ans}</span>`;}
+    else{el.innerHTML='<span style="color:#64748b">?</span>';}
+  });
+  document.getElementById('sort-feedback').innerHTML=`<div class="alert ${correct===SORT_ITEMS.length?'alert-success':'alert-info'}">Score: ${correct}/${SORT_ITEMS.length}</div>`;
+}
+buildSort();
+
+// ---- QUIZ ----
+const QUIZ=[
+  {q:"Which storage type provides file-level access over a network using SMB or NFS?",opts:["DAS","SAN","NAS","iSCSI"],ans:2},
+  {q:"iSCSI transports SCSI commands over which network protocol?",opts:["Fibre Channel","TCP/IP","InfiniBand","USB"],ans:1},
+  {q:"Which interface provides the FASTEST storage access for a single server?",opts:["iSCSI","NAS (SMB)","NVMe (PCIe)","SATA III"],ans:2},
+  {q:"FCoE (Fibre Channel over Ethernet) requires a minimum link speed of:",opts:["1 GbE","10 GbE","100 GbE","5 GbE"],ans:1},
+  {q:"An HBA (Host Bus Adapter) is required to connect a server to:",opts:["NAS storage","DAS SATA drives","Fibre Channel SAN","USB storage"],ans:2},
+  {q:"Which storage protocol uses a dedicated fabric separate from the LAN?",opts:["NAS","iSCSI","FCoE","Fibre Channel"],ans:3},
+  {q:"SAS drives are preferred over SATA in enterprise servers primarily because:",opts:["They are cheaper","They support longer cable runs and dual-porting","They use less power","They are smaller"],ans:1},
+  {q:"JBOD (Just a Bunch of Disks) means:",opts:["Disks in a RAID 0 array","Disks with redundancy","Individual disks without RAID, presented separately","Disks in a Fibre Channel array"],ans:2},
+  {q:"A thin provisioned LUN in a SAN means:",opts:["The LUN uses the full allocated space immediately","Storage space is allocated on demand as data is written","The LUN cannot be expanded","The LUN uses hardware encryption"],ans:1},
+  {q:"Which connector type is used for enterprise SAS hard drives?",opts:["SATA power+data","SFF-8482 (SAS)","M.2 Key M","USB-C"],ans:1},
+];
+let quizScores={};
+function buildQuiz(){
+  document.getElementById('quiz-container').innerHTML=QUIZ.map((q,qi)=>`
+    <div class="card" style="margin-bottom:16px">
+      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">Q${qi+1}. ${q.q}</p>
+      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
+    </div>`).join('');
+}
+function answerQ(qi,oi){
+  if(quizScores[qi]!==undefined)return;
+  const q=QUIZ[qi];
+  document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('correct');});
+  if(oi!==q.ans)document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt')[oi].classList.add('incorrect');
+  quizScores[qi]=oi===q.ans?1:0;
+  document.getElementById('quiz-score').textContent=`Score: ${Object.values(quizScores).reduce((a,b)=>a+b,0)} / 10`;
+}
+buildQuiz();
+</script>
+</body>
+</html>

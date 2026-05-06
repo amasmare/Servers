@@ -348,7 +348,9 @@ function answerQuiz(qi,oi){
   if(oi!==q.ans){opts[oi].classList.add('incorrect');quizScores[qi]=0;}
   else{quizScores[qi]=1;}
   const total=Object.values(quizScores).reduce((a,b)=>a+b,0);
-  document.getElementById('quiz-score').textContent=`النتيجة: ${total} / 10`;
+  const _sc=total;
+  document.getElementById('quiz-score').textContent=`النتيجة: ${_sc} / 10`;
+  localStorage.setItem('sp_lab01',JSON.stringify({score:_sc,total:10,pct:Math.round(_sc/10*100)}));;
   saveScore();
 }
 function saveScore(){

@@ -281,7 +281,9 @@ function answerQ(qi,oi){
   document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('correct');});
   if(oi!==q.ans)document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt')[oi].classList.add('incorrect');
   quizScores[qi]=oi===q.ans?1:0;
-  document.getElementById('quiz-score').textContent=`النتيجة: ${Object.values(quizScores).reduce((a,b)=>a+b,0)} / 12`;
+  const _sc=Object.values(quizScores).reduce((a,b)=>a+b,0);
+  document.getElementById('quiz-score').textContent=`النتيجة: ${_sc} / 12`;
+  localStorage.setItem('sp_lab10',JSON.stringify({score:_sc,total:12,pct:Math.round(_sc/12*100)}));;
 }
 buildQuiz();
 </script>

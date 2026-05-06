@@ -255,6 +255,7 @@ function answerExam(qi,oi){
   const total=Object.values(examScores).reduce((a,b)=>a+b,0);
   document.getElementById('exam-score-badge').textContent=`النتيجة: ${total} / 20`;
   addScore(correct?5:0,5);
+  localStorage.setItem('sp_lab11',JSON.stringify({score:total,total:20,pct:Math.round(total/20*100)}));
   if(Object.keys(examScores).length===EXAM_Q.length)showFinalResult();
 }
 function showFinalResult(){

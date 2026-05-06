@@ -85,6 +85,13 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
 .site-footer-bar p{color:#475569;font-size:.8rem;line-height:2.2;margin:0}
 .site-footer-bar strong{color:#f59e0b}
 @media(max-width:600px){.labs-grid{grid-template-columns:1fr}.stats-bar{gap:20px}.book-banner{flex-direction:column;text-align:center}}
+
+.grade-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;border:1px solid}
+.grade-A{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.4);color:#34d399}
+.grade-B{background:rgba(0,212,255,.10);border-color:rgba(0,212,255,.3);color:#00d4ff}
+.grade-C{background:rgba(245,158,11,.10);border-color:rgba(245,158,11,.3);color:#fbbf24}
+.grade-D{background:rgba(239,68,68,.10);border-color:rgba(239,68,68,.3);color:#f87171}
+.grade-none{background:rgba(100,116,139,.08);border-color:rgba(100,116,139,.2);color:#64748b}
 </style>
 </head>
 <body>
@@ -143,7 +150,7 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">بطاقة الشبكة</span><span class="topic-tag">وحدة الطاقة</span><span class="topic-tag">بطاقة RAID</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">الفصل الأول</span>
+        <span class="chapter-badge">الفصل الأول</span><span class="grade-badge grade-none" id="gb-sp_lab01">—</span>
         <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
@@ -163,7 +170,7 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">رموز POST</span><span class="topic-tag">Secure Boot</span><span class="topic-tag">IPMI</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">الفصل الثاني</span>
+        <span class="chapter-badge">الفصل الثاني</span><span class="grade-badge grade-none" id="gb-sp_lab02">—</span>
         <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
@@ -183,7 +190,7 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">تحمّل الأعطال</span><span class="topic-tag">Hot Spare</span><span class="topic-tag">JBOD</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">الفصل الثالث</span>
+        <span class="chapter-badge">الفصل الثالث</span><span class="grade-badge grade-none" id="gb-sp_lab03">—</span>
         <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
@@ -203,7 +210,7 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">SAS / SATA / NVMe</span><span class="topic-tag">توبولوجيا FC</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">الفصل الرابع</span>
+        <span class="chapter-badge">الفصل الرابع</span><span class="grade-badge grade-none" id="gb-sp_lab04">—</span>
         <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
@@ -223,7 +230,7 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">NTP / الطباعة</span><span class="topic-tag">أرقام المنافذ</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">الفصل الخامس</span>
+        <span class="chapter-badge">الفصل الخامس</span><span class="grade-badge grade-none" id="gb-sp_lab05">—</span>
         <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
@@ -243,7 +250,7 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">الترحيل المباشر</span><span class="topic-tag">اللقطات</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">الفصل السادس</span>
+        <span class="chapter-badge">الفصل السادس</span><span class="grade-badge grade-none" id="gb-sp_lab06">—</span>
         <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
@@ -263,7 +270,7 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">الأمن المادي</span><span class="topic-tag">قوائم التحكم</span><span class="topic-tag">MFA</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">الفصل السابع</span>
+        <span class="chapter-badge">الفصل السابع</span><span class="grade-badge grade-none" id="gb-sp_lab07">—</span>
         <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
@@ -283,7 +290,7 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">VPN / IPsec</span><span class="topic-tag">DMZ</span><span class="topic-tag">IDS/IPS</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">الفصل الثامن</span>
+        <span class="chapter-badge">الفصل الثامن</span><span class="grade-badge grade-none" id="gb-sp_lab08">—</span>
         <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
@@ -303,7 +310,7 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">نسخ كامل / تزايدي</span><span class="topic-tag">BCP / DRP</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">الفصل التاسع</span>
+        <span class="chapter-badge">الفصل التاسع</span><span class="grade-badge grade-none" id="gb-sp_lab09">—</span>
         <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
@@ -323,7 +330,7 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">ping / tracert</span><span class="topic-tag">Event Viewer</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">الفصل العاشر</span>
+        <span class="chapter-badge">الفصل العاشر</span><span class="grade-badge grade-none" id="gb-sp_lab10">—</span>
         <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
@@ -343,7 +350,7 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">التقييم</span><span class="topic-tag">التحضير للاختبار</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">جميع الفصول</span>
+        <span class="chapter-badge">جميع الفصول</span><span class="grade-badge grade-none" id="gb-sp_lab11">—</span>
         <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
@@ -386,5 +393,51 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
   <p>استناداً إلى: <strong>شهادة CompTIA Server+ (SK0-005)</strong></p>
   <p style="font-size:.7rem;color:#334155;margin-top:4px">© 2025 · جميع المحتوى لأغراض تعليمية أكاديمية · مختبرات Server+ التفاعلية</p>
 </div>
+
+<script>
+(function(){
+  var labs=[
+    {key:'sp_lab01',label:'المختبر 1'},
+    {key:'sp_lab02',label:'المختبر 2'},
+    {key:'sp_lab03',label:'المختبر 3'},
+    {key:'sp_lab04',label:'المختبر 4'},
+    {key:'sp_lab05',label:'المختبر 5'},
+    {key:'sp_lab06',label:'المختبر 6'},
+    {key:'sp_lab07',label:'المختبر 7'},
+    {key:'sp_lab08',label:'المختبر 8'},
+    {key:'sp_lab09',label:'المختبر 9'},
+    {key:'sp_lab10',label:'المختبر 10'},
+    {key:'sp_lab11',label:'المختبر 11'},
+  ];
+  labs.forEach(function(lab){
+    var raw=localStorage.getItem(lab.key);
+    if(!raw)return;
+    try{
+      var d=JSON.parse(raw);
+      var el=document.getElementById('gb-'+lab.key);
+      if(!el)return;
+      var pct=d.pct;
+      var grade,cls;
+      if(pct>=90){grade='A';cls='grade-A';}
+      else if(pct>=75){grade='B';cls='grade-B';}
+      else if(pct>=60){grade='C';cls='grade-C';}
+      else{grade='D';cls='grade-D';}
+      el.className='grade-badge '+cls;
+      el.textContent=grade+' '+pct+'%';
+    }catch(e){}
+  });
+  // Update total completed stat
+  var done=labs.filter(function(l){return localStorage.getItem(l.key);}).length;
+  var statEls=document.querySelectorAll('.stat-num');
+  // find the "11" stat and color it based on progress
+  if(done>0){
+    var msg=document.createElement('div');
+    msg.style='text-align:center;font-size:12px;color:#34d399;margin-bottom:10px;font-weight:700';
+    msg.textContent='✓ أكملت '+done+' من 11 مختبراً';
+    var hdr=document.querySelector('.stats-bar');
+    if(hdr)hdr.parentNode.insertBefore(msg,hdr.nextSibling);
+  }
+})();
+</script>
 </body>
 </html>

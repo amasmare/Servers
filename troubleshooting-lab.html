@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lab 10 — Troubleshooting Methodology</title>
+<title>مختبر 10 — منهجية استكشاف الأخطاء</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
@@ -12,7 +12,7 @@ body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0
 .site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #2dd4bf;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#0f766e,#14b8a6);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
 .site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#99f6e4}
-.site-author-block{text-align:right;border-left:1px solid rgba(255,255,255,.08);padding-left:18px;flex-shrink:0}
+.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.08);padding-right:18px;flex-shrink:0}
 .site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b}
 .back-btn{display:inline-flex;align-items:center;gap:6px;color:#2dd4bf;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(45,212,191,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(45,212,191,.1)}
 .tabs{display:flex;gap:0;background:#071020;border-bottom:1px solid #1e3a5c;padding:0 20px;overflow-x:auto}
@@ -43,7 +43,7 @@ h2{color:#2dd4bf;margin-bottom:8px;font-size:1.2rem}
 .match-item{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px 14px;margin-bottom:8px;cursor:pointer;transition:all .2s;font-size:.85rem}
 .match-item:hover{border-color:#2dd4bf}.match-item.selected{border-color:#14b8a6;background:rgba(20,184,166,.1);color:#2dd4bf}.match-item.matched{border-color:#10b981;background:rgba(16,185,129,.1);color:#34d399}.match-item.wrong-m{border-color:#ef4444}
 /* Quiz */
-.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:left;width:100%;margin-bottom:8px}
+.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:#e0e6f0}
 .quiz-opt:hover{border-color:#2dd4bf}.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
 .site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
 .site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#f59e0b}
@@ -51,107 +51,107 @@ h2{color:#2dd4bf;margin-bottom:8px;font-size:1.2rem}
 </head>
 <body>
 <div class="site-topbar">
-  <span>🖥️ Training Environment — Academic Use Only | CompTIA Server+</span>
-  <span class="author-tag">Eng. Abdullah Alasmari · م. عبدالله الأسمري</span>
+  <span>🖥️ بيئة التدريب — للاستخدام الأكاديمي فقط | CompTIA Server+</span>
+  <span class="author-tag">م. عبدالله الأسمري</span>
 </div>
 <div class="site-header-bar">
   <div class="site-logo-box">🔍</div>
   <div class="site-lab-info">
-    <h2>Lab 10 — Troubleshooting Methodology</h2>
-    <span>CompTIA Server+ SK0-005 · Chapter 10</span>
+    <h2>مختبر 10 — منهجية استكشاف الأخطاء</h2>
+    <span>CompTIA Server+ SK0-005 · الفصل العاشر</span>
   </div>
   <div class="site-author-block">
-    <div class="aname">Eng. Abdullah Alasmari</div>
-    <div class="abook">Server+ Interactive Labs</div>
+    <div class="aname">م. عبدالله الأسمري</div>
+    <div class="abook">مختبرات Server+ التفاعلية</div>
   </div>
 </div>
-<a href="index.html" class="back-btn">← Back to Labs</a>
+<a href="index.html" class="back-btn">→ العودة للمختبرات</a>
 
 <div class="tabs">
-  <div class="tab active" onclick="showTab('t1',this)">7-Step Methodology</div>
-  <div class="tab" onclick="showTab('t2',this)">Scenario Walk-Through</div>
-  <div class="tab" onclick="showTab('t3',this)">Diagnostic Tools</div>
-  <div class="tab" onclick="showTab('t4',this)">Quiz</div>
+  <div class="tab active" onclick="showTab('t1',this)">المنهجية السباعية</div>
+  <div class="tab" onclick="showTab('t2',this)">سيناريو تطبيقي</div>
+  <div class="tab" onclick="showTab('t3',this)">أدوات التشخيص</div>
+  <div class="tab" onclick="showTab('t4',this)">الاختبار</div>
 </div>
 
 <!-- TAB 1 -->
 <div id="t1" class="tab-panel active">
-  <h2>CompTIA's 7-Step Troubleshooting Methodology</h2>
-  <p class="subtitle">Click each step to see its details and what actions to take. This process applies to ALL server problems.</p>
+  <h2>منهجية CompTIA السباعية لاستكشاف الأخطاء</h2>
+  <p class="subtitle">انقر على كل خطوة لمعرفة تفاصيلها والإجراءات اللازمة. هذه العملية تنطبق على جميع مشكلات الخوادم.</p>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
     <div class="step-flow" id="step-flow"></div>
     <div class="card" id="step-detail">
-      <h3>Select a step to learn more</h3>
-      <p class="subtitle">Click any of the 7 steps on the left to see detailed guidance for that stage of troubleshooting.</p>
+      <h3>اختر خطوة لمعرفة التفاصيل</h3>
+      <p class="subtitle">انقر على أي من الخطوات السبع لعرض إرشادات تفصيلية لتلك المرحلة من استكشاف الأخطاء.</p>
     </div>
   </div>
 </div>
 
 <!-- TAB 2 -->
 <div id="t2" class="tab-panel">
-  <h2>Troubleshooting Scenario Walk-Through</h2>
-  <p class="subtitle">Apply the 7-step methodology to real server problems. Choose what to do at each step.</p>
-  <div class="score-badge" id="scenario-score">Score: 0 / 0</div>
+  <h2>سيناريو تطبيقي لاستكشاف الأخطاء</h2>
+  <p class="subtitle">طبّق المنهجية السباعية على مشكلات خوادم حقيقية. اختر ما يجب فعله في كل خطوة.</p>
+  <div class="score-badge" id="scenario-score">النتيجة: 0 / 0</div>
   <div id="scenario-card" class="card"></div>
 </div>
 
 <!-- TAB 3 -->
 <div id="t3" class="tab-panel">
-  <h2>Diagnostic Tools Matching</h2>
-  <p class="subtitle">Click a tool on the LEFT, then its use case on the RIGHT. Match all 10 tools.</p>
-  <div class="score-badge" id="tool-score">Matched: 0 / 10</div>
+  <h2>مطابقة أدوات التشخيص</h2>
+  <p class="subtitle">انقر على أداة من اليمين، ثم حالة الاستخدام المقابلة من اليسار. طابق جميع الأدوات العشر.</p>
+  <div class="score-badge" id="tool-score">مُطابَق: 0 / 10</div>
   <div class="tool-match">
     <div>
-      <div style="font-size:.78rem;color:#7ab3d4;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">Tool / Command</div>
+      <div style="font-size:.78rem;color:#7ab3d4;margin-bottom:8px">الأداة / الأمر</div>
       <div id="tool-left"></div>
     </div>
     <div>
-      <div style="font-size:.78rem;color:#7ab3d4;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">What it does</div>
+      <div style="font-size:.78rem;color:#7ab3d4;margin-bottom:8px">ما تفعله</div>
       <div id="tool-right"></div>
     </div>
   </div>
-  <button class="btn btn-outline btn-sm" onclick="resetTools()">Reset</button>
+  <button class="btn btn-outline btn-sm" onclick="resetTools()">إعادة ضبط</button>
   <div class="card" style="margin-top:16px">
-    <h3>📋 Common Server Troubleshooting Tools</h3>
+    <h3>📋 أدوات استكشاف أخطاء الخوادم الشائعة</h3>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;font-size:.8rem">
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">ping</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Tests basic IP connectivity to a host</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">tracert / traceroute</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Shows each hop to destination, identifies where path breaks</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">ipconfig / ifconfig</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Shows IP configuration, gateway, DNS settings</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4ff">netstat</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Shows active connections and listening ports</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">nslookup / dig</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Tests DNS resolution for a hostname</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">Event Viewer</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Windows system/app/security event logs</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">Task Manager / top</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Real-time CPU, RAM, and process monitoring</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">diskpart / fdisk</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Disk partitioning and management</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">SMART tools</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Hard drive health and predictive failure analysis</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">Wireshark</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">Full packet capture and protocol analysis</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">ping</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">اختبار الاتصال الأساسي بعنوان IP لمضيف</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">tracert / traceroute</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">يعرض كل عقدة وسيطة على الطريق للوجهة ويحدد أين ينقطع المسار</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">ipconfig / ifconfig</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">يعرض تهيئة IP والبوابة وإعدادات DNS</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">netstat</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">يعرض الاتصالات النشطة والمنافذ المستمِعة</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">nslookup / dig</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">يختبر تحليل DNS لاسم مضيف</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">Event Viewer</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">سجلات أحداث Windows للنظام والتطبيقات والأمان</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">Task Manager / top</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">مراقبة فورية للمعالج والذاكرة والعمليات</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">diskpart / fdisk</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">إدارة وتقسيم الأقراص</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">SMART tools</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">صحة القرص الصلب وتحليل الأعطال المبكرة</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">Wireshark</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">التقاط الحزم الكاملة وتحليل البروتوكولات</div></div>
     </div>
   </div>
 </div>
 
 <!-- TAB 4 -->
 <div id="t4" class="tab-panel">
-  <h2>Knowledge Quiz — Troubleshooting</h2>
-  <p class="subtitle">12 questions on the troubleshooting methodology, tools, and diagnostic scenarios.</p>
-  <div class="score-badge" id="quiz-score">Score: 0 / 12</div>
+  <h2>اختبار المعرفة — استكشاف الأخطاء</h2>
+  <p class="subtitle">12 سؤالاً حول منهجية استكشاف الأخطاء والأدوات والسيناريوهات التشخيصية.</p>
+  <div class="score-badge" id="quiz-score">النتيجة: 0 / 12</div>
   <div id="quiz-container"></div>
 </div>
 
 <div class="site-footer-bar">
-  <p>Designed by <strong>Eng. Abdullah Alasmari</strong> · CompTIA Server+ Interactive Labs</p>
+  <p>تصميم <strong>م. عبدالله الأسمري</strong> · مختبرات CompTIA Server+ التفاعلية</p>
 </div>
 
 <script>
 function showTab(id,el){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');el.classList.add('active');}
 
-// ---- 7-STEP METHODOLOGY ----
+// ---- المنهجية السباعية ----
 const STEPS=[
-  {num:1,title:"Identify the Problem",color:"#2dd4bf",detail:"Gather information about the problem. Ask: What changed? When did it start? Who is affected? What error messages appear?",actions:["Interview users and affected parties","Collect error messages, screenshots, logs","Identify the scope (single user, department, entire company)","Check monitoring dashboards for alerts","Document all symptoms precisely"],dont:"Don't assume you know the cause before gathering data."},
-  {num:2,title:"Establish a Theory of Probable Cause",color:"#22d3ee",detail:"Based on symptoms, develop one or more theories about what might be causing the problem. Question the obvious first.",actions:["List possible causes from most to least likely","Consider recent changes (patches, config changes, hardware)","Use divide and conquer — eliminate halves of potential causes","Research error codes and symptoms online/in documentation"],dont:"Don't start making changes before you have a theory."},
-  {num:3,title:"Test the Theory",color:"#38bdf8",detail:"Test your theory to determine if it's the actual cause. This is a diagnostic step — not yet fixing, just confirming.",actions:["Run diagnostic tests relevant to your theory","Use appropriate tools (ping, Event Viewer, SMART checks)","Try to reproduce the problem consistently","If theory is confirmed — proceed to plan of action","If theory fails — return to step 2 with a new theory"],dont:"Don't test multiple theories simultaneously — you won't know which fix worked."},
-  {num:4,title:"Establish a Plan of Action",color:"#818cf8",detail:"Create a plan to resolve the problem. Consider impact, required approvals, rollback plan, and change window.",actions:["Document the planned fix steps","Identify potential impact to other systems","Get management/change board approval if needed","Plan a rollback strategy if the fix fails","Schedule a change window for production changes"],dont:"Don't make unplanned changes to production systems."},
-  {num:5,title:"Implement the Solution",color:"#a78bfa",detail:"Execute your plan of action. Make changes carefully and in a controlled manner.",actions:["Follow the documented plan step by step","Make one change at a time when possible","Document each change as you make it","Monitor systems during and after changes","Be prepared to roll back if needed"],dont:"Don't rush changes. One mistake can compound the problem."},
-  {num:6,title:"Verify Full System Functionality",color:"#c4b5fd",detail:"Confirm the problem is resolved AND that you haven't introduced new issues. Test all affected systems.",actions:["Test the specific problem that was reported","Test related systems that could be affected","Verify with the original reporter that it works","Run monitoring to check for new alerts","Test edge cases and secondary functions"],dont:"Don't close the ticket before thorough verification."},
-  {num:7,title:"Document Findings & Lessons Learned",color:"#e9d5ff",detail:"Create comprehensive documentation of the problem, cause, solution, and prevention steps for future reference.",actions:["Document root cause and contributing factors","Record the exact solution steps that worked","Update knowledge base articles","Implement preventive measures if possible","Share lessons learned with the team","Update monitoring thresholds if applicable"],dont:"Don't skip documentation — the same problem will occur again without it."},
+  {num:1,title:"تحديد المشكلة",color:"#2dd4bf",detail:"اجمع معلومات حول المشكلة. اسأل: ما الذي تغيّر؟ متى بدأت؟ من المتضررون؟ ما رسائل الخطأ التي تظهر؟",actions:["قابل المستخدمين والأطراف المتضررة","اجمع رسائل الخطأ ولقطات الشاشة والسجلات","حدّد نطاق المشكلة (مستخدم واحد، قسم، أم الشركة كاملة)","راجع لوحات المراقبة للتنبيهات","وثّق جميع الأعراض بدقة"],dont:"لا تفترض معرفة السبب قبل جمع البيانات."},
+  {num:2,title:"وضع نظرية للسبب المحتمل",color:"#22d3ee",detail:"بناءً على الأعراض، ضع نظرية أو أكثر حول ما قد يسبب المشكلة. ابدأ بالأسباب الواضحة.",actions:["اسرد الأسباب المحتملة من الأكثر إلى الأقل احتمالاً","فكّر في التغييرات الأخيرة (تحديثات، تغييرات إعداد، أجهزة)","استخدم أسلوب التقسيم للتخلص من نصف الأسباب المحتملة","ابحث عن رموز الخطأ والأعراض في الوثائق والإنترنت"],dont:"لا تبدأ في إجراء تغييرات قبل أن يكون لديك نظرية."},
+  {num:3,title:"اختبار النظرية",color:"#38bdf8",detail:"اختبر نظريتك لتحديد ما إذا كانت السبب الفعلي. هذه خطوة تشخيصية — ليست إصلاحاً بعد، فقط تأكيد.",actions:["أجرِ اختبارات تشخيصية مرتبطة بنظريتك","استخدم الأدوات المناسبة (ping, Event Viewer, SMART)","حاول إعادة إنتاج المشكلة بشكل متسق","إذا تأكدت النظرية — انتقل إلى خطة العمل","إذا فشلت النظرية — عُد إلى الخطوة 2 بنظرية جديدة"],dont:"لا تختبر نظريات متعددة في وقت واحد — لن تعرف أي إصلاح نجح."},
+  {num:4,title:"وضع خطة عمل",color:"#818cf8",detail:"أنشئ خطة لحل المشكلة. ضع في الاعتبار التأثير، الموافقات المطلوبة، خطة التراجع، ونافذة التغيير.",actions:["وثّق خطوات الإصلاح المخطط لها","حدّد التأثير المحتمل على الأنظمة الأخرى","احصل على موافقة الإدارة/لجنة التغيير إذا لزم","خطّط لاستراتيجية تراجع في حال فشل الإصلاح","حدّد نافذة تغيير للتعديلات في بيئة الإنتاج"],dont:"لا تجرِ تغييرات غير مخططة على أنظمة الإنتاج."},
+  {num:5,title:"تنفيذ الحل",color:"#a78bfa",detail:"نفّذ خطة العمل. أجرِ التغييرات بحذر وبطريقة منضبطة.",actions:["اتّبع الخطة الموثقة خطوة بخطوة","أجرِ تغييراً واحداً في كل مرة عندما يكون ممكناً","وثّق كل تغيير أثناء إجرائه","راقب الأنظمة أثناء التغييرات وبعدها","كن مستعداً للتراجع عند الحاجة"],dont:"لا تتسرع في التغييرات. خطأ واحد قد يفاقم المشكلة."},
+  {num:6,title:"التحقق من اكتمال وظائف النظام",color:"#c4b5fd",detail:"تأكد من حل المشكلة ومن أنك لم تُحدث مشكلات جديدة. اختبر جميع الأنظمة المتضررة.",actions:["اختبر المشكلة المحددة التي أُبلغ عنها","اختبر الأنظمة المرتبطة التي قد تتأثر","تحقق مع مقدّم البلاغ الأصلي من أنها تعمل","شغّل المراقبة للتحقق من التنبيهات الجديدة","اختبر الحالات الهامشية والوظائف الثانوية"],dont:"لا تُغلق التذكرة قبل التحقق الشامل."},
+  {num:7,title:"توثيق النتائج والدروس المستفادة",color:"#e9d5ff",detail:"أنشئ توثيقاً شاملاً للمشكلة والسبب والحل وخطوات الوقاية للرجوع إليها مستقبلاً.",actions:["وثّق السبب الجذري والعوامل المساهمة","سجّل خطوات الحل الدقيقة التي نجحت","حدّث مقالات قاعدة المعرفة","نفّذ تدابير وقائية إن أمكن","شارك الدروس المستفادة مع الفريق","حدّث حدود المراقبة إذا كان ذلك ملائماً"],dont:"لا تتجاهل التوثيق — ستتكرر نفس المشكلة بدونه."},
 ];
 function buildStepFlow(){
   document.getElementById('step-flow').innerHTML=STEPS.map((s,i)=>`
@@ -168,70 +168,70 @@ function showStepDetail(i){
   document.querySelectorAll('.flow-step').forEach(el=>el.classList.remove('active-fs'));
   document.querySelectorAll('.flow-step')[i*2].classList.add('active-fs');
   document.getElementById('step-detail').innerHTML=`
-    <h3 style="color:${s.color}">Step ${s.num}: ${s.title}</h3>
+    <h3 style="color:${s.color}">الخطوة ${s.num}: ${s.title}</h3>
     <p style="color:#e0e6f0;line-height:1.7;margin:10px 0;font-size:.88rem">${s.detail}</p>
     <div style="margin-top:12px">
-      <div style="font-size:.78rem;color:#2dd4bf;font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px">Actions:</div>
-      ${s.actions.map(a=>`<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:6px;font-size:.82rem"><span style="color:#2dd4bf;flex-shrink:0">→</span><span style="color:#7ab3d4;line-height:1.4">${a}</span></div>`).join('')}
+      <div style="font-size:.78rem;color:#2dd4bf;font-weight:700;margin-bottom:6px">الإجراءات:</div>
+      ${s.actions.map(a=>`<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:6px;font-size:.82rem"><span style="color:#2dd4bf;flex-shrink:0">←</span><span style="color:#7ab3d4;line-height:1.4">${a}</span></div>`).join('')}
     </div>
     <div style="margin-top:12px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:10px;font-size:.78rem;color:#f87171">
-      <strong>⚠️ Don't:</strong> ${s.dont}
+      <strong>⚠️ تجنّب:</strong> ${s.dont}
     </div>`;
 }
 buildStepFlow();
 
-// ---- SCENARIO WALK-THROUGH ----
+// ---- السيناريو التطبيقي ----
 const SCENARIOS=[
-  {problem:"Users report they cannot access the company intranet website. Error: 'ERR_CONNECTION_REFUSED'. The website was working yesterday.",
+  {problem:"يُبلّغ المستخدمون بأنهم لا يستطيعون الوصول إلى موقع الإنترانت الداخلي. الخطأ: 'ERR_CONNECTION_REFUSED'. كان الموقع يعمل بالأمس.",
    steps:[
-     {q:"Step 1 — What's the FIRST thing you should do?",opts:["Restart the web server immediately","Ask users when it started and if anything changed","Check if the cable is unplugged","Reinstall the OS"],ans:1,explain:"Always gather information first. When did it start? What changed? How many users affected?"},
-     {q:"Step 2 — You learn the web service was restarted yesterday due to a patch. Your theory?",opts:["The patch broke the web service configuration","Someone deleted the website","The DNS server is down","The firewall blocked all traffic"],ans:0,explain:"Recent changes are the most common cause. The patch restart is the most probable cause to investigate first."},
-     {q:"Step 3 — How do you TEST your theory that the web service is down?",opts:["Uninstall the patch","Run 'netstat -an' to check if port 80/443 is listening","Restart the server immediately","Call the vendor"],ans:1,explain:"netstat -an shows if the web service is listening on ports 80/443. If not listening, the service isn't running."},
-     {q:"Step 5 — You confirm the web service stopped. What's the right implementation approach?",opts:["Delete the website files and redeploy","Start the service, check logs for errors, and monitor","Reinstall the web server software","Restore from backup immediately"],ans:1,explain:"Start the service, check application logs to understand why it stopped, and monitor it to ensure stability."},
+     {q:"الخطوة 1 — ما هو أول شيء يجب فعله؟",opts:["أعِد تشغيل خادم الويب فوراً","اسأل المستخدمين متى بدأت المشكلة وهل تغيّر شيء","تحقق من الكابلات غير المتصلة","أعِد تثبيت نظام التشغيل"],ans:1,explain:"اجمع المعلومات دائماً أولاً. متى بدأت؟ ما الذي تغيّر؟ كم عدد المتضررين؟"},
+     {q:"الخطوة 2 — علمت أن خدمة الويب أُعيد تشغيلها بالأمس بسبب تحديث. ما نظريتك؟",opts:["التحديث أفسد إعداد خدمة الويب","شخص ما حذف الموقع","خادم DNS معطّل","جدار الحماية حجب جميع الحركة"],ans:0,explain:"التغييرات الأخيرة هي السبب الأكثر شيوعاً. إعادة التشغيل بعد التحديث هو أول سبب يجب التحقيق فيه."},
+     {q:"الخطوة 3 — كيف تختبر نظريتك بأن خدمة الويب متوقفة؟",opts:["أزِل التحديث","شغّل 'netstat -an' للتحقق من استماع المنفذ 80/443","أعِد تشغيل الخادم فوراً","اتصل بالمورّد"],ans:1,explain:"netstat -an يُظهر ما إذا كانت خدمة الويب تستمع على المنافذ 80/443. إذا لم تكن تستمع، الخدمة لا تعمل."},
+     {q:"الخطوة 5 — تأكدت من توقف خدمة الويب. ما هو النهج الصحيح للتنفيذ؟",opts:["احذف ملفات الموقع وأعِد النشر","شغّل الخدمة، راجع السجلات لفهم سبب التوقف، ثم راقب","أعِد تثبيت برنامج خادم الويب","استعِد من النسخة الاحتياطية فوراً"],ans:1,explain:"شغّل الخدمة، راجع سجلات التطبيق لفهم سبب توقفها، وراقبها لضمان الاستقرار."},
    ]},
 ];
 let scStepIdx=0,scCorrect=0;
 function loadScenario(){
   const sc=SCENARIOS[0];
   const step=sc.steps[scStepIdx];
-  if(!step){document.getElementById('scenario-card').innerHTML=`<h3>Scenario Complete!</h3><div class="alert alert-success" style="margin-top:12px">Score: ${scCorrect}/${SCENARIOS[0].steps.length}. You successfully walked through this troubleshooting scenario!</div>`;return;}
+  if(!step){document.getElementById('scenario-card').innerHTML=`<h3>اكتمل السيناريو!</h3><div class="alert alert-success" style="margin-top:12px">النتيجة: ${scCorrect}/${SCENARIOS[0].steps.length}. لقد نجحت في اتباع منهجية استكشاف الأخطاء في هذا السيناريو!</div>`;return;}
   document.getElementById('scenario-card').innerHTML=`
-    <h3>🔧 Scenario: Web Server Down</h3>
+    <h3>🔧 السيناريو: خادم الويب معطّل</h3>
     <div class="alert alert-info" style="margin-bottom:16px">${sc.problem}</div>
     <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px">${step.q}</p>
-    <div style="display:grid;gap:8px">${step.opts.map((o,i)=>`<button style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;text-align:left;color:#e0e6f0;font-size:.88rem;width:100%;transition:all .2s" onclick="pickScStep(${i})">${o}</button>`).join('')}</div>
+    <div style="display:grid;gap:8px">${step.opts.map((o,i)=>`<button style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;text-align:right;color:#e0e6f0;font-size:.88rem;width:100%;transition:all .2s" onclick="pickScStep(${i})">${o}</button>`).join('')}</div>
     <div id="sc-step-fb" style="margin-top:12px"></div>`;
-  document.getElementById('scenario-score').textContent=`Step ${scStepIdx+1}/${sc.steps.length} | Score: ${scCorrect}`;
+  document.getElementById('scenario-score').textContent=`الخطوة ${scStepIdx+1}/${sc.steps.length} | النتيجة: ${scCorrect}`;
 }
 function pickScStep(i){
   const step=SCENARIOS[0].steps[scStepIdx];const correct=i===step.ans;
   if(correct)scCorrect++;
   document.querySelectorAll('#scenario-card button').forEach((b,bi)=>{b.disabled=true;if(bi===step.ans)b.style.background='rgba(16,185,129,.15)';});
   if(!correct)document.querySelectorAll('#scenario-card button')[i].style.background='rgba(239,68,68,.15)';
-  document.getElementById('sc-step-fb').innerHTML=`<div class="alert ${correct?'alert-success':'alert-warn'}">${correct?'✅':'💡'} ${step.explain}<br><button class="btn btn-outline btn-sm" onclick="nextScStep()" style="margin-top:10px">Next Step →</button></div>`;
+  document.getElementById('sc-step-fb').innerHTML=`<div class="alert ${correct?'alert-success':'alert-warn'}">${correct?'✅':'💡'} ${step.explain}<br><button class="btn btn-outline btn-sm" onclick="nextScStep()" style="margin-top:10px">الخطوة التالية ←</button></div>`;
 }
 function nextScStep(){scStepIdx++;loadScenario();}
 loadScenario();
 
-// ---- TOOL MATCHER ----
+// ---- مطابقة الأدوات ----
 const TOOLS=[
-  {tool:"ping",use:"Tests basic ICMP connectivity to a host by IP or hostname"},
-  {tool:"tracert / traceroute",use:"Shows the network path and latency at each hop to destination"},
-  {tool:"nslookup / dig",use:"Tests DNS name resolution — resolves a hostname to its IP address"},
-  {tool:"netstat",use:"Displays active TCP connections and ports currently listening"},
-  {tool:"ipconfig / ifconfig",use:"Shows IP address, subnet mask, gateway, and DNS configuration"},
-  {tool:"Event Viewer",use:"Windows centralized log viewer for system, security, and application events"},
-  {tool:"Task Manager / top",use:"Monitors real-time CPU, RAM, disk, and process usage"},
-  {tool:"SMART tools (smartctl)",use:"Checks hard drive health and predicts imminent drive failure"},
-  {tool:"Wireshark",use:"Captures and analyzes network packets at the protocol level"},
-  {tool:"diskpart / fdisk",use:"Creates, deletes, and manages disk partitions from command line"},
+  {tool:"ping",use:"يختبر اتصال ICMP الأساسي بمضيف عبر IP أو اسم المضيف"},
+  {tool:"tracert / traceroute",use:"يعرض مسار الشبكة والزمن في كل عقدة وسيطة للوجهة"},
+  {tool:"nslookup / dig",use:"يختبر تحليل DNS — يحوّل اسم المضيف إلى عنوان IP"},
+  {tool:"netstat",use:"يعرض اتصالات TCP النشطة والمنافذ المستمِعة حالياً"},
+  {tool:"ipconfig / ifconfig",use:"يعرض عنوان IP وقناع الشبكة والبوابة وتهيئة DNS"},
+  {tool:"Event Viewer",use:"مُشاهد السجلات المركزي في Windows للأحداث النظامية والأمنية والتطبيقية"},
+  {tool:"Task Manager / top",use:"يراقب استخدام المعالج والذاكرة والقرص والعمليات في الوقت الفعلي"},
+  {tool:"SMART tools (smartctl)",use:"يتحقق من صحة القرص الصلب ويتنبأ بالأعطال الوشيكة"},
+  {tool:"Wireshark",use:"يلتقط حزم الشبكة ويحللها على مستوى البروتوكول"},
+  {tool:"diskpart / fdisk",use:"إنشاء وحذف وإدارة أقسام القرص من سطر الأوامر"},
 ];
 let toolLeft=null,toolMatched=0;
 function buildTools(){
   toolLeft=null;toolMatched=0;
-  document.getElementById('tool-score').textContent='Matched: 0 / 10';
+  document.getElementById('tool-score').textContent='مُطابَق: 0 / 10';
   const shuffled=[...TOOLS].sort(()=>Math.random()-.5);
-  document.getElementById('tool-left').innerHTML=TOOLS.map((t,i)=>`<div class="match-item" id="tl-${i}" onclick="selectToolLeft(${i})" style="font-family:'Courier New',monospace;font-size:.82rem">${t.tool}</div>`).join('');
+  document.getElementById('tool-left').innerHTML=TOOLS.map((t,i)=>`<div class="match-item" id="tl-${i}" onclick="selectToolLeft(${i})" style="font-family:'Courier New',monospace;font-size:.82rem;direction:ltr;text-align:left">${t.tool}</div>`).join('');
   document.getElementById('tool-right').innerHTML=shuffled.map((t,i)=>`<div class="match-item" id="tr-${i}" onclick="selectToolRight(${i})" data-use="${t.use}" style="font-size:.8rem">${t.use}</div>`).join('');
 }
 function selectToolLeft(i){document.querySelectorAll('#tool-left .match-item').forEach(el=>el.classList.remove('selected'));document.getElementById('tl-'+i).classList.add('selected');toolLeft=i;}
@@ -241,8 +241,8 @@ function selectToolRight(i){
   if(correct){
     document.getElementById('tl-'+toolLeft).classList.remove('selected');document.getElementById('tl-'+toolLeft).classList.add('matched');document.getElementById('tl-'+toolLeft).style.pointerEvents='none';
     document.getElementById('tr-'+i).classList.add('matched');document.getElementById('tr-'+i).style.pointerEvents='none';
-    toolMatched++;document.getElementById('tool-score').textContent=`Matched: ${toolMatched} / 10`;
-    if(toolMatched===10){document.getElementById('tool-score').textContent='🎉 All matched!';}
+    toolMatched++;document.getElementById('tool-score').textContent=`مُطابَق: ${toolMatched} / 10`;
+    if(toolMatched===10){document.getElementById('tool-score').textContent='🎉 تمت جميع المطابقات!';}
   } else {
     document.getElementById('tl-'+toolLeft).classList.add('wrong-m');document.getElementById('tr-'+i).classList.add('wrong-m');
     setTimeout(()=>{document.getElementById('tl-'+toolLeft).classList.remove('wrong-m','selected');document.getElementById('tr-'+i).classList.remove('wrong-m');},700);
@@ -252,27 +252,27 @@ function selectToolRight(i){
 function resetTools(){buildTools();}
 buildTools();
 
-// ---- QUIZ ----
+// ---- الاختبار ----
 const QUIZ=[
-  {q:"What is the FIRST step in CompTIA's troubleshooting methodology?",opts:["Test a theory","Implement the solution","Identify the problem","Establish a theory"],ans:2},
-  {q:"After fixing a problem, which step ensures no new issues were introduced?",opts:["Document findings","Verify full system functionality","Establish a new theory","Implement the solution"],ans:1},
-  {q:"Which command shows if a service is listening on a specific TCP port?",opts:["ping","tracert","netstat","nslookup"],ans:2},
-  {q:"'Divide and conquer' in troubleshooting means:",opts:["Split the problem between two technicians","Eliminate half of potential causes at a time to narrow down the issue","Divide time equally between all possible solutions","Use two different tools simultaneously"],ans:1},
-  {q:"A server's SMART data shows 'Reallocated Sectors Count' increasing rapidly. This indicates:",opts:["CPU overheating","Imminent hard drive failure","Network packet loss","RAM errors"],ans:1},
-  {q:"Which troubleshooting approach tests from OSI Layer 1 (physical) up through Layer 7 (application)?",opts:["Top-down","Bottom-up","Divide and conquer","Follow the path"],ans:1},
-  {q:"You should document findings AFTER resolving a problem primarily because:",opts:["Documentation is required by law","The same problem will likely recur and documentation speeds future resolution","Managers require paperwork","It's the first step"],ans:1},
-  {q:"A server shows no video output on boot. Which is the most appropriate first diagnostic step?",opts:["Reinstall the OS","Check Event Viewer","Listen for POST beep codes","Replace the motherboard"],ans:2},
-  {q:"tracert/traceroute is most useful for diagnosing:",opts:["Drive failures","Where in the network path connectivity is lost","RAM errors","Service configuration issues"],ans:1},
-  {q:"Before implementing a solution in a production environment, you should:",opts:["Test it in isolation first and have a rollback plan","Implement it immediately to minimize downtime","Test it during business hours","Get verbal approval only"],ans:0},
-  {q:"Event Viewer in Windows primarily shows:",opts:["Network packet captures","Hardware SMART data","System, security, and application log events","Real-time CPU usage"],ans:2},
-  {q:"The goal of Step 2 (Establish Theory) in the CompTIA methodology is to:",opts:["Fix the problem","List and prioritize possible causes","Test all possible solutions","Document the problem"],ans:1},
+  {q:"ما هي الخطوة الأولى في منهجية CompTIA لاستكشاف الأخطاء؟",opts:["اختبار نظرية","تنفيذ الحل","تحديد المشكلة","وضع نظرية"],ans:2},
+  {q:"بعد إصلاح المشكلة، أي خطوة تضمن عدم ظهور مشكلات جديدة؟",opts:["توثيق النتائج","التحقق من اكتمال وظائف النظام","وضع نظرية جديدة","تنفيذ الحل"],ans:1},
+  {q:"أي أمر يُظهر ما إذا كانت خدمة تستمع على منفذ TCP محدد؟",opts:["ping","tracert","netstat","nslookup"],ans:2},
+  {q:"'التقسيم للتشخيص' في استكشاف الأخطاء يعني:",opts:["تقسيم المشكلة بين فنيَّين","إلغاء نصف الأسباب المحتملة في كل مرة لتضييق نطاق المشكلة","توزيع الوقت بالتساوي بين جميع الحلول المحتملة","استخدام أداتين في وقت واحد"],ans:1},
+  {q:"بيانات SMART للخادم تُظهر 'Reallocated Sectors Count' يرتفع بسرعة. هذا يشير إلى:",opts:["ارتفاع حرارة المعالج","عطل قرص صلب وشيك","فقدان حزم الشبكة","أخطاء ذاكرة RAM"],ans:1},
+  {q:"نهج 'من الأسفل للأعلى' في استكشاف الأخطاء يبدأ من:",opts:["طبقة التطبيق (7)","طبقة الشبكة (3)","الطبقة المادية (1) ثم صعوداً","طبقة النقل (4)"],ans:2},
+  {q:"يجب توثيق النتائج بعد حل المشكلة بشكل رئيسي لأن:",opts:["التوثيق مطلوب قانونياً","نفس المشكلة ستتكرر على الأرجح والتوثيق يسرّع الحل المستقبلي","المديرون يطلبون الأوراق","إنها الخطوة الأولى"],ans:1},
+  {q:"خادم لا يعرض أي مخرجات فيديو عند الإقلاع. أي خطوة تشخيصية أولى أنسب؟",opts:["أعِد تثبيت نظام التشغيل","راجع Event Viewer","استمع لأكواد صوت POST","استبدل اللوحة الأم"],ans:2},
+  {q:"tracert/traceroute الأفيد لتشخيص:",opts:["أعطال الأقراص","أين في مسار الشبكة ينقطع الاتصال","أخطاء الذاكرة RAM","مشكلات إعداد الخدمات"],ans:1},
+  {q:"قبل تنفيذ حل في بيئة الإنتاج، يجب:",opts:["اختباره بمعزل أولاً ووضع خطة تراجع","تنفيذه فوراً لتقليل التوقف","اختباره خلال ساعات العمل","الحصول على موافقة شفهية فقط"],ans:0},
+  {q:"Event Viewer في Windows يُظهر بشكل رئيسي:",opts:["التقاط حزم الشبكة","بيانات SMART للأجهزة","أحداث سجلات النظام والأمان والتطبيقات","استخدام المعالج في الوقت الفعلي"],ans:2},
+  {q:"هدف الخطوة 2 (وضع النظرية) في منهجية CompTIA هو:",opts:["إصلاح المشكلة","إدراج الأسباب المحتملة وترتيبها حسب الأولوية","اختبار جميع الحلول المحتملة","توثيق المشكلة"],ans:1},
 ];
 let quizScores={};
 function buildQuiz(){
   document.getElementById('quiz-container').innerHTML=QUIZ.map((q,qi)=>`
     <div class="card" style="margin-bottom:16px">
-      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">Q${qi+1}. ${q.q}</p>
-      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
+      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">س${qi+1}. ${q.q}</p>
+      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})" style="color:#e0e6f0">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
     </div>`).join('');
 }
 function answerQ(qi,oi){
@@ -281,7 +281,7 @@ function answerQ(qi,oi){
   document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('correct');});
   if(oi!==q.ans)document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt')[oi].classList.add('incorrect');
   quizScores[qi]=oi===q.ans?1:0;
-  document.getElementById('quiz-score').textContent=`Score: ${Object.values(quizScores).reduce((a,b)=>a+b,0)} / 12`;
+  document.getElementById('quiz-score').textContent=`النتيجة: ${Object.values(quizScores).reduce((a,b)=>a+b,0)} / 12`;
 }
 buildQuiz();
 </script>

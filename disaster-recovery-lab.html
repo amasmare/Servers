@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lab 09 — Disaster Recovery &amp; Backup</title>
+<title>مختبر 09 — التعافي من الكوارث والنسخ الاحتياطي</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
@@ -12,7 +12,7 @@ body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0
 .site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #f472b6;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#9d174d,#ec4899);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
 .site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#fbcfe8}
-.site-author-block{text-align:right;border-left:1px solid rgba(255,255,255,.08);padding-left:18px;flex-shrink:0}
+.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.08);padding-right:18px;flex-shrink:0}
 .site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b}
 .back-btn{display:inline-flex;align-items:center;gap:6px;color:#f472b6;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(244,114,182,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(244,114,182,.1)}
 .tabs{display:flex;gap:0;background:#071020;border-bottom:1px solid #1e3a5c;padding:0 20px;overflow-x:auto}
@@ -55,7 +55,7 @@ input[type=range]{width:100%;accent-color:#f472b6;height:6px}
 .cal-label{font-weight:700;font-size:.6rem}
 .cal-type{font-size:.55rem;margin-top:1px}
 /* Quiz */
-.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:left;width:100%;margin-bottom:8px}
+.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:#e0e6f0}
 .quiz-opt:hover{border-color:#f472b6}.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
 .site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
 .site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#f59e0b}
@@ -64,116 +64,116 @@ input[type=range]{width:100%;accent-color:#f472b6;height:6px}
 </head>
 <body>
 <div class="site-topbar">
-  <span>🖥️ Training Environment — Academic Use Only | CompTIA Server+</span>
-  <span class="author-tag">Eng. Abdullah Alasmari · م. عبدالله الأسمري</span>
+  <span>🖥️ بيئة التدريب — للاستخدام الأكاديمي فقط | CompTIA Server+</span>
+  <span class="author-tag">م. عبدالله الأسمري</span>
 </div>
 <div class="site-header-bar">
   <div class="site-logo-box">🔄</div>
   <div class="site-lab-info">
-    <h2>Lab 09 — Disaster Recovery &amp; Backup</h2>
-    <span>CompTIA Server+ SK0-005 · Chapter 9</span>
+    <h2>مختبر 09 — التعافي من الكوارث والنسخ الاحتياطي</h2>
+    <span>CompTIA Server+ SK0-005 · الفصل التاسع</span>
   </div>
   <div class="site-author-block">
-    <div class="aname">Eng. Abdullah Alasmari</div>
-    <div class="abook">Server+ Interactive Labs</div>
+    <div class="aname">م. عبدالله الأسمري</div>
+    <div class="abook">مختبرات Server+ التفاعلية</div>
   </div>
 </div>
-<a href="index.html" class="back-btn">← Back to Labs</a>
+<a href="index.html" class="back-btn">→ العودة للمختبرات</a>
 
 <div class="tabs">
-  <div class="tab active" onclick="showTab('t1',this)">DR Sites &amp; RTO/RPO</div>
-  <div class="tab" onclick="showTab('t2',this)">Backup Strategies</div>
-  <div class="tab" onclick="showTab('t3',this)">Restore Scenario</div>
-  <div class="tab" onclick="showTab('t4',this)">Quiz</div>
+  <div class="tab active" onclick="showTab('t1',this)">مواقع DR و RTO/RPO</div>
+  <div class="tab" onclick="showTab('t2',this)">استراتيجيات النسخ الاحتياطي</div>
+  <div class="tab" onclick="showTab('t3',this)">سيناريو الاسترداد</div>
+  <div class="tab" onclick="showTab('t4',this)">الاختبار</div>
 </div>
 
 <!-- TAB 1 -->
 <div id="t1" class="tab-panel active">
-  <h2>Disaster Recovery Sites &amp; RTO/RPO</h2>
-  <p class="subtitle">Understand the three types of DR sites and use the sliders to see how RTO/RPO requirements map to site choices.</p>
+  <h2>مواقع التعافي من الكوارث و RTO/RPO</h2>
+  <p class="subtitle">تعرّف على الأنواع الثلاثة لمواقع DR واستخدم شرائط التمرير لمعرفة كيف تتوافق متطلبات RTO/RPO مع اختيار الموقع.</p>
   <div class="site-grid">
     <div class="site-card site-hot">
-      <div class="site-label">🔥 Hot Site</div>
+      <div class="site-label">🔥 الموقع الساخن (Hot Site)</div>
       <div class="site-detail">
-        Fully operational mirror of production. Real-time data replication. Failover in minutes.<br><br>
-        <strong style="color:#f472b6">RTO:</strong> Minutes<br>
-        <strong style="color:#f472b6">RPO:</strong> Near-zero<br>
-        <strong style="color:#f472b6">Cost:</strong> Highest<br>
-        <strong style="color:#f472b6">Use:</strong> Banks, hospitals, stock exchanges
+        مرآة تشغيلية كاملة للإنتاج. نسخ متزامن للبيانات في الوقت الفعلي. التحويل في دقائق.<br><br>
+        <strong style="color:#f472b6">RTO:</strong> دقائق<br>
+        <strong style="color:#f472b6">RPO:</strong> شبه صفري<br>
+        <strong style="color:#f472b6">التكلفة:</strong> الأعلى<br>
+        <strong style="color:#f472b6">الاستخدام:</strong> البنوك والمستشفيات وبورصات الأسهم
       </div>
     </div>
     <div class="site-card site-warm">
-      <div class="site-label">🌡️ Warm Site</div>
+      <div class="site-label">🌡️ الموقع الدافئ (Warm Site)</div>
       <div class="site-detail">
-        Hardware is installed and ready but data must be restored. Failover in hours.<br><br>
-        <strong style="color:#fbbf24">RTO:</strong> Hours<br>
-        <strong style="color:#fbbf24">RPO:</strong> Hours to 1 day<br>
-        <strong style="color:#fbbf24">Cost:</strong> Medium<br>
-        <strong style="color:#fbbf24">Use:</strong> Most enterprises
+        الأجهزة مُركَّبة وجاهزة لكن يجب استعادة البيانات. التحويل في ساعات.<br><br>
+        <strong style="color:#fbbf24">RTO:</strong> ساعات<br>
+        <strong style="color:#fbbf24">RPO:</strong> ساعات إلى يوم<br>
+        <strong style="color:#fbbf24">التكلفة:</strong> متوسطة<br>
+        <strong style="color:#fbbf24">الاستخدام:</strong> معظم الشركات
       </div>
     </div>
     <div class="site-card site-cold">
-      <div class="site-label">❄️ Cold Site</div>
+      <div class="site-label">❄️ الموقع البارد (Cold Site)</div>
       <div class="site-detail">
-        Physical space and power only. Must procure and configure all equipment after disaster.<br><br>
-        <strong style="color:#94a3b8">RTO:</strong> Days to weeks<br>
-        <strong style="color:#94a3b8">RPO:</strong> Days<br>
-        <strong style="color:#94a3b8">Cost:</strong> Lowest<br>
-        <strong style="color:#94a3b8">Use:</strong> Non-critical systems
+        مساحة مادية وطاقة فقط. يجب توفير وتهيئة جميع الأجهزة بعد الكارثة.<br><br>
+        <strong style="color:#94a3b8">RTO:</strong> أيام إلى أسابيع<br>
+        <strong style="color:#94a3b8">RPO:</strong> أيام<br>
+        <strong style="color:#94a3b8">التكلفة:</strong> الأدنى<br>
+        <strong style="color:#94a3b8">الاستخدام:</strong> الأنظمة غير الحيوية
       </div>
     </div>
   </div>
 
   <div class="card">
-    <h3>⏱️ RTO / RPO Calculator</h3>
-    <p class="subtitle" style="margin-bottom:16px">Adjust the sliders to set your business requirements, and see which DR site type is recommended.</p>
+    <h3>⏱️ حاسبة RTO / RPO</h3>
+    <p class="subtitle" style="margin-bottom:16px">اضبط شرائط التمرير لتحديد متطلبات عملك، وانظر أي نوع موقع DR يُوصى به.</p>
     <div class="slider-wrap">
-      <div class="slider-label"><span>RTO (Recovery Time Objective)</span><span id="rto-val">4 hours</span></div>
+      <div class="slider-label"><span>RTO (هدف وقت الاسترداد)</span><span id="rto-val">4 ساعات</span></div>
       <input type="range" id="rto-slider" min="1" max="168" value="4" oninput="updateDR()">
-      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#475569;margin-top:2px"><span>1 min</span><span>1 day</span><span>1 week</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#475569;margin-top:2px"><span>1 دقيقة</span><span>يوم</span><span>أسبوع</span></div>
     </div>
     <div class="slider-wrap" style="margin-top:16px">
-      <div class="slider-label"><span>RPO (Recovery Point Objective)</span><span id="rpo-val">1 hour</span></div>
+      <div class="slider-label"><span>RPO (هدف نقطة الاسترداد)</span><span id="rpo-val">ساعة</span></div>
       <input type="range" id="rpo-slider" min="0" max="168" value="1" oninput="updateDR()">
-      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#475569;margin-top:2px"><span>0 (no loss)</span><span>1 day</span><span>1 week</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#475569;margin-top:2px"><span>0 (بدون فقد)</span><span>يوم</span><span>أسبوع</span></div>
     </div>
     <div id="dr-recommendation" style="margin-top:16px"></div>
   </div>
 
   <div class="card">
-    <h3>📖 Key DR Terminology</h3>
+    <h3>📖 مصطلحات DR الأساسية</h3>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;font-size:.82rem">
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">RTO</div><div style="color:#64748b;line-height:1.5">Recovery Time Objective — maximum acceptable time for systems to be restored after a disaster.</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">RPO</div><div style="color:#64748b;line-height:1.5">Recovery Point Objective — maximum acceptable data loss measured in time (e.g., 4-hour RPO = restore from backup max 4 hours old).</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">BCP</div><div style="color:#64748b;line-height:1.5">Business Continuity Plan — comprehensive plan to keep business operations running during/after disaster.</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">DRP</div><div style="color:#64748b;line-height:1.5">Disaster Recovery Plan — technical plan for restoring IT systems specifically. Subset of BCP.</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">MTTR</div><div style="color:#64748b;line-height:1.5">Mean Time To Repair — average time to restore a failed component or system.</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">MTBF</div><div style="color:#64748b;line-height:1.5">Mean Time Between Failures — average time between hardware failures. Measure of reliability.</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">RTO</div><div style="color:#64748b;line-height:1.5">هدف وقت الاسترداد — الحد الأقصى المقبول لاستعادة الأنظمة بعد كارثة.</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">RPO</div><div style="color:#64748b;line-height:1.5">هدف نقطة الاسترداد — الحد الأقصى المقبول لفقدان البيانات مقاساً بالوقت (مثال: RPO 4 ساعات = استعادة من نسخة لا تتجاوز 4 ساعات).</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">BCP</div><div style="color:#64748b;line-height:1.5">خطة استمرارية الأعمال — خطة شاملة لإبقاء العمليات مستمرة أثناء الكوارث وبعدها.</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">DRP</div><div style="color:#64748b;line-height:1.5">خطة التعافي من الكوارث — خطة تقنية لاستعادة أنظمة IT تحديداً. جزء فرعي من BCP.</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">MTTR</div><div style="color:#64748b;line-height:1.5">متوسط وقت الإصلاح — متوسط الوقت لاستعادة مكوّن أو نظام معطّل.</div></div>
+      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">MTBF</div><div style="color:#64748b;line-height:1.5">متوسط الوقت بين الأعطال — متوسط الوقت بين أعطال الأجهزة. مقياس للموثوقية.</div></div>
     </div>
   </div>
 </div>
 
 <!-- TAB 2 -->
 <div id="t2" class="tab-panel">
-  <h2>Backup Strategies</h2>
-  <p class="subtitle">Select a backup strategy to see a 4-week calendar showing which backups run each day and how much data would be backed up.</p>
+  <h2>استراتيجيات النسخ الاحتياطي</h2>
+  <p class="subtitle">اختر استراتيجية نسخ احتياطي لعرض تقويم مدته 4 أسابيع يُظهر النسخ التي تُشغَّل كل يوم وحجم البيانات المنسوخة.</p>
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
-    <button class="btn btn-outline btn-sm" onclick="showBackup('full')">Full Only (Daily)</button>
-    <button class="btn btn-outline btn-sm" onclick="showBackup('fi')">Full + Incremental</button>
-    <button class="btn btn-outline btn-sm" onclick="showBackup('fd')">Full + Differential</button>
+    <button class="btn btn-outline btn-sm" onclick="showBackup('full')">نسخ كامل فقط (يومي)</button>
+    <button class="btn btn-outline btn-sm" onclick="showBackup('fi')">كامل + تزايدي</button>
+    <button class="btn btn-outline btn-sm" onclick="showBackup('fd')">كامل + تفاضلي</button>
   </div>
   <div class="card" id="backup-card">
-    <h3>Select a strategy above to see the backup calendar</h3>
+    <h3>اختر استراتيجية أعلاه لعرض تقويم النسخ الاحتياطي</h3>
   </div>
   <div class="card">
-    <h3>📊 Backup Type Comparison</h3>
+    <h3>📊 مقارنة أنواع النسخ الاحتياطي</h3>
     <div style="overflow-x:auto">
       <table style="width:100%;border-collapse:collapse;font-size:.82rem">
-        <thead><tr style="background:#071020"><th style="padding:9px;text-align:left;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Type</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c">What it backs up</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Resets archive bit?</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Backup size</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c">Restore complexity</th></tr></thead>
+        <thead><tr style="background:#071020"><th style="padding:9px;text-align:right;color:#7ab3d4;border-bottom:2px solid #1e3a5c">النوع</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c">ما يحتوي</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c">يُعيد ضبط بت الأرشفة؟</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c">حجم النسخة</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c">تعقيد الاسترداد</th></tr></thead>
         <tbody>
-          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#f472b6;font-weight:700">Full</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">All selected data, always</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#34d399">Yes</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">Largest</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#34d399">Simplest (1 tape)</td></tr>
-          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#00d4ff;font-weight:700">Incremental</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">Data changed since last backup of ANY type</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#34d399">Yes</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">Smallest</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#f87171">Most complex (full + all incrementals)</td></tr>
-          <tr><td style="padding:9px;color:#fbbf24;font-weight:700">Differential</td><td style="padding:9px">Data changed since last FULL backup</td><td style="padding:9px;text-align:center;color:#f87171">No</td><td style="padding:9px">Grows each day</td><td style="padding:9px;color:#fbbf24">Medium (full + latest differential)</td></tr>
+          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#f472b6;font-weight:700">كامل (Full)</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">جميع البيانات المحددة دائماً</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#34d399">نعم</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">الأكبر</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#34d399">الأبسط (شريط واحد)</td></tr>
+          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#00d4ff;font-weight:700">تزايدي (Incremental)</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">البيانات المتغيرة منذ آخر نسخة من أي نوع</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#34d399">نعم</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">الأصغر</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#f87171">الأعقد (كامل + جميع التزايديات)</td></tr>
+          <tr><td style="padding:9px;color:#fbbf24;font-weight:700">تفاضلي (Differential)</td><td style="padding:9px">البيانات المتغيرة منذ آخر نسخة كاملة</td><td style="padding:9px;text-align:center;color:#f87171">لا</td><td style="padding:9px">يكبر كل يوم</td><td style="padding:9px;color:#fbbf24">متوسط (كامل + آخر تفاضلي)</td></tr>
         </tbody>
       </table>
     </div>
@@ -182,115 +182,115 @@ input[type=range]{width:100%;accent-color:#f472b6;height:6px}
 
 <!-- TAB 3 -->
 <div id="t3" class="tab-panel">
-  <h2>Restore Scenario</h2>
-  <p class="subtitle">A disaster occurs on Wednesday at 2pm. Based on the backup schedule shown, which tapes do you need to restore? Answer 4 scenarios.</p>
-  <div class="score-badge" id="restore-score">Score: 0 / 4</div>
+  <h2>سيناريو الاسترداد</h2>
+  <p class="subtitle">تقع كارثة يوم الأربعاء الساعة 2 ظهراً. بناءً على جدول النسخ الاحتياطي، أي الأشرطة تحتاج للاسترداد؟ أجب عن 4 سيناريوهات.</p>
+  <div class="score-badge" id="restore-score">النتيجة: 0 / 4</div>
   <div id="restore-card" class="card"></div>
 </div>
 
 <!-- TAB 4 -->
 <div id="t4" class="tab-panel">
-  <h2>Knowledge Quiz — DR &amp; Backup</h2>
-  <p class="subtitle">12 questions on disaster recovery, backup types, and business continuity.</p>
-  <div class="score-badge" id="quiz-score">Score: 0 / 12</div>
+  <h2>اختبار المعرفة — DR والنسخ الاحتياطي</h2>
+  <p class="subtitle">12 سؤالاً حول التعافي من الكوارث وأنواع النسخ الاحتياطي واستمرارية الأعمال.</p>
+  <div class="score-badge" id="quiz-score">النتيجة: 0 / 12</div>
   <div id="quiz-container"></div>
 </div>
 
 <div class="site-footer-bar">
-  <p>Designed by <strong>Eng. Abdullah Alasmari</strong> · CompTIA Server+ Interactive Labs</p>
+  <p>تصميم <strong>م. عبدالله الأسمري</strong> · مختبرات CompTIA Server+ التفاعلية</p>
 </div>
 
 <script>
 function showTab(id,el){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');el.classList.add('active');}
 
-// ---- RTO/RPO SLIDER ----
+// ---- شرائط RTO/RPO ----
 function updateDR(){
   const rto=parseInt(document.getElementById('rto-slider').value);
   const rpo=parseInt(document.getElementById('rpo-slider').value);
-  document.getElementById('rto-val').textContent=rto<24?rto+' hour(s)':Math.round(rto/24)+' day(s)';
-  document.getElementById('rpo-val').textContent=rpo===0?'Near-zero (no data loss)':rpo<24?rpo+' hour(s)':Math.round(rpo/24)+' day(s)';
+  document.getElementById('rto-val').textContent=rto<24?rto+' ساعة':Math.round(rto/24)+' يوم';
+  document.getElementById('rpo-val').textContent=rpo===0?'شبه صفري (بدون فقد بيانات)':rpo<24?rpo+' ساعة':Math.round(rpo/24)+' يوم';
   let site,color,desc;
-  if(rto<=2&&rpo<=1){site='🔥 Hot Site';color='#f472b6';desc='Your requirements demand near-instant failover and minimal data loss. A fully mirrored hot site with real-time replication is required.';}
-  else if(rto<=24&&rpo<=8){site='🌡️ Warm Site';color='#fbbf24';desc='Your requirements allow a few hours of recovery time. A warm site with pre-deployed hardware and scheduled backups meets these needs at lower cost.';}
-  else{site='❄️ Cold Site';color='#94a3b8';desc='Your requirements allow days of downtime and significant data loss tolerance. A cold site (facilities only) is cost-effective for non-critical systems.';}
-  document.getElementById('dr-recommendation').innerHTML=`<div style="background:rgba(244,114,182,.05);border:2px solid ${color};border-radius:10px;padding:16px"><div style="font-size:1.1rem;font-weight:800;color:${color};margin-bottom:6px">Recommended: ${site}</div><div style="font-size:.84rem;color:#7ab3d4;line-height:1.6">${desc}</div></div>`;
+  if(rto<=2&&rpo<=1){site='🔥 الموقع الساخن (Hot Site)';color='#f472b6';desc='متطلباتك تتطلب تحويلاً فورياً وحد أدنى من فقدان البيانات. موقع ساخن مطابق مع نسخ متزامن في الوقت الفعلي مطلوب.';}
+  else if(rto<=24&&rpo<=8){site='🌡️ الموقع الدافئ (Warm Site)';color='#fbbf24';desc='متطلباتك تتيح بضع ساعات لوقت الاسترداد. موقع دافئ مع أجهزة منشورة مسبقاً ونسخ مجدولة يلبي هذه الاحتياجات بتكلفة أقل.';}
+  else{site='❄️ الموقع البارد (Cold Site)';color='#94a3b8';desc='متطلباتك تتيح أياماً من التوقف وتحمّل كبير لفقد البيانات. الموقع البارد (منشآت فقط) فعّال من حيث التكلفة للأنظمة غير الحيوية.';}
+  document.getElementById('dr-recommendation').innerHTML=`<div style="background:rgba(244,114,182,.05);border:2px solid ${color};border-radius:10px;padding:16px"><div style="font-size:1.1rem;font-weight:800;color:${color};margin-bottom:6px">الموصى به: ${site}</div><div style="font-size:.84rem;color:#7ab3d4;line-height:1.6">${desc}</div></div>`;
 }
 updateDR();
 
-// ---- BACKUP CALENDAR ----
-const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+// ---- تقويم النسخ الاحتياطي ----
+const DAYS=['إث','ثل','أر','خم','جم','سب','أح'];
 const BACKUP_TYPES={
-  full:{name:'Full Only (Daily)',data:Array(28).fill('full'),desc:'Simple but uses the most storage. Every day backs up all 100GB. Restore: just one tape.',storage:Array(28).fill(100),restore:'1 tape (latest full)'},
-  fi:{name:'Full + Incremental',data:['full','incr','incr','incr','incr','incr','incr','full','incr','incr','incr','incr','incr','incr','full','incr','incr','incr','incr','incr','incr','full','incr','incr','incr','incr','incr','incr'],desc:'Full on Mondays, incremental every other day. Smallest daily backup, but restore requires full tape + all incrementals since last full.',storage:[100,5,8,6,7,9,5,100,6,5,8,7,5,9,100,5,7,6,8,5,9,100,6,5,8,7,5,9],restore:'Full + all incrementals since last full'},
-  fd:{name:'Full + Differential',data:['full','diff','diff','diff','diff','diff','diff','full','diff','diff','diff','diff','diff','diff','full','diff','diff','diff','diff','diff','diff','full','diff','diff','diff','diff','diff','diff'],desc:'Full on Mondays, differential every other day. Differential grows each day (includes all changes since last full). Restore: full + latest differential only.',storage:[100,20,35,45,52,60,65,100,18,32,48,55,63,70,100,22,38,50,58,65,72,100,25,40,55,62,68,75],restore:'Full + latest differential only'},
+  full:{name:'نسخ كامل فقط (يومي)',data:Array(28).fill('full'),desc:'بسيط لكن يستهلك أكبر مساحة تخزين. كل يوم ينسخ جميع 100 جيجابايت. الاسترداد: شريط واحد فقط.',storage:Array(28).fill(100),restore:'شريط واحد (آخر نسخة كاملة)'},
+  fi:{name:'كامل + تزايدي',data:['full','incr','incr','incr','incr','incr','incr','full','incr','incr','incr','incr','incr','incr','full','incr','incr','incr','incr','incr','incr','full','incr','incr','incr','incr','incr','incr'],desc:'نسخة كاملة أيام الاثنين، تزايدية كل يوم آخر. أصغر نسخة يومية لكن الاسترداد يتطلب الشريط الكامل + جميع التزايديات منذ آخر نسخة كاملة.',storage:[100,5,8,6,7,9,5,100,6,5,8,7,5,9,100,5,7,6,8,5,9,100,6,5,8,7,5,9],restore:'كامل + جميع التزايديات منذ آخر نسخة كاملة'},
+  fd:{name:'كامل + تفاضلي',data:['full','diff','diff','diff','diff','diff','diff','full','diff','diff','diff','diff','diff','diff','full','diff','diff','diff','diff','diff','diff','full','diff','diff','diff','diff','diff','diff'],desc:'نسخة كاملة أيام الاثنين، تفاضلية كل يوم آخر. التفاضلي يكبر كل يوم (يشمل جميع التغييرات منذ آخر نسخة كاملة). الاسترداد: كامل + آخر تفاضلي فقط.',storage:[100,20,35,45,52,60,65,100,18,32,48,55,63,70,100,22,38,50,58,65,72,100,25,40,55,62,68,75],restore:'كامل + آخر تفاضلي فقط'},
 };
 function showBackup(type){
   const b=BACKUP_TYPES[type];
   const colorClass={full:'full-b',incr:'incr-b',diff:'diff-b'};
-  const label={full:'FULL',incr:'INCR',diff:'DIFF'};
+  const label={full:'كامل',incr:'تزايدي',diff:'تفاضلي'};
   const totalStorage=b.storage.reduce((a,v)=>a+v,0);
   document.getElementById('backup-card').innerHTML=`
     <h3>${b.name}</h3>
     <p style="color:#7ab3d4;font-size:.84rem;margin-bottom:12px;line-height:1.6">${b.desc}</p>
     <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px">${DAYS.map(d=>`<div style="text-align:center;font-size:.72rem;color:#64748b;padding:4px;font-weight:700">${d}</div>`).join('')}</div>
-    <div class="cal-grid">${b.data.map((t,i)=>`<div class="cal-day ${colorClass[t]}"><div class="cal-label">Day ${i+1}</div><div class="cal-type">${label[t]}</div><div style="font-size:.55rem;margin-top:2px">${b.storage[i]}GB</div></div>`).join('')}</div>
+    <div class="cal-grid">${b.data.map((t,i)=>`<div class="cal-day ${colorClass[t]}"><div class="cal-label">يوم ${i+1}</div><div class="cal-type">${label[t]}</div><div style="font-size:.55rem;margin-top:2px">${b.storage[i]}GB</div></div>`).join('')}</div>
     <div style="display:flex;gap:16px;margin-top:10px;flex-wrap:wrap;font-size:.8rem">
-      <span><span style="display:inline-block;width:12px;height:12px;background:rgba(244,114,182,.4);border-radius:2px;vertical-align:middle;margin-right:4px"></span>Full Backup</span>
-      ${type==='fi'?'<span><span style="display:inline-block;width:12px;height:12px;background:rgba(0,212,255,.4);border-radius:2px;vertical-align:middle;margin-right:4px"></span>Incremental</span>':''}
-      ${type==='fd'?'<span><span style="display:inline-block;width:12px;height:12px;background:rgba(245,158,11,.4);border-radius:2px;vertical-align:middle;margin-right:4px"></span>Differential</span>':''}
+      <span><span style="display:inline-block;width:12px;height:12px;background:rgba(244,114,182,.4);border-radius:2px;vertical-align:middle;margin-left:4px"></span>نسخة كاملة</span>
+      ${type==='fi'?'<span><span style="display:inline-block;width:12px;height:12px;background:rgba(0,212,255,.4);border-radius:2px;vertical-align:middle;margin-left:4px"></span>تزايدي</span>':''}
+      ${type==='fd'?'<span><span style="display:inline-block;width:12px;height:12px;background:rgba(245,158,11,.4);border-radius:2px;vertical-align:middle;margin-left:4px"></span>تفاضلي</span>':''}
     </div>
-    <div class="alert alert-info" style="margin-top:12px">Total storage used (4 weeks): <strong>${totalStorage} GB</strong> | Restore tapes needed: <strong>${b.restore}</strong></div>`;
+    <div class="alert alert-info" style="margin-top:12px">إجمالي التخزين المستخدم (4 أسابيع): <strong>${totalStorage} GB</strong> | أشرطة الاسترداد المطلوبة: <strong>${b.restore}</strong></div>`;
 }
 
-// ---- RESTORE SCENARIOS ----
+// ---- سيناريوهات الاسترداد ----
 const RESTORE_SC=[
-  {q:"Schedule: Full backup every Sunday, incremental every other day. Disaster occurs Wednesday at 3pm. Which tapes do you restore?",ans:"Sunday Full + Monday Incr + Tuesday Incr + Wednesday Incr",opts:["Sunday Full only","Sunday Full + Monday Incr + Tuesday Incr + Wednesday Incr","Wednesday Incr only","Latest differential only"],explain:"With incremental backup, you need the last full PLUS every incremental since that full to rebuild to the disaster point."},
-  {q:"Schedule: Full backup every Sunday, differential every other day. Disaster occurs Thursday at 10am. Which tapes do you restore?",ans:"Sunday Full + Wednesday Differential",opts:["Sunday Full only","Sunday Full + Monday Diff + Tuesday Diff + Wednesday Diff","Sunday Full + Wednesday Differential","Thursday Diff only"],explain:"With differential backup, you only need the last full PLUS the most recent differential (Wednesday) — much simpler than incremental!"},
-  {q:"A hot site with real-time replication fails over during a network outage. The last replication completed 30 seconds ago. The RPO is:",opts:["30 seconds","1 hour","0 seconds","24 hours"],ans:0,explain:"RPO is measured by time since last good backup/replication. 30 seconds of replication lag = 30-second RPO."},
-  {q:"A company's BCP states RTO = 4 hours. During a fire drill test, restoration took 6 hours. This means:",opts:["The test passed — 6 hours is close enough","The RTO was not met — the DRP needs improvement","The RPO was exceeded","The hot site needs to be upgraded"],ans:1,explain:"RTO is the MAXIMUM acceptable recovery time. If testing shows 6 hours but RTO is 4 hours, the disaster recovery plan must be improved to meet the business requirement."},
+  {q:"الجدول: نسخة كاملة كل أحد، تزايدية كل يوم آخر. تقع كارثة الأربعاء الساعة 3 ظهراً. أي الأشرطة تسترد؟",ans:"النسخة الكاملة الأحد + تزايدي الاثنين + تزايدي الثلاثاء + تزايدي الأربعاء",opts:["النسخة الكاملة الأحد فقط","النسخة الكاملة الأحد + تزايدي الاثنين + تزايدي الثلاثاء + تزايدي الأربعاء","تزايدي الأربعاء فقط","آخر تفاضلي فقط"],explain:"مع النسخ التزايدي، تحتاج آخر نسخة كاملة + كل تزايدي منذ تلك النسخة لإعادة البناء حتى نقطة الكارثة."},
+  {q:"الجدول: نسخة كاملة كل أحد، تفاضلية كل يوم آخر. تقع كارثة الخميس الساعة 10 صباحاً. أي الأشرطة تسترد؟",ans:"النسخة الكاملة الأحد + التفاضلي الأربعاء",opts:["النسخة الكاملة الأحد فقط","الكاملة الأحد + تفاضلي الاثنين + تفاضلي الثلاثاء + تفاضلي الأربعاء","النسخة الكاملة الأحد + التفاضلي الأربعاء","تفاضلي الخميس فقط"],explain:"مع النسخ التفاضلي، تحتاج فقط آخر نسخة كاملة + آخر تفاضلي (الأربعاء) — أبسط بكثير من التزايدي!"},
+  {q:"موقع ساخن مع نسخ متزامن في الوقت الفعلي يتحول أثناء انقطاع الشبكة. اكتمل آخر نسخ قبل 30 ثانية. الـ RPO هو:",opts:["30 ثانية","ساعة","0 ثانية","24 ساعة"],ans:0,explain:"يُقاس RPO بالوقت منذ آخر نسخ/نسخة احتياطية جيدة. تأخر نسخ 30 ثانية = RPO 30 ثانية."},
+  {q:"خطة BCP لشركة تنص على RTO = 4 ساعات. خلال اختبار محاكاة، استغرق الاسترداد 6 ساعات. هذا يعني:",opts:["اجتاز الاختبار — 6 ساعات قريبة بما يكفي","لم يُحقق RTO — يحتاج DRP إلى تحسين","تجاوز RPO","يحتاج الموقع الساخن ترقية"],ans:1,explain:"RTO هو الحد الأقصى المقبول لوقت الاسترداد. إذا أظهر الاختبار 6 ساعات لكن RTO هو 4 ساعات، يجب تحسين خطة التعافي لتلبية متطلب العمل."},
 ];
 let restoreIdx=0,restoreCorrect=0;
 function loadRestore(){
   const sc=RESTORE_SC[restoreIdx];
   document.getElementById('restore-card').innerHTML=`
-    <h3>Scenario ${restoreIdx+1} of ${RESTORE_SC.length}</h3>
+    <h3>السيناريو ${restoreIdx+1} من ${RESTORE_SC.length}</h3>
     <p style="color:#e0e6f0;line-height:1.7;margin:12px 0">${sc.q}</p>
-    <div style="display:grid;gap:8px">${sc.opts.map((o,i)=>`<button style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;text-align:left;color:#e0e6f0;font-size:.88rem;transition:all .2s;width:100%" onclick="pickRestore(${i})">${o}</button>`).join('')}</div>
+    <div style="display:grid;gap:8px">${sc.opts.map((o,i)=>`<button style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;text-align:right;color:#e0e6f0;font-size:.88rem;transition:all .2s;width:100%" onclick="pickRestore(${i})">${o}</button>`).join('')}</div>
     <div id="restore-fb" style="margin-top:12px"></div>`;
-  document.getElementById('restore-score').textContent=`Score: ${restoreCorrect} / ${Math.min(restoreIdx,RESTORE_SC.length)}`;
+  document.getElementById('restore-score').textContent=`النتيجة: ${restoreCorrect} / ${Math.min(restoreIdx,RESTORE_SC.length)}`;
 }
 function pickRestore(i){
   const sc=RESTORE_SC[restoreIdx];const correct=sc.opts[i]===sc.ans;
   if(correct)restoreCorrect++;
-  document.getElementById('restore-score').textContent=`Score: ${restoreCorrect} / ${restoreIdx+1}`;
+  document.getElementById('restore-score').textContent=`النتيجة: ${restoreCorrect} / ${restoreIdx+1}`;
   document.querySelectorAll('#restore-card button').forEach((b,bi)=>{b.disabled=true;if(sc.opts[bi]===sc.ans)b.style.background='rgba(16,185,129,.15)';});
   if(!correct)document.querySelectorAll('#restore-card button')[i].style.background='rgba(239,68,68,.15)';
-  document.getElementById('restore-fb').innerHTML=`<div class="alert ${correct?'alert-success':'alert-warn'}">${correct?'✅':'💡'} ${sc.explain}<br><button class="btn btn-outline btn-sm" onclick="nextRestore()" style="margin-top:10px">${restoreIdx<RESTORE_SC.length-1?'Next →':'Finish'}</button></div>`;
+  document.getElementById('restore-fb').innerHTML=`<div class="alert ${correct?'alert-success':'alert-warn'}">${correct?'✅':'💡'} ${sc.explain}<br><button class="btn btn-outline btn-sm" onclick="nextRestore()" style="margin-top:10px">${restoreIdx<RESTORE_SC.length-1?'التالي ←':'إنهاء'}</button></div>`;
 }
-function nextRestore(){restoreIdx++;if(restoreIdx>=RESTORE_SC.length){document.getElementById('restore-card').innerHTML=`<h3>Complete!</h3><div class="alert alert-success" style="margin-top:12px">Score: ${restoreCorrect}/${RESTORE_SC.length}</div>`;return;}loadRestore();}
+function nextRestore(){restoreIdx++;if(restoreIdx>=RESTORE_SC.length){document.getElementById('restore-card').innerHTML=`<h3>اكتملت!</h3><div class="alert alert-success" style="margin-top:12px">النتيجة: ${restoreCorrect}/${RESTORE_SC.length}</div>`;return;}loadRestore();}
 loadRestore();
 
-// ---- QUIZ ----
+// ---- الاختبار ----
 const QUIZ=[
-  {q:"RTO (Recovery Time Objective) defines:",opts:["Maximum acceptable data loss","Maximum time to restore systems after a disaster","Cost of backup storage","Frequency of backup testing"],ans:1},
-  {q:"RPO (Recovery Point Objective) defines:",opts:["How long recovery can take","Maximum acceptable amount of data loss (measured in time)","Number of backup copies","Backup rotation schedule"],ans:1},
-  {q:"A hot site provides failover in approximately:",opts:["Days","Weeks","Minutes to hours","Months"],ans:2},
-  {q:"Which backup type grows in size each day as it includes all changes since the last full backup?",opts:["Incremental","Full","Differential","Mirror"],ans:2},
-  {q:"Incremental backup requires which tapes for a full restore?",opts:["Latest full only","Latest full + latest incremental","Latest full + ALL incrementals since last full","All incrementals only"],ans:2},
-  {q:"The 3-2-1 backup rule states: 3 copies, 2 different media types, and:",opts:["1 offsite copy","1 encrypted copy","1 daily backup","1 full backup weekly"],ans:0},
-  {q:"MTTR (Mean Time To Repair) measures:",opts:["Average time between hardware failures","Average time to restore a failed system","Backup completion time","Network latency"],ans:1},
-  {q:"A BCP (Business Continuity Plan) differs from a DRP (Disaster Recovery Plan) in that BCP:",opts:["Only covers IT systems","Covers the entire business operations, not just IT","Is only for natural disasters","Is a subset of DRP"],ans:1},
-  {q:"Which DR site type provides the lowest RTO but highest cost?",opts:["Cold site","Warm site","Hot site","Colocation site"],ans:2},
-  {q:"Backup tapes should be stored offsite primarily because:",opts:["Tapes last longer in a different location","A disaster at the primary site could destroy both production data and backups","Offsite storage is cheaper","Regulations require it in all cases"],ans:1},
-  {q:"A differential backup does NOT reset the archive bit, which means:",opts:["Data is not actually backed up","Each differential includes all changes since the last full backup","Incremental backups will skip these files","The backup is unencrypted"],ans:1},
-  {q:"MTBF (Mean Time Between Failures) is a measure of:",opts:["Recovery time","Hardware reliability / expected lifespan","Backup frequency","RTO compliance"],ans:1},
+  {q:"RTO (هدف وقت الاسترداد) يُحدّد:",opts:["الحد الأقصى المقبول لفقدان البيانات","الحد الأقصى لوقت استعادة الأنظمة بعد كارثة","تكلفة تخزين النسخ","تكرار اختبار النسخ"],ans:1},
+  {q:"RPO (هدف نقطة الاسترداد) يُحدّد:",opts:["مدة الاسترداد","الحد الأقصى المقبول لفقدان البيانات (مقاساً بالوقت)","عدد نسخ النسخ الاحتياطي","جدول دوران النسخ"],ans:1},
+  {q:"الموقع الساخن يوفر التحويل في:",opts:["أيام","أسابيع","دقائق إلى ساعات","أشهر"],ans:2},
+  {q:"أي نوع نسخ يكبر في الحجم كل يوم لأنه يشمل جميع التغييرات منذ آخر نسخة كاملة؟",opts:["تزايدي","كامل","تفاضلي","مرآة"],ans:2},
+  {q:"النسخ التزايدي يتطلب أي الأشرطة للاسترداد الكامل؟",opts:["آخر نسخة كاملة فقط","آخر نسخة كاملة + آخر تزايدي","آخر نسخة كاملة + جميع التزايديات منذ آخر نسخة كاملة","جميع التزايديات فقط"],ans:2},
+  {q:"قاعدة النسخ الاحتياطي 3-2-1 تنص: 3 نسخ، نوعان مختلفان من الوسائط، و:",opts:["نسخة واحدة خارج الموقع","نسخة مشفرة واحدة","نسخة احتياطية يومية واحدة","نسخة كاملة واحدة أسبوعياً"],ans:0},
+  {q:"MTTR (متوسط وقت الإصلاح) يقيس:",opts:["متوسط الوقت بين أعطال الأجهزة","متوسط وقت استعادة نظام معطّل","وقت اكتمال النسخ الاحتياطي","زمن استجابة الشبكة"],ans:1},
+  {q:"BCP (خطة استمرارية الأعمال) تختلف عن DRP (خطة التعافي من الكوارث) في أن BCP:",opts:["تغطي أنظمة IT فقط","تغطي عمليات الأعمال بأكملها وليس IT فحسب","تخص الكوارث الطبيعية فقط","جزء فرعي من DRP"],ans:1},
+  {q:"أي نوع موقع DR يوفر أدنى RTO لكن بأعلى تكلفة؟",opts:["الموقع البارد","الموقع الدافئ","الموقع الساخن","الموقع المشترك (Colocation)"],ans:2},
+  {q:"يجب تخزين أشرطة النسخ خارج الموقع بشكل رئيسي لأن:",opts:["الأشرطة تدوم أطول في موقع مختلف","كارثة في الموقع الرئيسي قد تدمر بيانات الإنتاج والنسخ معاً","التخزين الخارجي أرخص","اللوائح تُوجب ذلك دائماً"],ans:1},
+  {q:"النسخ التفاضلي لا يُعيد ضبط بت الأرشفة، مما يعني:",opts:["البيانات لا تُنسخ فعلياً","كل تفاضلي يشمل جميع التغييرات منذ آخر نسخة كاملة","النسخ التزايدي سيتجاهل هذه الملفات","النسخة غير مشفرة"],ans:1},
+  {q:"MTBF (متوسط الوقت بين الأعطال) هو مقياس لـ:",opts:["وقت الاسترداد","موثوقية الأجهزة / العمر المتوقع","تكرار النسخ الاحتياطي","الامتثال لـ RTO"],ans:1},
 ];
 let quizScores={};
 function buildQuiz(){
   document.getElementById('quiz-container').innerHTML=QUIZ.map((q,qi)=>`
     <div class="card" style="margin-bottom:16px">
-      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">Q${qi+1}. ${q.q}</p>
-      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
+      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">س${qi+1}. ${q.q}</p>
+      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})" style="color:#e0e6f0">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
     </div>`).join('');
 }
 function answerQ(qi,oi){
@@ -299,7 +299,7 @@ function answerQ(qi,oi){
   document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('correct');});
   if(oi!==q.ans)document.querySelectorAll('#quiz-container .card')[qi].querySelectorAll('.quiz-opt')[oi].classList.add('incorrect');
   quizScores[qi]=oi===q.ans?1:0;
-  document.getElementById('quiz-score').textContent=`Score: ${Object.values(quizScores).reduce((a,b)=>a+b,0)} / 12`;
+  document.getElementById('quiz-score').textContent=`النتيجة: ${Object.values(quizScores).reduce((a,b)=>a+b,0)} / 12`;
 }
 buildQuiz();
 </script>

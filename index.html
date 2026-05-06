@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>CompTIA Server+ Interactive Labs</title>
+<title>مختبرات CompTIA Server+ التفاعلية</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 [onclick]{cursor:pointer}
@@ -23,7 +23,7 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background-
 .site-lab-info{flex:1;min-width:0}
 .site-lab-info h2{font-size:1.25rem;font-weight:800;color:#fff;margin:0 0 3px;line-height:1.3}
 .site-lab-info span{font-size:.75rem;color:#93c5fd;letter-spacing:.5px}
-.site-author-block{text-align:right;border-left:1px solid rgba(255,255,255,.08);padding-left:20px;flex-shrink:0}
+.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.08);padding-right:20px;flex-shrink:0}
 .site-author-block .aname{font-size:1.05rem;font-weight:700;color:#f59e0b;line-height:1.4}
 .site-author-block .abook{font-size:.7rem;color:#64748b;margin-top:2px}
 header{text-align:center;padding:50px 20px 40px;position:relative}
@@ -39,7 +39,7 @@ header p{color:var(--muted);font-size:clamp(14px,2.5vw,18px);max-width:600px;mar
 .book-info h3{font-size:16px;color:var(--accent);margin-bottom:4px}
 .book-info p{font-size:14px;color:var(--muted);line-height:1.6}
 .section-title{font-size:20px;font-weight:700;color:var(--text);margin-bottom:20px;display:flex;align-items:center;gap:10px}
-.section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+.section-title::before{content:'';flex:1;height:1px;background:linear-gradient(270deg,var(--border),transparent)}
 .labs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;margin-bottom:50px}
 .lab-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;text-decoration:none;color:var(--text);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s,border-color .2s;position:relative}
 .lab-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.4)}
@@ -89,63 +89,62 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
 </head>
 <body>
 <div class="site-topbar">
-  <span>🖥️ Training Environment — Academic Use Only &nbsp;|&nbsp; CompTIA Server+ Interactive Labs</span>
-  <span class="author-tag">Eng. Abdullah Alasmari &nbsp;·&nbsp; م. عبدالله الأسمري</span>
+  <span>🖥️ بيئة تدريبية — للاستخدام الأكاديمي فقط &nbsp;|&nbsp; مختبرات Server+ التفاعلية</span>
+  <span class="author-tag">م. عبدالله الأسمري &nbsp;·&nbsp; Eng. Abdullah Alasmari</span>
 </div>
 <div class="site-header-bar">
   <div class="site-logo-box">🖥️</div>
   <div class="site-lab-info">
-    <h2>CompTIA Server+ Interactive Labs</h2>
-    <span>SK0-005 · Server Administration &amp; Infrastructure</span>
+    <h2>مختبرات CompTIA Server+ التفاعلية</h2>
+    <span>SK0-005 · إدارة الخوادم والبنية التحتية</span>
   </div>
   <div class="site-author-block">
-    <div class="aname">Eng. Abdullah Alasmari</div>
-    <div class="abook">Based on: CompTIA Server+ Certification (SK0-005)</div>
+    <div class="aname">م. عبدالله الأسمري</div>
+    <div class="abook">استناداً إلى شهادة: CompTIA Server+ (SK0-005)</div>
   </div>
 </div>
 
 <div class="container">
   <header>
-    <div class="header-badge">🖥️ Server+ Lab Suite · SK0-005</div>
-    <h1>CompTIA Server+ Interactive Labs</h1>
-    <p>Hands-on interactive simulations for every Server+ domain · <strong style="color:#f59e0b">Eng. Abdullah Alasmari</strong> · CompTIA SK0-005</p>
+    <div class="header-badge">🖥️ مختبرات Server+ · SK0-005</div>
+    <h1>مختبرات CompTIA Server+ التفاعلية</h1>
+    <p>محاكاة تفاعلية شاملة لجميع محاور شهادة Server+ · <strong style="color:#f59e0b">م. عبدالله الأسمري</strong> · CompTIA SK0-005</p>
     <div class="stats-bar">
-      <div class="stat"><span class="stat-num">11</span><span class="stat-label">Interactive Labs</span></div>
-      <div class="stat"><span class="stat-num">11</span><span class="stat-label">Book Chapters</span></div>
-      <div class="stat"><span class="stat-num">60+</span><span class="stat-label">Hands-on Exercises</span></div>
-      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Works Offline</span></div>
-      <div class="stat"><span class="stat-num" id="total-score">0 pts</span><span class="stat-label">Your Score</span></div>
+      <div class="stat"><span class="stat-num">11</span><span class="stat-label">مختبر تفاعلي</span></div>
+      <div class="stat"><span class="stat-num">11</span><span class="stat-label">فصل من المنهج</span></div>
+      <div class="stat"><span class="stat-num">60+</span><span class="stat-label">تمرين عملي</span></div>
+      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">يعمل بدون إنترنت</span></div>
     </div>
   </header>
 
   <div class="book-banner">
     <div class="book-icon">📚</div>
     <div class="book-info">
-      <h3>Reference: CompTIA Server+ Certification SK0-005</h3>
-      <p>These labs cover all 11 chapters of the Server+ curriculum — from hardware identification and RAID configuration to security hardening, disaster recovery, and troubleshooting. Every concept is turned into a hands-on browser simulation. No internet or software installation required.</p>
+      <h3>المرجع: شهادة CompTIA Server+ — SK0-005</h3>
+      <p>هذه المختبرات تغطي جميع فصول منهج Server+ الـ 11 — من التعرف على الأجهزة وضبط RAID وصولاً إلى تأمين الخوادم والتعافي من الكوارث واستكشاف الأخطاء. كل مفهوم نظري تحوّل إلى محاكاة عملية تفاعلية تعمل مباشرةً في المتصفح دون الحاجة لأي برنامج إضافي.</p>
     </div>
   </div>
 
-  <div class="section-title">🧪 Interactive Labs</div>
+  <div class="section-title">🧪 المختبرات التفاعلية</div>
   <div class="labs-grid">
 
     <a href="hardware-lab.html" class="lab-card card-blue">
       <div class="lab-card-header">
         <div class="lab-icon">🔧</div>
         <div class="lab-card-title">
-          <div class="lab-number">Lab 01</div>
-          <h2>Server Hardware Identification</h2>
-          <p>Form factors, components &amp; specs</p>
+          <div class="lab-number">المختبر الأول</div>
+          <h2>التعرف على عتاد الخوادم</h2>
+          <p>عوامل الشكل والمكونات والمواصفات</p>
         </div>
       </div>
-      <div class="lab-card-body"><p>Identify server form factors, label internal components on a diagram, and match hardware specs to real-world use cases.</p></div>
+      <div class="lab-card-body"><p>تعرّف على عوامل شكل الخوادم، وضع تسميات على المكونات الداخلية، وطابق المواصفات التقنية مع حالات الاستخدام الحقيقية.</p></div>
       <div class="lab-topics">
-        <span class="topic-tag">Rack / Tower / Blade</span><span class="topic-tag">CPU / RAM</span>
-        <span class="topic-tag">NIC / HBA</span><span class="topic-tag">PSU</span><span class="topic-tag">RAID Card</span>
+        <span class="topic-tag">Rack / Tower / Blade</span><span class="topic-tag">المعالج / الذاكرة</span>
+        <span class="topic-tag">بطاقة الشبكة</span><span class="topic-tag">وحدة الطاقة</span><span class="topic-tag">بطاقة RAID</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">Chapter 1</span>
-        <span class="open-btn">Open Lab →</span>
+        <span class="chapter-badge">الفصل الأول</span>
+        <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
 
@@ -153,19 +152,19 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
       <div class="lab-card-header">
         <div class="lab-icon">⚙️</div>
         <div class="lab-card-title">
-          <div class="lab-number">Lab 02</div>
-          <h2>BIOS/UEFI &amp; Server Setup</h2>
-          <p>Simulated firmware configuration</p>
+          <div class="lab-number">المختبر الثاني</div>
+          <h2>BIOS/UEFI وإعداد الخادم</h2>
+          <p>محاكاة إعدادات البرامج الثابتة</p>
         </div>
       </div>
-      <div class="lab-card-body"><p>Navigate a simulated BIOS/UEFI interface, configure boot order, enable virtualization, and diagnose POST error codes.</p></div>
+      <div class="lab-card-body"><p>تنقّل في واجهة BIOS/UEFI المحاكاة، ضبط ترتيب الإقلاع، تفعيل الافتراضية، وتشخيص رموز أخطاء POST.</p></div>
       <div class="lab-topics">
-        <span class="topic-tag">BIOS vs UEFI</span><span class="topic-tag">Boot Order</span>
-        <span class="topic-tag">POST Codes</span><span class="topic-tag">Secure Boot</span><span class="topic-tag">IPMI</span>
+        <span class="topic-tag">BIOS مقابل UEFI</span><span class="topic-tag">ترتيب الإقلاع</span>
+        <span class="topic-tag">رموز POST</span><span class="topic-tag">Secure Boot</span><span class="topic-tag">IPMI</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">Chapter 2</span>
-        <span class="open-btn">Open Lab →</span>
+        <span class="chapter-badge">الفصل الثاني</span>
+        <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
 
@@ -173,19 +172,19 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
       <div class="lab-card-header">
         <div class="lab-icon">💾</div>
         <div class="lab-card-title">
-          <div class="lab-number">Lab 03</div>
-          <h2>RAID Configuration &amp; Storage Math</h2>
-          <p>Capacity calculator &amp; fault tolerance</p>
+          <div class="lab-number">المختبر الثالث</div>
+          <h2>ضبط RAID وحسابات التخزين</h2>
+          <p>حاسبة السعة وتحمّل الأعطال</p>
         </div>
       </div>
-      <div class="lab-card-body"><p>Visualize how data stripes and mirrors across RAID levels, calculate usable capacity, and decide which RAID fits a scenario.</p></div>
+      <div class="lab-card-body"><p>شاهد كيف تُوزَّع البيانات عبر مستويات RAID، احسب السعة الفعلية، وحدد مستوى RAID المناسب لكل سيناريو.</p></div>
       <div class="lab-topics">
-        <span class="topic-tag">RAID 0/1/5/6/10</span><span class="topic-tag">Capacity Math</span>
-        <span class="topic-tag">Fault Tolerance</span><span class="topic-tag">Hot Spare</span><span class="topic-tag">JBOD</span>
+        <span class="topic-tag">RAID 0/1/5/6/10</span><span class="topic-tag">حساب السعة</span>
+        <span class="topic-tag">تحمّل الأعطال</span><span class="topic-tag">Hot Spare</span><span class="topic-tag">JBOD</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">Chapter 3</span>
-        <span class="open-btn">Open Lab →</span>
+        <span class="chapter-badge">الفصل الثالث</span>
+        <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
 
@@ -193,19 +192,19 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
       <div class="lab-card-header">
         <div class="lab-icon">🗄️</div>
         <div class="lab-card-title">
-          <div class="lab-number">Lab 04</div>
-          <h2>Storage Technologies</h2>
-          <p>DAS, NAS, SAN &amp; connectors</p>
+          <div class="lab-number">المختبر الرابع</div>
+          <h2>تقنيات التخزين</h2>
+          <p>DAS وNAS وSAN والموصلات</p>
         </div>
       </div>
-      <div class="lab-card-body"><p>Match storage architectures to scenarios, identify connectors, build a SAN/NAS topology, and compare iSCSI vs FCoE.</p></div>
+      <div class="lab-card-body"><p>طابق بنى التخزين مع السيناريوهات، تعرّف على الموصلات، ابنِ مخطط SAN/NAS، وقارن بين iSCSI وFibre Channel.</p></div>
       <div class="lab-topics">
         <span class="topic-tag">DAS / NAS / SAN</span><span class="topic-tag">iSCSI / FCoE</span>
-        <span class="topic-tag">SAS / SATA / NVMe</span><span class="topic-tag">FC Topology</span>
+        <span class="topic-tag">SAS / SATA / NVMe</span><span class="topic-tag">توبولوجيا FC</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">Chapter 4</span>
-        <span class="open-btn">Open Lab →</span>
+        <span class="chapter-badge">الفصل الرابع</span>
+        <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
 
@@ -213,19 +212,19 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
       <div class="lab-card-header">
         <div class="lab-icon">🌐</div>
         <div class="lab-card-title">
-          <div class="lab-number">Lab 05</div>
-          <h2>Server Roles &amp; Services</h2>
-          <p>Role identification &amp; port mapping</p>
+          <div class="lab-number">المختبر الخامس</div>
+          <h2>أدوار الخوادم والخدمات</h2>
+          <p>تحديد الأدوار وأرقام المنافذ</p>
         </div>
       </div>
-      <div class="lab-card-body"><p>Match server roles to functions, assign correct ports, and deploy the right services for a given company scenario.</p></div>
+      <div class="lab-card-body"><p>طابق أدوار الخوادم مع وظائفها، عيّن أرقام المنافذ الصحيحة، ونشر الخدمات المناسبة لسيناريو شركة معيّن.</p></div>
       <div class="lab-topics">
-        <span class="topic-tag">DNS / DHCP / AD</span><span class="topic-tag">Web / DB / Mail</span>
-        <span class="topic-tag">NTP / Print</span><span class="topic-tag">Port Numbers</span>
+        <span class="topic-tag">DNS / DHCP / AD</span><span class="topic-tag">خادم الويب / قاعدة البيانات</span>
+        <span class="topic-tag">NTP / الطباعة</span><span class="topic-tag">أرقام المنافذ</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">Chapter 5</span>
-        <span class="open-btn">Open Lab →</span>
+        <span class="chapter-badge">الفصل الخامس</span>
+        <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
 
@@ -233,19 +232,19 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
       <div class="lab-card-header">
         <div class="lab-icon">🖥️</div>
         <div class="lab-card-title">
-          <div class="lab-number">Lab 06</div>
-          <h2>Virtualization</h2>
-          <p>Hypervisors, VMs &amp; resource planning</p>
+          <div class="lab-number">المختبر السادس</div>
+          <h2>الافتراضية</h2>
+          <p>المراقبون الافتراضيون والأجهزة الافتراضية</p>
         </div>
       </div>
-      <div class="lab-card-body"><p>Compare Type I vs Type II hypervisors, allocate VMs to a host, detect over-provisioning, and explore live migration concepts.</p></div>
+      <div class="lab-card-body"><p>قارن بين المراقبين من النوعين I وII، خصص الأجهزة الافتراضية على مضيف، واكتشف مفاهيم الترحيل المباشر واللقطات.</p></div>
       <div class="lab-topics">
-        <span class="topic-tag">Type I / II Hypervisor</span><span class="topic-tag">vCPU / vRAM</span>
-        <span class="topic-tag">Live Migration</span><span class="topic-tag">Snapshots</span>
+        <span class="topic-tag">النوع I / النوع II</span><span class="topic-tag">vCPU / vRAM</span>
+        <span class="topic-tag">الترحيل المباشر</span><span class="topic-tag">اللقطات</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">Chapter 6</span>
-        <span class="open-btn">Open Lab →</span>
+        <span class="chapter-badge">الفصل السادس</span>
+        <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
 
@@ -253,19 +252,19 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
       <div class="lab-card-header">
         <div class="lab-icon">🔒</div>
         <div class="lab-card-title">
-          <div class="lab-number">Lab 07</div>
-          <h2>Server Security &amp; Hardening</h2>
-          <p>OS hardening &amp; physical security</p>
+          <div class="lab-number">المختبر السابع</div>
+          <h2>أمن الخوادم والتصليب</h2>
+          <p>تصليب نظام التشغيل والأمن المادي</p>
         </div>
       </div>
-      <div class="lab-card-body"><p>Complete an OS hardening checklist, secure a server room, trace a PKI certificate chain, and configure user access controls.</p></div>
+      <div class="lab-card-body"><p>أكمل قائمة تصليب نظام التشغيل، أمّن غرفة الخادم، تتبّع سلسلة شهادات PKI، وضبط ضوابط وصول المستخدمين.</p></div>
       <div class="lab-topics">
-        <span class="topic-tag">OS Hardening</span><span class="topic-tag">PKI / Certificates</span>
-        <span class="topic-tag">Physical Security</span><span class="topic-tag">ACLs</span><span class="topic-tag">MFA</span>
+        <span class="topic-tag">تصليب النظام</span><span class="topic-tag">PKI / الشهادات</span>
+        <span class="topic-tag">الأمن المادي</span><span class="topic-tag">قوائم التحكم</span><span class="topic-tag">MFA</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">Chapter 7</span>
-        <span class="open-btn">Open Lab →</span>
+        <span class="chapter-badge">الفصل السابع</span>
+        <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
 
@@ -273,19 +272,19 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
       <div class="lab-card-header">
         <div class="lab-icon">🛡️</div>
         <div class="lab-card-title">
-          <div class="lab-number">Lab 08</div>
-          <h2>Network Security</h2>
-          <p>Firewalls, VLANs, VPN &amp; DMZ</p>
+          <div class="lab-number">المختبر الثامن</div>
+          <h2>أمن الشبكات</h2>
+          <p>جدران الحماية والشبكات الافتراضية والـ VPN</p>
         </div>
       </div>
-      <div class="lab-card-body"><p>Build firewall rules, segment VLANs, place IDS/IPS, design a DMZ, and compare VPN types including IPsec tunnel vs transport mode.</p></div>
+      <div class="lab-card-body"><p>ابنِ قواعد جدار الحماية، قسّم الشبكات الافتراضية، ضع أنظمة كشف التسلل، وصمّم منطقة DMZ.</p></div>
       <div class="lab-topics">
-        <span class="topic-tag">Firewall Rules</span><span class="topic-tag">VLANs</span>
+        <span class="topic-tag">قواعد جدار الحماية</span><span class="topic-tag">VLAN</span>
         <span class="topic-tag">VPN / IPsec</span><span class="topic-tag">DMZ</span><span class="topic-tag">IDS/IPS</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">Chapter 8</span>
-        <span class="open-btn">Open Lab →</span>
+        <span class="chapter-badge">الفصل الثامن</span>
+        <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
 
@@ -293,19 +292,19 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
       <div class="lab-card-header">
         <div class="lab-icon">🔄</div>
         <div class="lab-card-title">
-          <div class="lab-number">Lab 09</div>
-          <h2>Disaster Recovery &amp; Backup</h2>
-          <p>RTO/RPO, sites &amp; backup strategies</p>
+          <div class="lab-number">المختبر التاسع</div>
+          <h2>التعافي من الكوارث والنسخ الاحتياطي</h2>
+          <p>RTO/RPO والمواقع واستراتيجيات النسخ</p>
         </div>
       </div>
-      <div class="lab-card-body"><p>Compare hot/warm/cold sites with RTO/RPO sliders, design backup rotation schedules, and walk through a restore scenario.</p></div>
+      <div class="lab-card-body"><p>قارن المواقع الساخنة والدافئة والباردة باستخدام شرائح RTO/RPO، صمّم جداول النسخ الاحتياطي، وتدرّب على سيناريو الاستعادة.</p></div>
       <div class="lab-topics">
-        <span class="topic-tag">Hot / Warm / Cold Site</span><span class="topic-tag">RTO / RPO</span>
-        <span class="topic-tag">Full / Incremental</span><span class="topic-tag">BCP / DRP</span>
+        <span class="topic-tag">موقع ساخن / دافئ / بارد</span><span class="topic-tag">RTO / RPO</span>
+        <span class="topic-tag">نسخ كامل / تزايدي</span><span class="topic-tag">BCP / DRP</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">Chapter 9</span>
-        <span class="open-btn">Open Lab →</span>
+        <span class="chapter-badge">الفصل التاسع</span>
+        <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
 
@@ -313,19 +312,19 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
       <div class="lab-card-header">
         <div class="lab-icon">🔍</div>
         <div class="lab-card-title">
-          <div class="lab-number">Lab 10</div>
-          <h2>Troubleshooting Methodology</h2>
-          <p>7-step process &amp; diagnostic tools</p>
+          <div class="lab-number">المختبر العاشر</div>
+          <h2>منهجية استكشاف الأخطاء</h2>
+          <p>العملية السباعية وأدوات التشخيص</p>
         </div>
       </div>
-      <div class="lab-card-body"><p>Walk through CompTIA's 7-step troubleshooting methodology with real scenarios, diagnose hardware faults, and match tools to tasks.</p></div>
+      <div class="lab-card-body"><p>تدرّب على منهجية CompTIA السباعية لاستكشاف الأخطاء مع سيناريوهات حقيقية، وشخّص أعطال الأجهزة.</p></div>
       <div class="lab-topics">
-        <span class="topic-tag">7-Step Process</span><span class="topic-tag">POST / Beep Codes</span>
+        <span class="topic-tag">العملية السباعية</span><span class="topic-tag">رموز POST</span>
         <span class="topic-tag">ping / tracert</span><span class="topic-tag">Event Viewer</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">Chapter 10</span>
-        <span class="open-btn">Open Lab →</span>
+        <span class="chapter-badge">الفصل العاشر</span>
+        <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
 
@@ -333,72 +332,59 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
       <div class="lab-card-header">
         <div class="lab-icon">🏆</div>
         <div class="lab-card-title">
-          <div class="lab-number">Lab 11</div>
-          <h2>Capstone — Server+ Challenge</h2>
-          <p>Build a server environment end-to-end</p>
+          <div class="lab-number">المختبر الحادي عشر</div>
+          <h2>التحدي الشامل — Server+</h2>
+          <p>بناء بيئة خادم متكاملة من البداية</p>
         </div>
       </div>
-      <div class="lab-card-body"><p>Multi-phase scenario: select hardware → configure storage → assign roles → apply security → plan disaster recovery. Scored throughout.</p></div>
+      <div class="lab-card-body"><p>سيناريو متعدد المراحل: اختر العتاد ← ضبط التخزين ← تعيين الأدوار ← تطبيق الأمان ← التخطيط للكوارث. مع نظام تقييم شامل.</p></div>
       <div class="lab-topics">
-        <span class="topic-tag">All Domains</span><span class="topic-tag">Scenario Engine</span>
-        <span class="topic-tag">Scoring</span><span class="topic-tag">Exam Prep</span>
+        <span class="topic-tag">جميع المحاور</span><span class="topic-tag">محرك السيناريوهات</span>
+        <span class="topic-tag">التقييم</span><span class="topic-tag">التحضير للاختبار</span>
       </div>
       <div class="lab-card-footer">
-        <span class="chapter-badge">All Chapters</span>
-        <span class="open-btn">Open Lab →</span>
+        <span class="chapter-badge">جميع الفصول</span>
+        <span class="open-btn">فتح المختبر ←</span>
       </div>
     </a>
 
   </div>
 
-  <div class="section-title">📖 Chapter Coverage</div>
+  <div class="section-title">📖 تغطية فصول المنهج</div>
   <div class="coverage-grid">
-    <div class="chapter-item"><div class="ch-num">1</div><div class="ch-info"><h4>Server Hardware &amp; Form Factors</h4><span>Lab 01 — Hardware ID</span></div><span class="ch-check">✓</span></div>
-    <div class="chapter-item"><div class="ch-num">2</div><div class="ch-info"><h4>Server Installation &amp; Configuration</h4><span>Lab 02 — BIOS/UEFI Setup</span></div><span class="ch-check">✓</span></div>
-    <div class="chapter-item"><div class="ch-num">3</div><div class="ch-info"><h4>RAID &amp; Storage Management</h4><span>Lab 03 — RAID Config</span></div><span class="ch-check">✓</span></div>
-    <div class="chapter-item"><div class="ch-num">4</div><div class="ch-info"><h4>Storage Technologies</h4><span>Lab 04 — Storage Tech</span></div><span class="ch-check">✓</span></div>
-    <div class="chapter-item"><div class="ch-num">5</div><div class="ch-info"><h4>Server Roles &amp; Services</h4><span>Lab 05 — Server Roles</span></div><span class="ch-check">✓</span></div>
-    <div class="chapter-item"><div class="ch-num">6</div><div class="ch-info"><h4>Virtualization</h4><span>Lab 06 — Virtualization</span></div><span class="ch-check">✓</span></div>
-    <div class="chapter-item"><div class="ch-num">7</div><div class="ch-info"><h4>Server Security &amp; Hardening</h4><span>Lab 07 — Security</span></div><span class="ch-check">✓</span></div>
-    <div class="chapter-item"><div class="ch-num">8</div><div class="ch-info"><h4>Network Security</h4><span>Lab 08 — Network Security</span></div><span class="ch-check">✓</span></div>
-    <div class="chapter-item"><div class="ch-num">9</div><div class="ch-info"><h4>Disaster Recovery &amp; Backup</h4><span>Lab 09 — DR &amp; Backup</span></div><span class="ch-check">✓</span></div>
-    <div class="chapter-item"><div class="ch-num">10</div><div class="ch-info"><h4>Troubleshooting</h4><span>Lab 10 — Troubleshooting</span></div><span class="ch-check">✓</span></div>
-    <div class="chapter-item"><div class="ch-num">11</div><div class="ch-info"><h4>Capstone / Exam Prep</h4><span>Lab 11 — Capstone Challenge</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">1</div><div class="ch-info"><h4>عتاد الخوادم وعوامل الشكل</h4><span>المختبر الأول — التعرف على العتاد</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">2</div><div class="ch-info"><h4>تثبيت الخادم وإعداده</h4><span>المختبر الثاني — BIOS/UEFI</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">3</div><div class="ch-info"><h4>RAID وإدارة التخزين</h4><span>المختبر الثالث — ضبط RAID</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">4</div><div class="ch-info"><h4>تقنيات التخزين</h4><span>المختبر الرابع — تقنيات التخزين</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">5</div><div class="ch-info"><h4>أدوار الخوادم والخدمات</h4><span>المختبر الخامس — أدوار الخوادم</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">6</div><div class="ch-info"><h4>الافتراضية</h4><span>المختبر السادس — الافتراضية</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">7</div><div class="ch-info"><h4>أمن الخوادم والتصليب</h4><span>المختبر السابع — الأمن</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">8</div><div class="ch-info"><h4>أمن الشبكات</h4><span>المختبر الثامن — أمن الشبكات</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">9</div><div class="ch-info"><h4>التعافي من الكوارث والنسخ الاحتياطي</h4><span>المختبر التاسع — التعافي من الكوارث</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">10</div><div class="ch-info"><h4>استكشاف الأخطاء وإصلاحها</h4><span>المختبر العاشر — استكشاف الأخطاء</span></div><span class="ch-check">✓</span></div>
+    <div class="chapter-item"><div class="ch-num">11</div><div class="ch-info"><h4>التحدي الشامل / التحضير للاختبار</h4><span>المختبر الحادي عشر — التحدي الشامل</span></div><span class="ch-check">✓</span></div>
   </div>
 
   <div class="quickstart">
-    <h3>🚀 How to Use These Labs</h3>
+    <h3>🚀 كيف تستخدم هذه المختبرات؟</h3>
     <div class="qs-steps">
-      <div class="qs-step"><div class="qs-num">1</div><div class="qs-text">Start with Lab 01 to get familiar with server hardware before moving to configuration labs</div></div>
-      <div class="qs-step"><div class="qs-num">2</div><div class="qs-text">Follow the labs in order to match your lecture schedule, or jump directly to the relevant topic</div></div>
-      <div class="qs-step"><div class="qs-num">3</div><div class="qs-text">All labs run in your browser — no internet connection or software installation required</div></div>
-      <div class="qs-step"><div class="qs-num">4</div><div class="qs-text">Works on Windows, Mac, iPad, iPhone, and Android with any modern browser</div></div>
+      <div class="qs-step"><div class="qs-num">1</div><div class="qs-text">ابدأ بالمختبر الأول للتعرف على عتاد الخوادم قبل الانتقال لمختبرات الإعداد</div></div>
+      <div class="qs-step"><div class="qs-num">2</div><div class="qs-text">اتبع ترتيب المختبرات حسب الجدول الدراسي، أو انتقل مباشرةً للمختبر المرتبط بالمحاضرة</div></div>
+      <div class="qs-step"><div class="qs-num">3</div><div class="qs-text">جميع المختبرات تعمل في المتصفح مباشرةً — لا إنترنت ولا تثبيت برامج</div></div>
+      <div class="qs-step"><div class="qs-num">4</div><div class="qs-text">تعمل على Windows وMac وiPad وiPhone وأجهزة Android بالمتصفحات الحديثة</div></div>
     </div>
   </div>
 
   <footer>
-    <p>CompTIA Server+ Interactive Labs — SK0-005 Training Environment</p>
-    <p style="margin-top:6px;font-size:11px;opacity:.5">All simulations are for educational purposes only · لأغراض تعليمية فقط</p>
+    <p>مختبرات CompTIA Server+ التفاعلية — بيئة تدريبية شاملة SK0-005</p>
+    <p style="margin-top:6px;font-size:11px;opacity:.5">جميع المحاكاة لأغراض تعليمية أكاديمية فقط · All simulations are for educational purposes only</p>
   </footer>
 </div>
 
 <div class="site-footer-bar">
-  <p>Designed by <strong>Eng. Abdullah Alasmari · م. عبدالله الأسمري</strong></p>
-  <p>Based on: <strong>CompTIA Server+ Certification (SK0-005)</strong></p>
-  <p style="font-size:.7rem;color:#334155;margin-top:4px">© 2025 · All content for academic educational purposes · Server+ Interactive Labs</p>
+  <p>صُمِّمت بواسطة <strong>م. عبدالله الأسمري — Eng. Abdullah Alasmari</strong></p>
+  <p>استناداً إلى: <strong>شهادة CompTIA Server+ (SK0-005)</strong></p>
+  <p style="font-size:.7rem;color:#334155;margin-top:4px">© 2025 · جميع المحتوى لأغراض تعليمية أكاديمية · مختبرات Server+ التفاعلية</p>
 </div>
-
-<script>
-(function(){
-  var sx=0,sy=0;
-  document.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
-  document.addEventListener('touchend',function(e){
-    var dx=Math.abs(e.changedTouches[0].clientX-sx),dy=Math.abs(e.changedTouches[0].clientY-sy);
-    if(dx>10||dy>10)return;
-    var el=e.target;
-    while(el&&el!==document.body){if(el.tagName==='A'){return;}el=el.parentElement;}
-  },false);
-})();
-</script>
 </body>
 </html>

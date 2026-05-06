@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lab 01 — Server Hardware Identification</title>
+<title>المختبر 01 — التعرف على عتاد الخوادم</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
@@ -14,7 +14,7 @@ body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0
 .site-lab-info{flex:1;min-width:0}
 .site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}
 .site-lab-info span{font-size:.7rem;color:#93c5fd}
-.site-author-block{text-align:right;border-left:1px solid rgba(255,255,255,.08);padding-left:18px;flex-shrink:0}
+.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.08);padding-right:18px;flex-shrink:0}
 .site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}
 .site-author-block .abook{font-size:.68rem;color:#64748b;margin-top:1px}
 .back-btn{display:inline-flex;align-items:center;gap:6px;color:#00d4ff;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(0,212,255,.3);border-radius:8px;margin:16px 24px;transition:all .2s}
@@ -39,7 +39,6 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
 .alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
 .alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
 .score-badge{display:inline-block;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#00d4ff;margin-bottom:16px}
-/* Form factor cards */
 .ff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:16px 0}
 .ff-card{background:#071020;border:2px solid #1e3a5c;border-radius:10px;padding:18px;text-align:center;cursor:pointer;transition:all .2s}
 .ff-card:hover{border-color:#00d4ff;background:rgba(0,212,255,.05)}
@@ -48,7 +47,6 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
 .ff-icon{font-size:2.5rem;margin-bottom:10px}
 .ff-name{font-weight:700;color:#e0e6f0;margin-bottom:4px}
 .ff-desc{font-size:.75rem;color:#64748b;line-height:1.4}
-/* Component matching */
 .match-container{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:16px 0}
 .match-col h4{font-size:.85rem;color:#7ab3d4;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
 .match-item{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:all .2s;font-size:.88rem}
@@ -56,22 +54,19 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
 .match-item.selected{border-color:#0ea5e9;background:rgba(14,165,233,.1);color:#38bdf8}
 .match-item.matched{border-color:#10b981;background:rgba(16,185,129,.1);color:#34d399}
 .match-item.wrong-match{border-color:#ef4444;background:rgba(239,68,68,.1);color:#f87171}
-/* Quiz */
 .quiz-q{margin-bottom:24px}
 .quiz-q p{font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5}
 .quiz-options{display:grid;gap:8px}
-.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:left;width:100%}
+.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%}
 .quiz-opt:hover{border-color:#0ea5e9;background:rgba(14,165,233,.06)}
 .quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}
 .quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
-/* Spec matcher */
 .spec-table{width:100%;border-collapse:collapse;font-size:.85rem}
-.spec-table th{background:#071020;color:#7ab3d4;padding:10px;text-align:left;border-bottom:2px solid #1e3a5c}
+.spec-table th{background:#071020;color:#7ab3d4;padding:10px;text-align:right;border-bottom:2px solid #1e3a5c}
 .spec-table td{padding:10px;border-bottom:1px solid #1e3a5c;vertical-align:middle}
 .spec-table select{background:#0a0f1e;border:1px solid #1e3a5c;border-radius:6px;color:#e0e6f0;padding:5px 8px;font-size:.82rem;width:100%}
 .spec-table tr.correct-row td{background:rgba(16,185,129,.06)}
 .spec-table tr.wrong-row td{background:rgba(239,68,68,.06)}
-/* Progress */
 .prog-wrap{background:#1e3a5c;border-radius:20px;height:8px;margin:8px 0;overflow:hidden}
 .prog-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#00d4ff,#0ea5e9);transition:width .4s}
 .site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
@@ -82,117 +77,116 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
 </head>
 <body>
 <div class="site-topbar">
-  <span>🖥️ Training Environment — Academic Use Only | CompTIA Server+</span>
-  <span class="author-tag">Eng. Abdullah Alasmari · م. عبدالله الأسمري</span>
+  <span>🖥️ بيئة تدريبية — للاستخدام الأكاديمي فقط | CompTIA Server+</span>
+  <span class="author-tag">م. عبدالله الأسمري</span>
 </div>
 <div class="site-header-bar">
   <div class="site-logo-box">🔧</div>
   <div class="site-lab-info">
-    <h2>Lab 01 — Server Hardware Identification</h2>
-    <span>CompTIA Server+ SK0-005 · Chapter 1</span>
+    <h2>المختبر 01 — التعرف على عتاد الخوادم</h2>
+    <span>CompTIA Server+ SK0-005 · الفصل الأول</span>
   </div>
   <div class="site-author-block">
-    <div class="aname">Eng. Abdullah Alasmari</div>
-    <div class="abook">Server+ Interactive Labs</div>
+    <div class="aname">م. عبدالله الأسمري</div>
+    <div class="abook">مختبرات Server+ التفاعلية</div>
   </div>
 </div>
-<a href="index.html" class="back-btn">← Back to Labs</a>
+<a href="index.html" class="back-btn">→ العودة للمختبرات</a>
 
 <div class="tabs">
-  <div class="tab active" onclick="showTab('t1',this)">Form Factors</div>
-  <div class="tab" onclick="showTab('t2',this)">Component ID</div>
-  <div class="tab" onclick="showTab('t3',this)">Specs Matching</div>
-  <div class="tab" onclick="showTab('t4',this)">Knowledge Quiz</div>
+  <div class="tab active" onclick="showTab('t1',this)">أشكال الخوادم</div>
+  <div class="tab" onclick="showTab('t2',this)">التعرف على المكونات</div>
+  <div class="tab" onclick="showTab('t3',this)">مطابقة المواصفات</div>
+  <div class="tab" onclick="showTab('t4',this)">اختبار المعرفة</div>
 </div>
 
-<!-- TAB 1: Form Factors -->
+<!-- تبويب 1: أشكال الخوادم -->
 <div id="t1" class="tab-panel active">
-  <h2>Server Form Factors</h2>
-  <p class="subtitle">Select the correct form factor for each scenario below. Choose wisely — each scenario has one best answer.</p>
-  <div class="score-badge" id="ff-score">Score: 0 / 0</div>
+  <h2>أشكال الخوادم (Form Factors)</h2>
+  <p class="subtitle">اختر شكل الخادم المناسب لكل سيناريو أدناه. لكل سيناريو إجابة واحدة صحيحة.</p>
+  <div class="score-badge" id="ff-score">النتيجة: 0 / 0</div>
 
   <div class="card">
-    <h3>Scenario 1 of 4</h3>
+    <h3>السيناريو 1 من 4</h3>
     <p id="ff-scenario" style="color:#e0e6f0;line-height:1.7;margin-bottom:16px"></p>
     <div class="ff-grid" id="ff-options"></div>
     <div id="ff-feedback" style="margin-top:12px"></div>
-    <button class="btn btn-blue" id="ff-next" onclick="nextFF()" style="margin-top:16px;display:none">Next Scenario →</button>
+    <button class="btn btn-blue" id="ff-next" onclick="nextFF()" style="margin-top:16px;display:none">السيناريو التالي ←</button>
   </div>
 
   <div class="card">
-    <h3>📋 Form Factor Quick Reference</h3>
+    <h3>📋 مرجع سريع لأشكال الخوادم</h3>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:8px">
       <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:14px">
         <div style="font-size:1.8rem;margin-bottom:6px">🏢</div>
         <div style="color:#00d4ff;font-weight:700;margin-bottom:4px">Rack Mount</div>
-        <div style="font-size:.78rem;color:#64748b;line-height:1.5">Measured in U (rack units). 1U=44.45mm. Used in data centers. High density. Requires rack cabinet.</div>
+        <div style="font-size:.78rem;color:#64748b;line-height:1.5">يُقاس بوحدة U (وحدة الرف). 1U = 44.45 مم. يُستخدم في مراكز البيانات. كثافة عالية. يحتاج خزانة رف.</div>
       </div>
       <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:14px">
         <div style="font-size:1.8rem;margin-bottom:6px">🗼</div>
         <div style="color:#00d4ff;font-weight:700;margin-bottom:4px">Tower</div>
-        <div style="font-size:.78rem;color:#64748b;line-height:1.5">Standalone upright case. Best for small offices. Easy to service. No special rack needed. Quiet options available.</div>
+        <div style="font-size:.78rem;color:#64748b;line-height:1.5">هيكل مستقل منتصب. مناسب للمكاتب الصغيرة. سهل الصيانة. لا يحتاج رفًا خاصًا.</div>
       </div>
       <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:14px">
         <div style="font-size:1.8rem;margin-bottom:6px">⚡</div>
         <div style="color:#00d4ff;font-weight:700;margin-bottom:4px">Blade</div>
-        <div style="font-size:.78rem;color:#64748b;line-height:1.5">Thin modules in a blade chassis. Highest density. Shared power/cooling/networking. Most expensive per unit.</div>
+        <div style="font-size:.78rem;color:#64748b;line-height:1.5">وحدات رفيعة في هيكل Blade. أعلى كثافة. مشاركة الطاقة والتبريد والشبكة. الأغلى سعرًا.</div>
       </div>
       <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:14px">
         <div style="font-size:1.8rem;margin-bottom:6px">📦</div>
         <div style="color:#00d4ff;font-weight:700;margin-bottom:4px">Micro / Mini</div>
-        <div style="font-size:.78rem;color:#64748b;line-height:1.5">Compact low-power servers. Edge computing, branch offices. Limited expansion but small footprint.</div>
+        <div style="font-size:.78rem;color:#64748b;line-height:1.5">خوادم صغيرة منخفضة الاستهلاك. للحوسبة الطرفية والفروع. توسع محدود وحجم صغير.</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- TAB 2: Component ID -->
+<!-- تبويب 2: التعرف على المكونات -->
 <div id="t2" class="tab-panel">
-  <h2>Component Identification</h2>
-  <p class="subtitle">Click a component on the LEFT, then click its matching description on the RIGHT. Match all 8 components correctly.</p>
-  <div class="score-badge" id="comp-score">Matched: 0 / 8</div>
+  <h2>التعرف على مكونات الخادم</h2>
+  <p class="subtitle">انقر على مكوّن من اليمين، ثم انقر على وصفه المطابق من اليسار. طابق جميع المكونات الـ 8 بشكل صحيح.</p>
+  <div class="score-badge" id="comp-score">تمت المطابقة: 0 / 8</div>
   <div class="match-container">
     <div>
-      <div class="match-col"><h4>Server Components</h4></div>
+      <div class="match-col"><h4>مكونات الخادم</h4></div>
       <div id="comp-left"></div>
     </div>
     <div>
-      <div class="match-col"><h4>Function / Description</h4></div>
+      <div class="match-col"><h4>الوظيفة / الوصف</h4></div>
       <div id="comp-right"></div>
     </div>
   </div>
-  <button class="btn btn-outline btn-sm" onclick="resetComp()" style="margin-top:8px">Reset</button>
+  <button class="btn btn-outline btn-sm" onclick="resetComp()" style="margin-top:8px">إعادة تعيين</button>
   <div id="comp-feedback" style="margin-top:12px"></div>
 </div>
 
-<!-- TAB 3: Specs Matching -->
+<!-- تبويب 3: مطابقة المواصفات -->
 <div id="t3" class="tab-panel">
-  <h2>Specs &amp; Use Case Matching</h2>
-  <p class="subtitle">For each server specification, select the most appropriate use case from the dropdown.</p>
+  <h2>مطابقة المواصفات وحالات الاستخدام</h2>
+  <p class="subtitle">لكل مواصفة خادم، اختر حالة الاستخدام الأنسب من القائمة المنسدلة.</p>
   <div class="card">
     <table class="spec-table">
-      <thead><tr><th>Server Specification</th><th>Best Use Case</th><th>Status</th></tr></thead>
+      <thead><tr><th>مواصفات الخادم</th><th>أفضل حالة استخدام</th><th>الحالة</th></tr></thead>
       <tbody id="spec-tbody"></tbody>
     </table>
-    <button class="btn btn-blue" onclick="checkSpecs()" style="margin-top:16px">Check Answers</button>
+    <button class="btn btn-blue" onclick="checkSpecs()" style="margin-top:16px">تحقق من الإجابات</button>
     <div id="spec-feedback" style="margin-top:12px"></div>
   </div>
 </div>
 
-<!-- TAB 4: Quiz -->
+<!-- تبويب 4: الاختبار -->
 <div id="t4" class="tab-panel">
-  <h2>Knowledge Quiz — Chapter 1</h2>
-  <p class="subtitle">10 questions on server hardware. Click an option to answer. Your score is saved automatically.</p>
-  <div class="score-badge" id="quiz-score">Score: 0 / 10</div>
+  <h2>اختبار المعرفة — الفصل الأول</h2>
+  <p class="subtitle">10 أسئلة حول عتاد الخوادم. انقر على خيار للإجابة. تُحفظ نتيجتك تلقائيًا.</p>
+  <div class="score-badge" id="quiz-score">النتيجة: 0 / 10</div>
   <div id="quiz-container"></div>
 </div>
 
 <div class="site-footer-bar">
-  <p>Designed by <strong>Eng. Abdullah Alasmari</strong> · CompTIA Server+ Interactive Labs</p>
+  <p>صُمِّمت بواسطة <strong>م. عبدالله الأسمري</strong> · مختبرات CompTIA Server+ التفاعلية</p>
 </div>
 
 <script>
-// ---- TAB SWITCHING ----
 function showTab(id,el){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
@@ -200,12 +194,12 @@ function showTab(id,el){
   el.classList.add('active');
 }
 
-// ---- FORM FACTORS ----
+// ---- أشكال الخوادم ----
 const FF_SCENARIOS=[
-  {q:"A startup has 3 servers needed in a small storage room closet. They have no server rack and a limited budget. Which form factor fits best?",ans:"Tower",opts:["Rack Mount","Tower","Blade","Micro"],explain:"Tower servers don't require a rack, cost less to start, and are easy to manage in small offices."},
-  {q:"A financial company is building a new data center and needs to fit 40 servers in 10U of rack space with shared power and cooling infrastructure.",ans:"Blade",opts:["Rack Mount","Tower","Blade","Micro"],explain:"Blade servers achieve the highest density by sharing power, cooling, and networking through the blade chassis."},
-  {q:"A medium-sized company needs 6 servers in a standard 42U rack cabinet in their server room. They want a balance between density and cost.",ans:"Rack Mount",opts:["Rack Mount","Tower","Blade","Micro"],explain:"Rack mount servers are the standard for server rooms, offering good density and manageability at moderate cost."},
-  {q:"A retail chain needs a small server at each store location for local POS and inventory processing. Minimal IT staff, small physical footprint needed.",ans:"Micro",opts:["Rack Mount","Tower","Blade","Micro"],explain:"Micro/Mini servers are designed for edge locations — compact, low power, and manageable remotely."},
+  {q:"شركة ناشئة تحتاج 3 خوادم في غرفة تخزين صغيرة. ليس لديها رف خوادم وميزانيتها محدودة. أي شكل خادم يناسبها؟",ans:"Tower",opts:["Rack Mount","Tower","Blade","Micro"],explain:"خوادم Tower لا تحتاج رفًا وتكلفة بدايتها أقل وسهلة الإدارة في المكاتب الصغيرة."},
+  {q:"شركة مالية تبني مركز بيانات جديدًا وتحتاج وضع 40 خادمًا في 10U من مساحة الرف مع بنية تحتية مشتركة للطاقة والتبريد.",ans:"Blade",opts:["Rack Mount","Tower","Blade","Micro"],explain:"خوادم Blade تحقق أعلى كثافة من خلال مشاركة الطاقة والتبريد والشبكة عبر هيكل Blade."},
+  {q:"شركة متوسطة تحتاج 6 خوادم في خزانة رف 42U في غرفة الخوادم. تريد توازنًا بين الكثافة والتكلفة.",ans:"Rack Mount",opts:["Rack Mount","Tower","Blade","Micro"],explain:"خوادم Rack Mount هي المعيار لغرف الخوادم، توفر كثافة جيدة وإمكانية إدارة بتكلفة معتدلة."},
+  {q:"سلسلة متاجر تحتاج خادمًا صغيرًا في كل فرع لمعالجة نقاط البيع والمخزون محليًا. كادر تقني محدود ومساحة مادية صغيرة.",ans:"Micro",opts:["Rack Mount","Tower","Blade","Micro"],explain:"خوادم Micro/Mini مصممة للمواقع الطرفية — مدمجة ومنخفضة الاستهلاك وقابلة للإدارة عن بُعد."},
 ];
 let ffIdx=0,ffCorrect=0;
 function loadFF(){
@@ -227,31 +221,31 @@ function selectFF(choice){
   cards.forEach(c=>{c.style.pointerEvents='none';if(c.querySelector('.ff-name').textContent===sc.ans)c.classList.add('selected');});
   const correct=choice===sc.ans;
   if(correct)ffCorrect++;
-  document.getElementById('ff-feedback').innerHTML=`<div class="alert ${correct?'alert-success':'alert-danger'}">${correct?'✅ Correct!':'❌ Not quite.'} ${sc.explain}</div>`;
+  document.getElementById('ff-feedback').innerHTML=`<div class="alert ${correct?'alert-success':'alert-danger'}">${correct?'✅ صحيح!':'❌ غير صحيح.'} ${sc.explain}</div>`;
   document.getElementById('ff-next').style.display='inline-block';
   updateFFScore();
 }
 function nextFF(){
   ffIdx++;
   if(ffIdx>=FF_SCENARIOS.length){
-    document.querySelector('#t1 .card').innerHTML=`<h3>Section Complete!</h3><div class="alert alert-success" style="margin-top:12px">You scored ${ffCorrect}/${FF_SCENARIOS.length} on form factors. <button class="btn btn-outline btn-sm" onclick="ffIdx=0;ffCorrect=0;loadFF()" style="margin-left:10px">Retry</button></div>`;
+    document.querySelector('#t1 .card').innerHTML=`<h3>اكتمل القسم!</h3><div class="alert alert-success" style="margin-top:12px">حصلت على ${ffCorrect}/${FF_SCENARIOS.length} في أشكال الخوادم. <button class="btn btn-outline btn-sm" onclick="ffIdx=0;ffCorrect=0;loadFF()" style="margin-right:10px">إعادة المحاولة</button></div>`;
     return;
   }
   loadFF();
 }
-function updateFFScore(){document.getElementById('ff-score').textContent=`Score: ${ffCorrect} / ${Math.min(ffIdx,FF_SCENARIOS.length)}`;}
+function updateFFScore(){document.getElementById('ff-score').textContent=`النتيجة: ${ffCorrect} / ${Math.min(ffIdx,FF_SCENARIOS.length)}`;}
 loadFF();
 
-// ---- COMPONENT MATCHING ----
+// ---- مطابقة المكونات ----
 const COMP_DATA=[
-  {comp:"CPU (Processor)",func:"Executes instructions; measured in GHz and cores"},
-  {comp:"RAM (Memory)",func:"Temporary storage for running processes; volatile"},
-  {comp:"NIC (Network Card)",func:"Connects the server to the network via Ethernet"},
-  {comp:"HBA (Host Bus Adapter)",func:"Connects the server to a SAN or external storage"},
-  {comp:"RAID Controller",func:"Manages disk arrays; handles parity and striping"},
-  {comp:"PSU (Power Supply)",func:"Converts AC mains power to DC for components"},
-  {comp:"Riser Card",func:"Extends PCIe slots, allowing cards in low-profile chassis"},
-  {comp:"BIOS/UEFI Chip",func:"Firmware that initialises hardware during POST"},
+  {comp:"المعالج (CPU)",func:"ينفّذ التعليمات؛ يُقاس بـ GHz والأنوية"},
+  {comp:"الذاكرة العشوائية (RAM)",func:"تخزين مؤقت للعمليات الجارية؛ متطاير"},
+  {comp:"بطاقة الشبكة (NIC)",func:"توصيل الخادم بالشبكة عبر Ethernet"},
+  {comp:"محوّل ناقل المضيف (HBA)",func:"يوصّل الخادم بشبكة SAN أو التخزين الخارجي"},
+  {comp:"وحدة تحكم RAID",func:"تدير مصفوفات الأقراص؛ تتعامل مع Parity والـ Striping"},
+  {comp:"وحدة الطاقة (PSU)",func:"تحوّل تيار AC إلى DC لتغذية المكونات"},
+  {comp:"بطاقة الارتفاع (Riser Card)",func:"تمدد فتحات PCIe لتسمح بالبطاقات في الهياكل الرفيعة"},
+  {comp:"شريحة BIOS/UEFI",func:"البرنامج الثابت الذي يُهيئ العتاد أثناء POST"},
 ];
 let selectedLeft=null,matchedCount=0;
 function buildComp(){
@@ -276,8 +270,8 @@ function selectRight(i){
     rightEl.classList.add('matched');
     rightEl.style.pointerEvents='none';
     matchedCount++;
-    document.getElementById('comp-score').textContent=`Matched: ${matchedCount} / 8`;
-    if(matchedCount===8)document.getElementById('comp-feedback').innerHTML='<div class="alert alert-success">🎉 All components matched correctly!</div>';
+    document.getElementById('comp-score').textContent=`تمت المطابقة: ${matchedCount} / 8`;
+    if(matchedCount===8)document.getElementById('comp-feedback').innerHTML='<div class="alert alert-success">🎉 تمت مطابقة جميع المكونات بشكل صحيح!</div>';
   } else {
     document.getElementById('cl-'+selectedLeft).classList.add('wrong-match');
     rightEl.classList.add('wrong-match');
@@ -288,21 +282,21 @@ function selectRight(i){
   }
   selectedLeft=null;
 }
-function resetComp(){matchedCount=0;selectedLeft=null;document.getElementById('comp-score').textContent='Matched: 0 / 8';document.getElementById('comp-feedback').innerHTML='';buildComp();}
+function resetComp(){matchedCount=0;selectedLeft=null;document.getElementById('comp-score').textContent='تمت المطابقة: 0 / 8';document.getElementById('comp-feedback').innerHTML='';buildComp();}
 buildComp();
 
-// ---- SPECS MATCHING ----
+// ---- مطابقة المواصفات ----
 const SPEC_DATA=[
-  {spec:"2x Intel Xeon 32-core, 512GB RAM, 8x NVMe SSD",ans:"High-Performance Database Server",opts:["Small Business File Server","High-Performance Database Server","Edge/Branch Office Server","Email/Mail Server"]},
-  {spec:"Intel Pentium, 8GB RAM, 2x 1TB HDD",ans:"Small Business File Server",opts:["Small Business File Server","High-Performance Database Server","Edge/Branch Office Server","Blade Cluster Node"]},
-  {spec:"ARM Cortex A72, 4GB RAM, 64GB eMMC",ans:"Edge/Branch Office Server",opts:["Small Business File Server","Edge/Branch Office Server","High-Performance Database Server","Email/Mail Server"]},
-  {spec:"Dual Intel Xeon 16-core, 256GB RAM, 24x SAS HDDs, dual 10GbE NIC",ans:"Blade Cluster Node",opts:["Email/Mail Server","Small Business File Server","Blade Cluster Node","Edge/Branch Office Server"]},
-  {spec:"Intel Xeon 8-core, 64GB RAM, 4x 2TB SATA HDDs RAID 5",ans:"Email/Mail Server",opts:["High-Performance Database Server","Email/Mail Server","Edge/Branch Office Server","Small Business File Server"]},
+  {spec:"2x Intel Xeon 32-core، 512GB RAM، 8x NVMe SSD",ans:"خادم قواعد بيانات عالي الأداء",opts:["خادم ملفات للشركات الصغيرة","خادم قواعد بيانات عالي الأداء","خادم الفرع الطرفي","خادم البريد الإلكتروني"]},
+  {spec:"Intel Pentium، 8GB RAM، 2x 1TB HDD",ans:"خادم ملفات للشركات الصغيرة",opts:["خادم ملفات للشركات الصغيرة","خادم قواعد بيانات عالي الأداء","خادم الفرع الطرفي","عقدة Blade"]},
+  {spec:"ARM Cortex A72، 4GB RAM، 64GB eMMC",ans:"خادم الفرع الطرفي",opts:["خادم ملفات للشركات الصغيرة","خادم الفرع الطرفي","خادم قواعد بيانات عالي الأداء","خادم البريد الإلكتروني"]},
+  {spec:"Dual Intel Xeon 16-core، 256GB RAM، 24x SAS HDDs، dual 10GbE NIC",ans:"عقدة Blade",opts:["خادم البريد الإلكتروني","خادم ملفات للشركات الصغيرة","عقدة Blade","خادم الفرع الطرفي"]},
+  {spec:"Intel Xeon 8-core، 64GB RAM، 4x 2TB SATA HDDs RAID 5",ans:"خادم البريد الإلكتروني",opts:["خادم قواعد بيانات عالي الأداء","خادم البريد الإلكتروني","خادم الفرع الطرفي","خادم ملفات للشركات الصغيرة"]},
 ];
 function buildSpecs(){
   document.getElementById('spec-tbody').innerHTML=SPEC_DATA.map((d,i)=>`<tr id="sr-${i}">
     <td style="color:#e0e6f0;line-height:1.5">${d.spec}</td>
-    <td><select id="ss-${i}"><option value="">-- Select --</option>${d.opts.map(o=>`<option value="${o}">${o}</option>`).join('')}</select></td>
+    <td><select id="ss-${i}"><option value="">-- اختر --</option>${d.opts.map(o=>`<option value="${o}">${o}</option>`).join('')}</select></td>
     <td id="st-${i}" style="font-size:.8rem;color:#64748b">—</td>
   </tr>`).join('');
 }
@@ -313,32 +307,32 @@ function checkSpecs(){
     const row=document.getElementById('sr-'+i);
     const status=document.getElementById('st-'+i);
     row.classList.remove('correct-row','wrong-row');
-    if(sel===d.ans){correct++;row.classList.add('correct-row');status.innerHTML='<span style="color:#34d399">✓ Correct</span>';}
+    if(sel===d.ans){correct++;row.classList.add('correct-row');status.innerHTML='<span style="color:#34d399">✓ صحيح</span>';}
     else if(sel){row.classList.add('wrong-row');status.innerHTML=`<span style="color:#f87171">✗ ${d.ans}</span>`;}
     else{status.innerHTML='<span style="color:#64748b">—</span>';}
   });
-  document.getElementById('spec-feedback').innerHTML=`<div class="alert ${correct===SPEC_DATA.length?'alert-success':'alert-info'}">Score: ${correct}/${SPEC_DATA.length} correct</div>`;
+  document.getElementById('spec-feedback').innerHTML=`<div class="alert ${correct===SPEC_DATA.length?'alert-success':'alert-info'}">النتيجة: ${correct}/${SPEC_DATA.length} إجابات صحيحة</div>`;
 }
 buildSpecs();
 
-// ---- QUIZ ----
+// ---- الاختبار ----
 const QUIZ=[
-  {q:"What does '1U' refer to in rack server terminology?",opts:["1 unit of processing power","1.75 inches (44.45mm) of rack height","1 gigabit of network bandwidth","1 unit of power consumption"],ans:1},
-  {q:"Which form factor offers the HIGHEST server density per rack unit?",opts:["Tower","Rack Mount (1U)","Blade","Mini-ITX"],ans:2},
-  {q:"A server's POST (Power-On Self-Test) is initiated by which component?",opts:["Operating System","RAID Controller","BIOS/UEFI","CPU"],ans:2},
-  {q:"What is the primary function of an HBA (Host Bus Adapter)?",opts:["Connects server to internet","Connects server to SAN storage","Manages RAID arrays","Provides additional CPU cores"],ans:1},
-  {q:"Which component provides redundant power delivery in enterprise servers?",opts:["Dual NIC","Redundant PSU","RAID 1","Hot spare drive"],ans:1},
-  {q:"Riser cards in a server are used to:",opts:["Boost CPU performance","Extend PCIe slots for low-profile chassis","Increase RAM capacity","Speed up SAN connectivity"],ans:1},
-  {q:"A server with ECC RAM is best suited for which environment?",opts:["Gaming workstation","Development desktop","Mission-critical database server","Home media server"],ans:2},
-  {q:"Which NIC feature allows a server to remain connected if one network port fails?",opts:["VLAN tagging","NIC teaming (bonding)","MAC filtering","Port mirroring"],ans:1},
-  {q:"Hot-swap capability in server components means:",opts:["The component runs at high temperature","Components can be replaced without powering down the server","The server uses liquid cooling","Components are pre-heated before installation"],ans:1},
-  {q:"IPMI (Intelligent Platform Management Interface) is used for:",opts:["Network traffic shaping","Out-of-band server management even when OS is down","RAID configuration","Memory error correction"],ans:1},
+  {q:"ماذا يعني '1U' في مصطلحات خوادم الرف؟",opts:["وحدة قدرة معالجة واحدة","1.75 بوصة (44.45 مم) ارتفاع الرف","1 جيجابت عرض نطاق ترددي","وحدة استهلاك طاقة واحدة"],ans:1},
+  {q:"أي شكل خادم يوفر أعلى كثافة لكل وحدة رف؟",opts:["Tower","Rack Mount (1U)","Blade","Mini-ITX"],ans:2},
+  {q:"اختبار التشغيل الذاتي POST يبدأ بواسطة أي مكوّن؟",opts:["نظام التشغيل","وحدة تحكم RAID","BIOS/UEFI","المعالج"],ans:2},
+  {q:"ما الوظيفة الأساسية لـ HBA (Host Bus Adapter)؟",opts:["توصيل الخادم بالإنترنت","توصيل الخادم بتخزين SAN","إدارة مصفوفات RAID","توفير أنوية معالجة إضافية"],ans:1},
+  {q:"أي مكوّن يوفر إمداد طاقة احتياطي في خوادم المؤسسات؟",opts:["بطاقة شبكة مزدوجة","وحدة طاقة احتياطية (Redundant PSU)","RAID 1","قرص احتياطي ساخن"],ans:1},
+  {q:"تُستخدم بطاقات Riser في الخادم من أجل:",opts:["رفع أداء المعالج","توسيع فتحات PCIe للهياكل الرفيعة","زيادة سعة الذاكرة العشوائية","تسريع اتصال SAN"],ans:1},
+  {q:"خادم مزود بـ ECC RAM يناسب أي بيئة؟",opts:["محطة العمل للألعاب","سطح مكتب التطوير","خادم قواعد بيانات حرج","خادم وسائط منزلي"],ans:2},
+  {q:"أي خاصية في بطاقة الشبكة تضمن استمرار الاتصال عند فشل منفذ شبكي؟",opts:["VLAN tagging","NIC teaming (bonding)","تصفية MAC","Port mirroring"],ans:1},
+  {q:"قابلية التبديل الساخن (Hot-swap) في مكونات الخادم تعني:",opts:["المكوّن يعمل بدرجة حرارة عالية","يمكن استبدال المكونات دون إيقاف الخادم","الخادم يستخدم التبريد السائل","المكونات تُسخّن قبل التركيب"],ans:1},
+  {q:"IPMI (Intelligent Platform Management Interface) يُستخدم من أجل:",opts:["تشكيل حركة مرور الشبكة","الإدارة البعيدة خارج النطاق حتى لو توقف نظام التشغيل","إعداد RAID","تصحيح أخطاء الذاكرة"],ans:1},
 ];
 let quizScores={};
 function buildQuiz(){
   document.getElementById('quiz-container').innerHTML=QUIZ.map((q,qi)=>`
     <div class="card quiz-q" id="qq-${qi}">
-      <p>Q${qi+1}. ${q.q}</p>
+      <p>س${qi+1}. ${q.q}</p>
       <div class="quiz-options">
         ${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQuiz(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}
       </div>
@@ -354,7 +348,7 @@ function answerQuiz(qi,oi){
   if(oi!==q.ans){opts[oi].classList.add('incorrect');quizScores[qi]=0;}
   else{quizScores[qi]=1;}
   const total=Object.values(quizScores).reduce((a,b)=>a+b,0);
-  document.getElementById('quiz-score').textContent=`Score: ${total} / 10`;
+  document.getElementById('quiz-score').textContent=`النتيجة: ${total} / 10`;
   saveScore();
 }
 function saveScore(){

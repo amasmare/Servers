@@ -544,7 +544,13 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
       <div id="share-link-area" style="display:none;margin-top:12px">
         <div style="font-size:.78rem;color:#34d399;margin-bottom:6px;font-weight:700">✓ الرابط جاهز — انسخه وأرسله:</div>
         <div class="share-link-box" id="share-link-box"></div>
-        <button class="copy-btn" id="copy-btn" onclick="copyShareLink()">📋 نسخ الرابط</button>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="copy-btn" id="copy-btn" onclick="copyShareLink()" style="flex:1">📋 نسخ الرابط</button>
+          <button onclick="shareToTelegram()" style="flex:1;background:#2CA5E0;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:.82rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .2s" onmouseover="this.style.background='#1a8fc0'" onmouseout="this.style.background='#2CA5E0'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/></svg>
+            إرسال عبر تيليغرام
+          </button>
+        </div>
       </div>
       <button class="modal-cancel" style="width:100%;margin-top:10px" onclick="closeShareModal()">إغلاق</button>
     </div>
@@ -675,6 +681,13 @@ function copyShareLink(){
   var done=function(){btn.textContent='تم النسخ!';btn.className='copy-btn copied';setTimeout(function(){btn.textContent='نسخ الرابط';btn.className='copy-btn';},2500);};
   if(navigator.clipboard){navigator.clipboard.writeText(link).then(done);}
   else{var ta=document.createElement('textarea');ta.value=link;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);done();}
+}
+function shareToTelegram(){
+  var link=document.getElementById('share-link-box').textContent;
+  var name=document.getElementById('student-name-input').value.trim()||'الطالب';
+  var text='تقرير أداء الطالب '+name+' — مختبرات CompTIA Server+ SK0-005';
+  var url='https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(text);
+  window.open(url,'_blank');
 }
 
 // ===== Report rendering =====

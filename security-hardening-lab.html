@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مختبر 07 — أمان الخادم وتصليبه</title>
+<title>مختبر 07 — أمان الخادم وتقويةه</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
@@ -62,7 +62,7 @@ h2{color:#f87171;margin-bottom:8px;font-size:1.2rem}
 <div class="site-header-bar">
   <div class="site-logo-box">🔒</div>
   <div class="site-lab-info">
-    <h2>مختبر 07 — أمان الخادم وتصليبه</h2>
+    <h2>مختبر 07 — أمان الخادم وتقويةه</h2>
     <span>CompTIA Server+ SK0-005 · الفصل السابع</span>
   </div>
   <div class="site-author-block">
@@ -73,7 +73,7 @@ h2{color:#f87171;margin-bottom:8px;font-size:1.2rem}
 <a href="index.html" class="back-btn">→ العودة للمختبرات</a>
 
 <div class="tabs">
-  <div class="tab active" onclick="showTab('t1',this)">قائمة تصليب نظام التشغيل</div>
+  <div class="tab active" onclick="showTab('t1',this)">قائمة تقوية نظام التشغيل</div>
   <div class="tab" onclick="showTab('t2',this)">الأمان المادي</div>
   <div class="tab" onclick="showTab('t3',this)">PKI والشهادات</div>
   <div class="tab" onclick="showTab('t4',this)">الاختبار</div>
@@ -81,11 +81,11 @@ h2{color:#f87171;margin-bottom:8px;font-size:1.2rem}
 
 <!-- TAB 1 -->
 <div id="t1" class="tab-panel active">
-  <h2>قائمة تصليب نظام التشغيل</h2>
-  <p class="subtitle">خادم تم نشره حديثاً يحتاج إلى تصليب قبل الدخول للإنتاج. انقر على كل بند لتحديده كمكتمل. استهدف 100% قبل النشر!</p>
+  <h2>قائمة تقوية نظام التشغيل</h2>
+  <p class="subtitle">خادم تم نشره حديثاً يحتاج إلى تقوية قبل الدخول للإنتاج. انقر على كل بند لتحديده كمكتمل. استهدف 100% قبل النشر!</p>
   <div class="score-badge" id="harden-score">مكتمل: 0 / 15</div>
   <div class="card">
-    <h3>🔒 خطوات التصليب</h3>
+    <h3>🔒 خطوات التقوية</h3>
     <div id="checklist"></div>
   </div>
   <div id="harden-result"></div>
@@ -128,7 +128,7 @@ h2{color:#f87171;margin-bottom:8px;font-size:1.2rem}
 <!-- TAB 4 -->
 <div id="t4" class="tab-panel">
   <h2>اختبار المعرفة — أمان الخادم</h2>
-  <p class="subtitle">12 سؤالاً حول تصليب نظام التشغيل والأمان المادي وPKI والتحكم في الوصول.</p>
+  <p class="subtitle">12 سؤالاً حول تقوية نظام التشغيل والأمان المادي وPKI والتحكم في الوصول.</p>
   <div class="score-badge" id="quiz-score">النتيجة: 0 / 12</div>
   <div id="quiz-container"></div>
 </div>
@@ -140,7 +140,7 @@ h2{color:#f87171;margin-bottom:8px;font-size:1.2rem}
 <script>
 function showTab(id,el){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');el.classList.add('active');}
 
-// ---- قائمة التصليب ----
+// ---- قائمة التقوية ----
 const CHECKLIST=[
   {title:"إزالة الحسابات وكلمات المرور الافتراضية",desc:"أعد تسمية حساب Administrator/root المدمج أو عطّله. غيّر جميع كلمات المرور الافتراضية فوراً."},
   {title:"تطبيق جميع تحديثات وتصحيحات الأمان",desc:"شغّل Windows Update / apt upgrade. جدوِل دورات تصحيح شهرية آلية للحفاظ على الأمان."},
@@ -170,7 +170,7 @@ function buildChecklist(){
     </div>`).join('');
   document.getElementById('harden-score').textContent=`مكتمل: ${completed.size} / ${CHECKLIST.length}`;
   if(completed.size===CHECKLIST.length){
-    document.getElementById('harden-result').innerHTML='<div class="alert alert-success" style="margin-top:4px">🎉 اكتمل تصليب الخادم! هذا الخادم يلبي متطلبات الأمان الأساسية قبل النشر في بيئة الإنتاج.</div>';
+    document.getElementById('harden-result').innerHTML='<div class="alert alert-success" style="margin-top:4px">🎉 اكتمل تقوية الخادم! هذا الخادم يلبي متطلبات الأمان الأساسية قبل النشر في بيئة الإنتاج.</div>';
   } else if(completed.size>=10){
     document.getElementById('harden-result').innerHTML='<div class="alert alert-warn">⚠️ أوشكت على الانتهاء! أكمل جميع الخطوات قبل النشر في بيئة الإنتاج.</div>';
   } else {
@@ -246,7 +246,7 @@ buildPKI();
 
 // ---- الاختبار ----
 const QUIZ=[
-  {q:"أي خطوة من خطوات تصليب نظام التشغيل هي الأهم فور نشر خادم جديد؟",opts:["تثبيت مضاد فيروسات","تغيير كلمات المرور الافتراضية وإعادة تسمية حسابات المدير","تفعيل تشفير القرص","تهيئة SNMP"],ans:1},
+  {q:"أي خطوة من خطوات تقوية نظام التشغيل هي الأهم فور نشر خادم جديد؟",opts:["تثبيت مضاد فيروسات","تغيير كلمات المرور الافتراضية وإعادة تسمية حسابات المدير","تفعيل تشفير القرص","تهيئة SNMP"],ans:1},
   {q:"مبدأ 'أقل صلاحية' يعني:",opts:["جميع المستخدمين لديهم حقوق مدير","المستخدمون لديهم الحد الأدنى الضروري من الصلاحيات لعملهم","المستخدمون المميزون يحصلون على وصول كامل","موظفو IT فقط يمكنهم تسجيل الدخول"],ans:1},
   {q:"أي نوع من أنظمة إخماد الحريق مناسب لغرف الخوادم؟",opts:["رشاشات مياه","أنظمة غاز نظيف (FM-200)","دلاء رمل","CO2 عند مستوى الأرضية"],ans:1},
   {q:"ما الغرض من CSR (طلب توقيع الشهادة)؟",opts:["تجديد شهادة منتهية الصلاحية تلقائياً","طلب شهادة موقّعة من CA بما فيها المفتاح العام","تخزين المفتاح الخاص بأمان","إلغاء شهادة مخترقة"],ans:1},

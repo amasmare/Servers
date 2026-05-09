@@ -115,6 +115,75 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
 .modal-confirm:hover{background:#b91c1c}
 .modal-cancel{background:transparent;color:#64748b;border:1px solid #1e3a5c;border-radius:8px;padding:10px 24px;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s}
 .modal-cancel:hover{border-color:#64748b;color:#94a3b8}
+
+/* ===== Share & Report ===== */
+.share-btn{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.4);color:#00d4ff;border-radius:10px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s;margin-top:14px;margin-right:10px}
+.share-btn:hover{background:rgba(0,212,255,.25);border-color:#00d4ff}
+.share-input{width:100%;background:#071020;border:1px solid #1e3a5c;border-radius:8px;color:#e0e6f0;padding:10px 14px;font-size:.9rem;margin:10px 0 16px;font-family:inherit;text-align:right}
+.share-input:focus{outline:none;border-color:#00d4ff}
+.share-link-box{background:#071020;border:1px solid rgba(0,212,255,.3);border-radius:8px;padding:10px 14px;font-size:.72rem;color:#7ab3d4;word-break:break-all;direction:ltr;text-align:left;margin:10px 0;line-height:1.6;max-height:80px;overflow-y:auto}
+.copy-btn{background:#0891b2;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:.82rem;font-weight:700;cursor:pointer;transition:background .2s;width:100%}
+.copy-btn:hover{background:#0e7490}
+.copy-btn.copied{background:#10b981}
+/* Report overlay */
+.report-overlay{display:none;position:fixed;inset:0;background:#050c18;z-index:10000;overflow-y:auto;padding:24px 16px 60px}
+.report-overlay.open{display:block}
+.report-wrap{max-width:780px;margin:0 auto}
+.report-header{background:linear-gradient(135deg,#0a1628,#0d2145);border:1px solid #1e3a5f;border-radius:16px;padding:28px 32px;margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.report-logo{width:64px;height:64px;background:linear-gradient(135deg,#1d4ed8,#3b82f6);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0}
+.report-header-info{flex:1}
+.report-header-info h1{font-size:1.3rem;font-weight:800;color:#fff;margin:0 0 4px}
+.report-header-info p{font-size:.8rem;color:#93c5fd;margin:0}
+.report-meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.report-meta-card{background:#0d1b2a;border:1px solid #1e3a5f;border-radius:12px;padding:16px 20px}
+.report-meta-card .rmc-label{font-size:.72rem;color:#64748b;margin-bottom:4px;text-transform:uppercase;letter-spacing:1px}
+.report-meta-card .rmc-value{font-size:1rem;font-weight:700;color:#e0e6f0}
+.report-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.rsum-card{background:#0d1b2a;border:1px solid #1e3a5f;border-radius:12px;padding:16px;text-align:center}
+.rsum-card .rsum-num{font-size:1.6rem;font-weight:800;margin-bottom:4px}
+.rsum-card .rsum-label{font-size:.7rem;color:#64748b;line-height:1.4}
+.report-section{background:#0d1b2a;border:1px solid #1e3a5f;border-radius:14px;padding:20px 24px;margin-bottom:20px}
+.report-section h3{font-size:.88rem;font-weight:700;color:#7ab3d4;margin-bottom:16px;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid #1e3a5f;padding-bottom:10px}
+.overall-bar-wrap{margin-bottom:6px}
+.overall-bar-track{background:#1e3a5c;border-radius:20px;height:14px;overflow:hidden}
+.overall-bar-fill{height:100%;border-radius:20px;transition:width .8s}
+.overall-bar-labels{display:flex;justify-content:space-between;font-size:.75rem;color:#64748b;margin-top:4px}
+.lab-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(30,58,92,.5)}
+.lab-row:last-child{border-bottom:none}
+.lab-row-icon{font-size:1.2rem;flex-shrink:0;width:28px;text-align:center}
+.lab-row-info{flex:1;min-width:0}
+.lab-row-name{font-size:.85rem;font-weight:600;color:#e0e6f0;margin-bottom:2px}
+.lab-row-chapter{font-size:.72rem;color:#64748b}
+.lab-row-bar{width:120px;flex-shrink:0}
+.lab-row-bar-track{background:#1e3a5c;border-radius:20px;height:6px;overflow:hidden}
+.lab-row-bar-fill{height:100%;border-radius:20px}
+.lab-row-score{width:70px;text-align:center;flex-shrink:0;font-size:.8rem;font-weight:700}
+.lab-row-grade{width:40px;text-align:center;flex-shrink:0}
+.lab-grade-pill{display:inline-block;font-size:.72rem;font-weight:800;padding:2px 8px;border-radius:20px;border:1px solid}
+.grade-pill-A{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.4);color:#34d399}
+.grade-pill-B{background:rgba(0,212,255,.12);border-color:rgba(0,212,255,.35);color:#00d4ff}
+.grade-pill-C{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.35);color:#fbbf24}
+.grade-pill-D{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.35);color:#f87171}
+.grade-pill-none{background:rgba(100,116,139,.1);border-color:rgba(100,116,139,.25);color:#64748b}
+.lab-row-notdone{font-size:.78rem;color:#475569;font-style:italic}
+.grade-dist{display:flex;gap:10px;flex-wrap:wrap}
+.grade-dist-item{flex:1;min-width:60px;background:#071020;border-radius:10px;padding:12px 8px;text-align:center;border:1px solid #1e3a5f}
+.grade-dist-item .gdi-num{font-size:1.4rem;font-weight:800}
+.grade-dist-item .gdi-label{font-size:.68rem;color:#64748b;margin-top:2px}
+.report-actions{display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+.print-btn{background:#1d4ed8;color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.88rem;font-weight:700;cursor:pointer;transition:background .2s;display:flex;align-items:center;gap:8px}
+.print-btn:hover{background:#1e40af}
+.back-report-btn{background:transparent;color:#64748b;border:1px solid #1e3a5c;border-radius:10px;padding:12px 28px;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s}
+.back-report-btn:hover{border-color:#64748b;color:#94a3b8}
+@media(max-width:600px){.report-summary{grid-template-columns:repeat(2,1fr)}.report-meta{grid-template-columns:1fr}.lab-row-bar{width:70px}}
+@media print{
+  .report-overlay{background:#fff;color:#000;padding:0}
+  .report-actions,.back-report-btn,.print-btn{display:none!important}
+  .report-header,.report-section,.report-meta-card,.rsum-card{background:#f8fafc!important;border-color:#e2e8f0!important}
+  .rmc-value,.lab-row-name,.report-header-info h1{color:#1e293b!important}
+  .rmc-label,.lab-row-chapter,.overall-bar-labels,.rsum-label,.report-section h3{color:#64748b!important}
+  body > *:not(.report-overlay){display:none!important}
+}
 </style>
 </head>
 <body>
@@ -147,6 +216,7 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
     </div>
     <div id="progress-summary" style="display:none;margin-bottom:6px"></div>
     <button class="reset-btn" id="reset-all-btn" onclick="openResetModal()" style="display:none">🗑️ إعادة تعيين جميع نتائج الاختبارات</button>
+    <button class="share-btn" onclick="openShareModal()">📤 مشاركة نتائجي مع الأستاذ</button>
   </header>
 
   <!-- Modal تأكيد الحذف -->
@@ -463,6 +533,35 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
     </div>
   </div>
 
+  
+  <!-- Share Modal -->
+  <div class="modal-overlay" id="share-modal">
+    <div class="modal-box" style="max-width:480px">
+      <h3 style="color:#00d4ff;margin-bottom:8px">📤 مشاركة نتائجي مع الأستاذ</h3>
+      <p style="color:#94a3b8;font-size:.85rem;line-height:1.7;margin-bottom:16px">أدخل اسمك الكامل، ثم انسخ الرابط وأرسله لأستاذك عبر واتساب أو البريد الإلكتروني أو نظام الإدارة التعليمية.</p>
+      <input class="share-input" id="student-name-input" type="text" placeholder="الاسم الكامل (مثال: عبدالله محمد الأسمري)" maxlength="60" />
+      <button class="modal-confirm" style="width:100%;margin-bottom:8px" onclick="generateShareLink()">🔗 إنشاء رابط التقرير</button>
+      <div id="share-link-area" style="display:none;margin-top:12px">
+        <div style="font-size:.78rem;color:#34d399;margin-bottom:6px;font-weight:700">✓ الرابط جاهز — انسخه وأرسله:</div>
+        <div class="share-link-box" id="share-link-box"></div>
+        <button class="copy-btn" id="copy-btn" onclick="copyShareLink()">📋 نسخ الرابط</button>
+      </div>
+      <button class="modal-cancel" style="width:100%;margin-top:10px" onclick="closeShareModal()">إغلاق</button>
+    </div>
+  </div>
+
+
+  <!-- Report Overlay -->
+  <div class="report-overlay" id="report-overlay">
+    <div class="report-wrap">
+      <div id="report-content"></div>
+      <div class="report-actions">
+        <button class="print-btn" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+        <button class="back-report-btn" onclick="document.getElementById('report-overlay').classList.remove('open');history.replaceState(null,'',window.location.pathname)">← العودة للمختبرات</button>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <p>مختبرات CompTIA Server+ التفاعلية — بيئة تدريبية شاملة SK0-005</p>
     <p style="margin-top:6px;font-size:11px;opacity:.5">جميع المحاكاة لأغراض تعليمية أكاديمية فقط · All simulations are for educational purposes only</p>
@@ -526,6 +625,160 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
     if(rb)rb.style.display='inline-flex';
   }
 })();
+
+// ===== Lab metadata =====
+var LAB_META=[
+  {key:'sp_lab01',num:'01',name:'التعرف على عتاد الخوادم',chapter:'الفصل الأول',icon:'🔧',color:'#00d4ff'},
+  {key:'sp_lab02',num:'02',name:'BIOS/UEFI وإعداد الخادم',chapter:'الفصل الثاني',icon:'⚙️',color:'#a78bfa'},
+  {key:'sp_lab03',num:'03',name:'ضبط RAID وحسابات التخزين',chapter:'الفصل الثالث',icon:'💾',color:'#34d399'},
+  {key:'sp_lab04',num:'04',name:'تقنيات التخزين',chapter:'الفصل الرابع',icon:'🗄️',color:'#fbbf24'},
+  {key:'sp_lab05',num:'05',name:'أدوار الخوادم والخدمات',chapter:'الفصل الخامس',icon:'🌐',color:'#22d3ee'},
+  {key:'sp_lab06',num:'06',name:'المحاكاة الافتراضية',chapter:'الفصل السادس',icon:'🖥️',color:'#818cf8'},
+  {key:'sp_lab07',num:'07',name:'أمن الخوادم والتصليب',chapter:'الفصل السابع',icon:'🔒',color:'#f87171'},
+  {key:'sp_lab08',num:'08',name:'أمن الشبكات',chapter:'الفصل الثامن',icon:'🛡️',color:'#fb923c'},
+  {key:'sp_lab09',num:'09',name:'التعافي من الكوارث والنسخ الاحتياطي',chapter:'الفصل التاسع',icon:'🔄',color:'#f472b6'},
+  {key:'sp_lab10',num:'10',name:'منهجية استكشاف الأخطاء',chapter:'الفصل العاشر',icon:'🔍',color:'#2dd4bf'},
+  {key:'sp_lab11',num:'11',name:'التحدي الشامل — Server+',chapter:'جميع الفصول',icon:'🏆',color:'#a3e635'},
+];
+
+// ===== Share modal =====
+function openShareModal(){
+  document.getElementById('share-modal').classList.add('open');
+  document.getElementById('share-link-area').style.display='none';
+  document.getElementById('student-name-input').value='';
+  var cb=document.getElementById('copy-btn');
+  if(cb){cb.textContent='نسخ الرابط';cb.className='copy-btn';}
+}
+function closeShareModal(){document.getElementById('share-modal').classList.remove('open');}
+function generateShareLink(){
+  var name=document.getElementById('student-name-input').value.trim();
+  if(!name){
+    document.getElementById('student-name-input').focus();
+    document.getElementById('student-name-input').style.borderColor='#f87171';
+    return;
+  }
+  document.getElementById('student-name-input').style.borderColor='';
+  var scores={};
+  LAB_META.forEach(function(lab){
+    var raw=localStorage.getItem(lab.key);
+    if(raw){try{scores[lab.key]=JSON.parse(raw);}catch(e){}}
+  });
+  var data={n:name,d:new Date().toLocaleDateString('ar-SA'),scores:scores,v:1};
+  var encoded=btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  var url=window.location.href.split('#')[0]+'#report='+encoded;
+  document.getElementById('share-link-box').textContent=url;
+  document.getElementById('share-link-area').style.display='block';
+}
+function copyShareLink(){
+  var link=document.getElementById('share-link-box').textContent;
+  var btn=document.getElementById('copy-btn');
+  var done=function(){btn.textContent='تم النسخ!';btn.className='copy-btn copied';setTimeout(function(){btn.textContent='نسخ الرابط';btn.className='copy-btn';},2500);};
+  if(navigator.clipboard){navigator.clipboard.writeText(link).then(done);}
+  else{var ta=document.createElement('textarea');ta.value=link;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);done();}
+}
+
+// ===== Report rendering =====
+function gradeInfo(pct){
+  if(pct>=90)return{g:'A',cls:'grade-pill-A',bar:'#34d399',label:'ممتاز'};
+  if(pct>=75)return{g:'B',cls:'grade-pill-B',bar:'#00d4ff',label:'جيد جداً'};
+  if(pct>=60)return{g:'C',cls:'grade-pill-C',bar:'#fbbf24',label:'جيد'};
+  return{g:'D',cls:'grade-pill-D',bar:'#f87171',label:'يحتاج مراجعة'};
+}
+function renderReport(data){
+  var scores=data.scores||{};
+  var completed=LAB_META.filter(function(l){return scores[l.key];}).length;
+  var donePcts=LAB_META.map(function(l){return scores[l.key]?scores[l.key].pct:0;}).filter(function(p){return p>0;});
+  var avg=donePcts.length?Math.round(donePcts.reduce(function(a,b){return a+b;},0)/donePcts.length):0;
+  var totalPts=LAB_META.reduce(function(a,l){return a+(scores[l.key]?scores[l.key].score:0);},0);
+  var totalMax=LAB_META.reduce(function(a,l){return a+(scores[l.key]?scores[l.key].total:0);},0);
+  var overallGi=avg>0?gradeInfo(avg):{g:'—',cls:'grade-pill-none',bar:'#475569',label:'لم يبدأ بعد'};
+  var dist={A:0,B:0,C:0,D:0};
+  LAB_META.forEach(function(l){if(scores[l.key]){var gi=gradeInfo(scores[l.key].pct);if(dist[gi.g]!==undefined)dist[gi.g]++;}});
+
+  var labRows=LAB_META.map(function(l){
+    var d=scores[l.key];
+    if(!d){
+      return '<div class="lab-row">'
+        +'<div class="lab-row-icon">'+l.icon+'</div>'
+        +'<div class="lab-row-info"><div class="lab-row-name">المختبر '+l.num+' — '+l.name+'</div><div class="lab-row-chapter">'+l.chapter+'</div></div>'
+        +'<div class="lab-row-bar"><div class="lab-row-bar-track"><div class="lab-row-bar-fill" style="width:0%;background:#1e3a5c"></div></div></div>'
+        +'<div class="lab-row-score lab-row-notdone">لم يُكمل</div>'
+        +'<div class="lab-row-grade"><span class="lab-grade-pill grade-pill-none">—</span></div></div>';
+    }
+    var gi=gradeInfo(d.pct);
+    return '<div class="lab-row">'
+      +'<div class="lab-row-icon">'+l.icon+'</div>'
+      +'<div class="lab-row-info"><div class="lab-row-name">المختبر '+l.num+' — '+l.name+'</div><div class="lab-row-chapter">'+l.chapter+'</div></div>'
+      +'<div class="lab-row-bar"><div class="lab-row-bar-track"><div class="lab-row-bar-fill" style="width:'+d.pct+'%;background:'+gi.bar+'"></div></div></div>'
+      +'<div class="lab-row-score" style="color:'+gi.bar+'">'+d.score+'/'+d.total+'</div>'
+      +'<div class="lab-row-grade"><span class="lab-grade-pill '+gi.cls+'">'+gi.g+'</span></div></div>';
+  }).join('');
+
+  var pctDone=(completed/11*100).toFixed(0);
+  var html=''
+    +'<div class="report-header">'
+    +'<div class="report-logo">🖥️</div>'
+    +'<div class="report-header-info">'
+    +'<h1>تقرير أداء الطالب — مختبرات Server+</h1>'
+    +'<p>CompTIA Server+ SK0-005 · إدارة الخوادم والبنية التحتية · م. عبدالله الأسمري</p>'
+    +'</div></div>'
+    +'<div class="report-meta">'
+    +'<div class="report-meta-card"><div class="rmc-label">اسم الطالب</div><div class="rmc-value" style="font-size:1.15rem">'+data.n+'</div></div>'
+    +'<div class="report-meta-card"><div class="rmc-label">تاريخ التقرير</div><div class="rmc-value">'+data.d+'</div></div>'
+    +'</div>'
+    +'<div class="report-summary">'
+    +'<div class="rsum-card"><div class="rsum-num" style="color:#00d4ff">'+completed+'<span style="font-size:1rem;color:#475569">/11</span></div><div class="rsum-label">مختبرات مكتملة</div></div>'
+    +'<div class="rsum-card"><div class="rsum-num" style="color:'+overallGi.bar+'">'+avg+'<span style="font-size:1rem;color:#475569">%</span></div><div class="rsum-label">متوسط النتيجة</div></div>'
+    +'<div class="rsum-card"><div class="rsum-num"><span class="lab-grade-pill '+overallGi.cls+'" style="font-size:1.3rem;padding:5px 16px">'+overallGi.g+'</span></div><div class="rsum-label" style="margin-top:6px">التقدير العام<br>'+overallGi.label+'</div></div>'
+    +'<div class="rsum-card"><div class="rsum-num" style="color:#fbbf24">'+totalPts+'<span style="font-size:1rem;color:#475569">/'+totalMax+'</span></div><div class="rsum-label">مجموع النقاط</div></div>'
+    +'</div>'
+    +'<div class="report-section">'
+    +'<h3>التقدم العام في المنهج</h3>'
+    +'<div class="overall-bar-wrap">'
+    +'<div style="display:flex;justify-content:space-between;font-size:.78rem;color:#7ab3d4;margin-bottom:6px"><span>اكتمال المختبرات</span><span>'+completed+' / 11 ('+pctDone+'%)</span></div>'
+    +'<div class="overall-bar-track"><div class="overall-bar-fill" style="width:'+pctDone+'%;background:linear-gradient(90deg,#1d4ed8,#00d4ff)"></div></div>'
+    +'</div>'
+    +'<div style="margin-top:6px;font-size:.78rem;color:#7ab3d4;display:flex;justify-content:space-between"><span>متوسط النتيجة</span><span>'+avg+'%</span></div>'
+    +'<div class="overall-bar-track" style="margin-top:4px"><div class="overall-bar-fill" style="width:'+avg+'%;background:'+overallGi.bar+'"></div></div>'
+    +'<div class="grade-dist" style="margin-top:20px">'
+    +'<div class="grade-dist-item"><div class="gdi-num" style="color:#34d399">'+dist.A+'</div><div class="gdi-label">ممتاز (A)<br>90%+</div></div>'
+    +'<div class="grade-dist-item"><div class="gdi-num" style="color:#00d4ff">'+dist.B+'</div><div class="gdi-label">جيد جداً (B)<br>75-89%</div></div>'
+    +'<div class="grade-dist-item"><div class="gdi-num" style="color:#fbbf24">'+dist.C+'</div><div class="gdi-label">جيد (C)<br>60-74%</div></div>'
+    +'<div class="grade-dist-item"><div class="gdi-num" style="color:#f87171">'+dist.D+'</div><div class="gdi-label">يحتاج مراجعة (D)<br>أقل من 60%</div></div>'
+    +'<div class="grade-dist-item"><div class="gdi-num" style="color:#475569">'+(11-completed)+'</div><div class="gdi-label">لم يُكمل<br>بعد</div></div>'
+    +'</div></div>'
+    +'<div class="report-section">'
+    +'<h3>تفاصيل نتائج كل مختبر</h3>'
+    +'<div style="display:flex;align-items:center;font-size:.7rem;color:#475569;padding:4px 0 10px;border-bottom:1px solid #1e3a5f;margin-bottom:4px">'
+    +'<div style="flex:1">المختبر والفصل</div>'
+    +'<div style="width:120px;text-align:center">شريط التقدم</div>'
+    +'<div style="width:70px;text-align:center">النتيجة</div>'
+    +'<div style="width:40px;text-align:center">تقدير</div>'
+    +'</div>'
+    +labRows
+    +'</div>'
+    +'<div style="background:#0d1b2a;border:1px solid #1e3a5f;border-radius:12px;padding:16px 20px;text-align:center;color:#475569;font-size:.78rem;line-height:2">'
+    +'صُمِّمت بواسطة <strong style="color:#f59e0b">م. عبدالله الأسمري</strong> · مختبرات CompTIA Server+ التفاعلية · SK0-005<br>'
+    +'هذا التقرير تم إنشاؤه تلقائياً من نتائج الطالب المحفوظة محلياً في المتصفح'
+    +'</div>';
+
+  document.getElementById('report-content').innerHTML=html;
+  document.getElementById('report-overlay').classList.add('open');
+  window.scrollTo(0,0);
+}
+
+function checkForReport(){
+  var hash=window.location.hash;
+  if(!hash||hash.indexOf('#report=')<0)return;
+  try{
+    var encoded=hash.slice(8);
+    var data=JSON.parse(decodeURIComponent(escape(atob(encoded))));
+    renderReport(data);
+  }catch(e){console.error('Report error',e);}
+}
+checkForReport();
+
+
 function openResetModal(){document.getElementById('reset-modal').classList.add('open');}
 function closeResetModal(){document.getElementById('reset-modal').classList.remove('open');}
 function confirmReset(){

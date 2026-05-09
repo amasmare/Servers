@@ -166,7 +166,7 @@ function buildStepFlow(){
 function showStepDetail(i){
   const s=STEPS[i];
   document.querySelectorAll('.flow-step').forEach(el=>el.classList.remove('active-fs'));
-  document.querySelectorAll('.flow-step')[i*2].classList.add('active-fs');
+  document.querySelectorAll('.flow-step')[i].classList.add('active-fs');
   document.getElementById('step-detail').innerHTML=`
     <h3 style="color:${s.color}">الخطوة ${s.num}: ${s.title}</h3>
     <p style="color:#e0e6f0;line-height:1.7;margin:10px 0;font-size:.88rem">${s.detail}</p>

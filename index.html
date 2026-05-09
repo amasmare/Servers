@@ -92,6 +92,16 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
 .grade-C{background:rgba(245,158,11,.10);border-color:rgba(245,158,11,.3);color:#fbbf24}
 .grade-D{background:rgba(239,68,68,.10);border-color:rgba(239,68,68,.3);color:#f87171}
 .grade-none{background:rgba(100,116,139,.08);border-color:rgba(100,116,139,.2);color:#64748b}
+.lab-progress{padding:0 24px 14px}
+.lab-progress-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;font-size:11px}
+.lab-progress-label{color:#64748b}
+.lab-progress-score{font-weight:700;font-size:12px}
+.lab-progress-bar{background:rgba(255,255,255,.06);border-radius:20px;height:6px;overflow:hidden}
+.lab-progress-fill{height:100%;border-radius:20px;transition:width .5s;background:linear-gradient(90deg,#64748b,#475569)}
+.lab-progress-fill.fill-A{background:linear-gradient(90deg,#10b981,#34d399)}
+.lab-progress-fill.fill-B{background:linear-gradient(90deg,#0891b2,#00d4ff)}
+.lab-progress-fill.fill-C{background:linear-gradient(90deg,#d97706,#fbbf24)}
+.lab-progress-fill.fill-D{background:linear-gradient(90deg,#dc2626,#f87171)}
 </style>
 </head>
 <body>
@@ -149,6 +159,10 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">Rack / Tower / Blade</span><span class="topic-tag">المعالج / الذاكرة</span>
         <span class="topic-tag">بطاقة الشبكة</span><span class="topic-tag">وحدة الطاقة</span><span class="topic-tag">بطاقة RAID</span>
       </div>
+      <div class="lab-progress" id="lp-sp_lab01" style="display:none">
+        <div class="lab-progress-row"><span class="lab-progress-label">نتيجة الاختبار</span><span class="lab-progress-score" id="ps-sp_lab01">—</span></div>
+        <div class="lab-progress-bar"><div class="lab-progress-fill" id="pf-sp_lab01" style="width:0%"></div></div>
+      </div>
       <div class="lab-card-footer">
         <span class="chapter-badge">الفصل الأول</span><span class="grade-badge grade-none" id="gb-sp_lab01">—</span>
         <span class="open-btn">فتح المختبر ←</span>
@@ -168,6 +182,10 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
       <div class="lab-topics">
         <span class="topic-tag">BIOS مقابل UEFI</span><span class="topic-tag">ترتيب الإقلاع</span>
         <span class="topic-tag">رموز POST</span><span class="topic-tag">Secure Boot</span><span class="topic-tag">IPMI</span>
+      </div>
+      <div class="lab-progress" id="lp-sp_lab02" style="display:none">
+        <div class="lab-progress-row"><span class="lab-progress-label">نتيجة الاختبار</span><span class="lab-progress-score" id="ps-sp_lab02">—</span></div>
+        <div class="lab-progress-bar"><div class="lab-progress-fill" id="pf-sp_lab02" style="width:0%"></div></div>
       </div>
       <div class="lab-card-footer">
         <span class="chapter-badge">الفصل الثاني</span><span class="grade-badge grade-none" id="gb-sp_lab02">—</span>
@@ -189,6 +207,10 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">RAID 0/1/5/6/10</span><span class="topic-tag">حساب السعة</span>
         <span class="topic-tag">تحمّل الأعطال</span><span class="topic-tag">Hot Spare</span><span class="topic-tag">JBOD</span>
       </div>
+      <div class="lab-progress" id="lp-sp_lab03" style="display:none">
+        <div class="lab-progress-row"><span class="lab-progress-label">نتيجة الاختبار</span><span class="lab-progress-score" id="ps-sp_lab03">—</span></div>
+        <div class="lab-progress-bar"><div class="lab-progress-fill" id="pf-sp_lab03" style="width:0%"></div></div>
+      </div>
       <div class="lab-card-footer">
         <span class="chapter-badge">الفصل الثالث</span><span class="grade-badge grade-none" id="gb-sp_lab03">—</span>
         <span class="open-btn">فتح المختبر ←</span>
@@ -208,6 +230,10 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
       <div class="lab-topics">
         <span class="topic-tag">DAS / NAS / SAN</span><span class="topic-tag">iSCSI / FCoE</span>
         <span class="topic-tag">SAS / SATA / NVMe</span><span class="topic-tag">توبولوجيا FC</span>
+      </div>
+      <div class="lab-progress" id="lp-sp_lab04" style="display:none">
+        <div class="lab-progress-row"><span class="lab-progress-label">نتيجة الاختبار</span><span class="lab-progress-score" id="ps-sp_lab04">—</span></div>
+        <div class="lab-progress-bar"><div class="lab-progress-fill" id="pf-sp_lab04" style="width:0%"></div></div>
       </div>
       <div class="lab-card-footer">
         <span class="chapter-badge">الفصل الرابع</span><span class="grade-badge grade-none" id="gb-sp_lab04">—</span>
@@ -229,6 +255,10 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">DNS / DHCP / AD</span><span class="topic-tag">خادم الويب / قاعدة البيانات</span>
         <span class="topic-tag">NTP / الطباعة</span><span class="topic-tag">أرقام المنافذ</span>
       </div>
+      <div class="lab-progress" id="lp-sp_lab05" style="display:none">
+        <div class="lab-progress-row"><span class="lab-progress-label">نتيجة الاختبار</span><span class="lab-progress-score" id="ps-sp_lab05">—</span></div>
+        <div class="lab-progress-bar"><div class="lab-progress-fill" id="pf-sp_lab05" style="width:0%"></div></div>
+      </div>
       <div class="lab-card-footer">
         <span class="chapter-badge">الفصل الخامس</span><span class="grade-badge grade-none" id="gb-sp_lab05">—</span>
         <span class="open-btn">فتح المختبر ←</span>
@@ -248,6 +278,10 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
       <div class="lab-topics">
         <span class="topic-tag">النوع I / النوع II</span><span class="topic-tag">vCPU / vRAM</span>
         <span class="topic-tag">الترحيل المباشر</span><span class="topic-tag">اللقطات</span>
+      </div>
+      <div class="lab-progress" id="lp-sp_lab06" style="display:none">
+        <div class="lab-progress-row"><span class="lab-progress-label">نتيجة الاختبار</span><span class="lab-progress-score" id="ps-sp_lab06">—</span></div>
+        <div class="lab-progress-bar"><div class="lab-progress-fill" id="pf-sp_lab06" style="width:0%"></div></div>
       </div>
       <div class="lab-card-footer">
         <span class="chapter-badge">الفصل السادس</span><span class="grade-badge grade-none" id="gb-sp_lab06">—</span>
@@ -269,6 +303,10 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">تصليب النظام</span><span class="topic-tag">PKI / الشهادات</span>
         <span class="topic-tag">الأمن المادي</span><span class="topic-tag">قوائم التحكم</span><span class="topic-tag">MFA</span>
       </div>
+      <div class="lab-progress" id="lp-sp_lab07" style="display:none">
+        <div class="lab-progress-row"><span class="lab-progress-label">نتيجة الاختبار</span><span class="lab-progress-score" id="ps-sp_lab07">—</span></div>
+        <div class="lab-progress-bar"><div class="lab-progress-fill" id="pf-sp_lab07" style="width:0%"></div></div>
+      </div>
       <div class="lab-card-footer">
         <span class="chapter-badge">الفصل السابع</span><span class="grade-badge grade-none" id="gb-sp_lab07">—</span>
         <span class="open-btn">فتح المختبر ←</span>
@@ -288,6 +326,10 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
       <div class="lab-topics">
         <span class="topic-tag">قواعد جدار الحماية</span><span class="topic-tag">VLAN</span>
         <span class="topic-tag">VPN / IPsec</span><span class="topic-tag">DMZ</span><span class="topic-tag">IDS/IPS</span>
+      </div>
+      <div class="lab-progress" id="lp-sp_lab08" style="display:none">
+        <div class="lab-progress-row"><span class="lab-progress-label">نتيجة الاختبار</span><span class="lab-progress-score" id="ps-sp_lab08">—</span></div>
+        <div class="lab-progress-bar"><div class="lab-progress-fill" id="pf-sp_lab08" style="width:0%"></div></div>
       </div>
       <div class="lab-card-footer">
         <span class="chapter-badge">الفصل الثامن</span><span class="grade-badge grade-none" id="gb-sp_lab08">—</span>
@@ -309,6 +351,10 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">موقع ساخن / دافئ / بارد</span><span class="topic-tag">RTO / RPO</span>
         <span class="topic-tag">نسخ كامل / تزايدي</span><span class="topic-tag">BCP / DRP</span>
       </div>
+      <div class="lab-progress" id="lp-sp_lab09" style="display:none">
+        <div class="lab-progress-row"><span class="lab-progress-label">نتيجة الاختبار</span><span class="lab-progress-score" id="ps-sp_lab09">—</span></div>
+        <div class="lab-progress-bar"><div class="lab-progress-fill" id="pf-sp_lab09" style="width:0%"></div></div>
+      </div>
       <div class="lab-card-footer">
         <span class="chapter-badge">الفصل التاسع</span><span class="grade-badge grade-none" id="gb-sp_lab09">—</span>
         <span class="open-btn">فتح المختبر ←</span>
@@ -329,6 +375,10 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
         <span class="topic-tag">العملية السباعية</span><span class="topic-tag">رموز POST</span>
         <span class="topic-tag">ping / tracert</span><span class="topic-tag">Event Viewer</span>
       </div>
+      <div class="lab-progress" id="lp-sp_lab10" style="display:none">
+        <div class="lab-progress-row"><span class="lab-progress-label">نتيجة الاختبار</span><span class="lab-progress-score" id="ps-sp_lab10">—</span></div>
+        <div class="lab-progress-bar"><div class="lab-progress-fill" id="pf-sp_lab10" style="width:0%"></div></div>
+      </div>
       <div class="lab-card-footer">
         <span class="chapter-badge">الفصل العاشر</span><span class="grade-badge grade-none" id="gb-sp_lab10">—</span>
         <span class="open-btn">فتح المختبر ←</span>
@@ -348,6 +398,10 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
       <div class="lab-topics">
         <span class="topic-tag">جميع المحاور</span><span class="topic-tag">محرك السيناريوهات</span>
         <span class="topic-tag">التقييم</span><span class="topic-tag">التحضير للاختبار</span>
+      </div>
+      <div class="lab-progress" id="lp-sp_lab11" style="display:none">
+        <div class="lab-progress-row"><span class="lab-progress-label">نتيجة الاختبار</span><span class="lab-progress-score" id="ps-sp_lab11">—</span></div>
+        <div class="lab-progress-bar"><div class="lab-progress-fill" id="pf-sp_lab11" style="width:0%"></div></div>
       </div>
       <div class="lab-card-footer">
         <span class="chapter-badge">جميع الفصول</span><span class="grade-badge grade-none" id="gb-sp_lab11">—</span>
@@ -414,22 +468,30 @@ footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);co
     if(!raw)return;
     try{
       var d=JSON.parse(raw);
-      var el=document.getElementById('gb-'+lab.key);
-      if(!el)return;
       var pct=d.pct;
-      var grade,cls;
-      if(pct>=90){grade='A';cls='grade-A';}
-      else if(pct>=75){grade='B';cls='grade-B';}
-      else if(pct>=60){grade='C';cls='grade-C';}
-      else{grade='D';cls='grade-D';}
-      el.className='grade-badge '+cls;
-      el.textContent=grade+' '+pct+'%';
+      var grade,cls,fillCls;
+      if(pct>=90){grade='A';cls='grade-A';fillCls='fill-A';}
+      else if(pct>=75){grade='B';cls='grade-B';fillCls='fill-B';}
+      else if(pct>=60){grade='C';cls='grade-C';fillCls='fill-C';}
+      else{grade='D';cls='grade-D';fillCls='fill-D';}
+
+      // Update grade badge
+      var el=document.getElementById('gb-'+lab.key);
+      if(el){el.className='grade-badge '+cls;el.textContent=grade+' '+pct+'%';}
+
+      // Show progress bar section
+      var lp=document.getElementById('lp-'+lab.key);
+      if(lp){
+        lp.style.display='block';
+        var ps=document.getElementById('ps-'+lab.key);
+        if(ps){ps.textContent=d.score+'/'+d.total+' ('+pct+'%)';ps.style.color=cls==='grade-A'?'#34d399':cls==='grade-B'?'#00d4ff':cls==='grade-C'?'#fbbf24':'#f87171';}
+        var pf=document.getElementById('pf-'+lab.key);
+        if(pf){pf.style.width=pct+'%';pf.className='lab-progress-fill '+fillCls;}
+      }
     }catch(e){}
   });
-  // Update total completed stat
+  // Show overall completion
   var done=labs.filter(function(l){return localStorage.getItem(l.key);}).length;
-  var statEls=document.querySelectorAll('.stat-num');
-  // find the "11" stat and color it based on progress
   if(done>0){
     var msg=document.createElement('div');
     msg.style='text-align:center;font-size:12px;color:#34d399;margin-bottom:10px;font-weight:700';

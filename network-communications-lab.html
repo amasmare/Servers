@@ -666,6 +666,7 @@ function showFinal(){
   document.getElementById('quiz-score-text').innerHTML=`أجبت صحيحاً على <strong style="color:#00d4ff">${correct}</strong> من <strong>${total}</strong> سؤالاً (${pct}%) ${pct>=80?'🎉 ممتاز!':pct>=60?'👍 جيد، راجع الأخطاء':'📚 راجع المحتوى مجدداً'}`;
   document.getElementById('quiz-final').style.display='block';
   document.getElementById('quiz-final').scrollIntoView({behavior:'smooth'});
+  localStorage.setItem('sp_lab_nc',JSON.stringify({score:correct,total:total,pct:pct}));
 }
 function restartQuiz(){buildQuiz();}
 buildQuiz();

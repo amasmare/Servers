@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -6,47 +6,47 @@
 <title>مختبر 10 — منهجية استكشاف الأخطاء</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
-.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
-.site-topbar .author-tag{color:#f59e0b;font-weight:700}
-.site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #2dd4bf;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#f0f4f0;color:#1a2e22;min-height:100vh;-webkit-text-size-adjust:100%}
+.site-topbar{background:#004d28;border-bottom:1px solid #003d20;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#d4e8db;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#c9a227;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#006633 0%,#00843d 60%,#004d28 100%);border-bottom:4px solid #c9a227;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#0f766e,#14b8a6);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
 .site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#99f6e4}
-.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.08);padding-right:18px;flex-shrink:0}
-.site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b}
-.back-btn{display:inline-flex;align-items:center;gap:6px;color:#2dd4bf;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(45,212,191,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(45,212,191,.1)}
-.tabs{display:flex;gap:0;background:#071020;border-bottom:1px solid #1e3a5c;padding:0 20px;overflow-x:auto}
-.tab{padding:14px 22px;cursor:pointer;color:#7ab3d4;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#2dd4bf}.tab.active{border-bottom-color:#2dd4bf;background:rgba(45,212,191,.05)}
+.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.2);padding-right:18px;flex-shrink:0}
+.site-author-block .aname{font-size:.95rem;font-weight:700;color:#c9a227}.site-author-block .abook{font-size:.68rem;color:#4a7a5e}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#006633;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(0,102,51,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(0,102,51,.1)}
+.tabs{display:flex;gap:0;background:#e8f0eb;border-bottom:1px solid #c8ddd2;padding:0 20px;overflow-x:auto}
+.tab{padding:14px 22px;cursor:pointer;color:#4a7a5e;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#006633}.tab.active{border-bottom-color:#006633;background:rgba(0,102,51,.05)}
 .tab-panel{display:none;padding:30px;max-width:960px;margin:0 auto}.tab-panel.active{display:block}
-h2{color:#2dd4bf;margin-bottom:8px;font-size:1.2rem}
-.subtitle{color:#7ab3d4;font-size:.85rem;margin-bottom:20px;line-height:1.7}
-.card{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
-.card h3{color:#2dd4bf;margin-bottom:12px;font-size:1rem}
+h2{color:#006633;margin-bottom:8px;font-size:1.2rem}
+.subtitle{color:#4a7a5e;font-size:.85rem;margin-bottom:20px;line-height:1.7}
+.card{background:#ffffff;border:1px solid #c8ddd2;border-radius:12px;padding:22px;margin-bottom:20px}
+.card h3{color:#006633;margin-bottom:12px;font-size:1rem}
 .btn{padding:9px 20px;border:none;border-radius:6px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
 .btn-teal{background:#0f766e;color:#fff}.btn-teal:hover{background:#0d9488}
-.btn-outline{background:transparent;border:1px solid #2dd4bf;color:#2dd4bf}.btn-outline:hover{background:rgba(45,212,191,.1)}
+.btn-outline{background:transparent;border:1px solid #006633;color:#006633}.btn-outline:hover{background:rgba(0,102,51,.1)}
 .btn-sm{padding:5px 12px;font-size:.78rem}
 .alert{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.88rem;line-height:1.6}
-.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#34d399}
-.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
-.alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
-.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:#7ab3d4}
-.score-badge{display:inline-block;background:rgba(45,212,191,.1);border:1px solid rgba(45,212,191,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#2dd4bf;margin-bottom:16px}
+.alert-success{background:rgba(6,95,70,.08);border:1px solid rgba(6,95,70,.25);color:#065f46}
+.alert-warn{background:rgba(120,85,0,.06);border:1px solid rgba(180,130,0,.3);color:#7a6010}
+.alert-danger{background:rgba(127,29,29,.06);border:1px solid rgba(200,50,50,.25);color:#7f1d1d}
+.alert-info{background:rgba(0,102,51,.07);border:1px solid rgba(0,102,51,.25);color:#2d6a4a}
+.score-badge{display:inline-block;background:rgba(0,102,51,.08);border:1px solid rgba(0,102,51,.25);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#006633;margin-bottom:16px}
 /* 7-step flowchart */
 .step-flow{display:flex;flex-direction:column;gap:0}
-.flow-step{background:#071020;border:2px solid #1e3a5c;border-radius:10px;padding:14px;cursor:pointer;transition:all .2s;margin-bottom:4px}
-.flow-step:hover,.flow-step.active-fs{border-color:#2dd4bf;background:rgba(45,212,191,.05)}
+.flow-step{background:#f0f7f3;border:2px solid #c8ddd2;border-radius:10px;padding:14px;cursor:pointer;transition:all .2s;margin-bottom:4px}
+.flow-step:hover,.flow-step.active-fs{border-color:#006633;background:rgba(0,102,51,.05)}
 .flow-step-num{width:32px;height:32px;border-radius:50%;background:#2dd4bf;color:#000;font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.flow-arrow{text-align:center;color:#1e3a5c;font-size:1.1rem;margin:-2px 0}
+.flow-arrow{text-align:center;color:#c8ddd2;font-size:1.1rem;margin:-2px 0}
 /* Tool matcher */
 .tool-match{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
-.match-item{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px 14px;margin-bottom:8px;cursor:pointer;transition:all .2s;font-size:.85rem}
-.match-item:hover{border-color:#2dd4bf}.match-item.selected{border-color:#14b8a6;background:rgba(20,184,166,.1);color:#2dd4bf}.match-item.matched{border-color:#10b981;background:rgba(16,185,129,.1);color:#34d399}.match-item.wrong-m{border-color:#ef4444}
+.match-item{background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px 14px;margin-bottom:8px;cursor:pointer;transition:all .2s;font-size:.85rem}
+.match-item:hover{border-color:#006633}.match-item.selected{border-color:#14b8a6;background:rgba(20,184,166,.1);color:#006633}.match-item.matched{border-color:#006633;background:rgba(0,102,51,.12);color:#065f46}.match-item.wrong-m{border-color:#ef4444}
 /* Quiz */
-.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:#e0e6f0}
-.quiz-opt:hover{border-color:#2dd4bf}.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
-.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
-.site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#f59e0b}
+.quiz-opt{background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:#1a2e22}
+.quiz-opt:hover{border-color:#006633}.quiz-opt.correct{border-color:#006633;background:rgba(0,102,51,.12);color:#065f46}.quiz-opt.incorrect{border-color:#dc2626;background:rgba(239,68,68,.08);color:#7f1d1d}
+.site-footer-bar{background:#006633;border-top:2px solid #004d28;padding:20px 30px;text-align:center;margin-top:30px}
+.site-footer-bar p{color:#d4e8db;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#c9a227}
 </style>
 </head>
 <body>
@@ -102,11 +102,11 @@ h2{color:#2dd4bf;margin-bottom:8px;font-size:1.2rem}
   <div class="score-badge" id="tool-score">مُطابَق: 0 / 10</div>
   <div class="tool-match">
     <div>
-      <div style="font-size:.78rem;color:#7ab3d4;margin-bottom:8px">الأداة / الأمر</div>
+      <div style="font-size:.78rem;color:#4a7a5e;margin-bottom:8px">الأداة / الأمر</div>
       <div id="tool-left"></div>
     </div>
     <div>
-      <div style="font-size:.78rem;color:#7ab3d4;margin-bottom:8px">ما تفعله</div>
+      <div style="font-size:.78rem;color:#4a7a5e;margin-bottom:8px">ما تفعله</div>
       <div id="tool-right"></div>
     </div>
   </div>
@@ -114,16 +114,16 @@ h2{color:#2dd4bf;margin-bottom:8px;font-size:1.2rem}
   <div class="card" style="margin-top:16px">
     <h3>📋 أدوات استكشاف أخطاء الخوادم الشائعة</h3>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;font-size:.8rem">
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">ping</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">اختبار الاتصال الأساسي بعنوان IP لمضيف</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">tracert / traceroute</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">يعرض كل عقدة وسيطة على الطريق للوجهة ويحدد أين ينقطع المسار</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">ipconfig / ifconfig</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">يعرض تهيئة IP والبوابة وإعدادات DNS</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">netstat</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">يعرض الاتصالات النشطة والمنافذ المستمِعة</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">nslookup / dig</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">يختبر تحليل DNS لاسم مضيف</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">Event Viewer</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">سجلات أحداث Windows للنظام والتطبيقات والأمان</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">Task Manager / top</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">مراقبة فورية للمعالج والذاكرة والعمليات</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">diskpart / fdisk</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">إدارة وتقسيم الأقراص</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">SMART tools</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">صحة القرص الصلب وتحليل الأعطال المبكرة</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><code style="color:#2dd4bf">Wireshark</code><div style="color:#64748b;margin-top:3px;font-size:.75rem">التقاط الحزم الكاملة وتحليل البروتوكولات</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><code style="color:#006633">ping</code><div style="color:#4a7a5e;margin-top:3px;font-size:.75rem">اختبار الاتصال الأساسي بعنوان IP لمضيف</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><code style="color:#006633">tracert / traceroute</code><div style="color:#4a7a5e;margin-top:3px;font-size:.75rem">يعرض كل عقدة وسيطة على الطريق للوجهة ويحدد أين ينقطع المسار</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><code style="color:#006633">ipconfig / ifconfig</code><div style="color:#4a7a5e;margin-top:3px;font-size:.75rem">يعرض تهيئة IP والبوابة وإعدادات DNS</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><code style="color:#006633">netstat</code><div style="color:#4a7a5e;margin-top:3px;font-size:.75rem">يعرض الاتصالات النشطة والمنافذ المستمِعة</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><code style="color:#006633">nslookup / dig</code><div style="color:#4a7a5e;margin-top:3px;font-size:.75rem">يختبر تحليل DNS لاسم مضيف</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><code style="color:#006633">Event Viewer</code><div style="color:#4a7a5e;margin-top:3px;font-size:.75rem">سجلات أحداث Windows للنظام والتطبيقات والأمان</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><code style="color:#006633">Task Manager / top</code><div style="color:#4a7a5e;margin-top:3px;font-size:.75rem">مراقبة فورية للمعالج والذاكرة والعمليات</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><code style="color:#006633">diskpart / fdisk</code><div style="color:#4a7a5e;margin-top:3px;font-size:.75rem">إدارة وتقسيم الأقراص</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><code style="color:#006633">SMART tools</code><div style="color:#4a7a5e;margin-top:3px;font-size:.75rem">صحة القرص الصلب وتحليل الأعطال المبكرة</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><code style="color:#006633">Wireshark</code><div style="color:#4a7a5e;margin-top:3px;font-size:.75rem">التقاط الحزم الكاملة وتحليل البروتوكولات</div></div>
     </div>
   </div>
 </div>
@@ -158,7 +158,7 @@ function buildStepFlow(){
     <div class="flow-step" onclick="showStepDetail(${i})">
       <div style="display:flex;align-items:center;gap:10px">
         <div class="flow-step-num" style="background:${s.color}">${s.num}</div>
-        <div style="font-size:.88rem;font-weight:600;color:#e0e6f0">${s.title}</div>
+        <div style="font-size:.88rem;font-weight:600;color:#1a2e22">${s.title}</div>
       </div>
     </div>
     ${i<STEPS.length-1?'<div class="flow-arrow">↓</div>':''}`).join('');
@@ -169,12 +169,12 @@ function showStepDetail(i){
   document.querySelectorAll('.flow-step')[i].classList.add('active-fs');
   document.getElementById('step-detail').innerHTML=`
     <h3 style="color:${s.color}">الخطوة ${s.num}: ${s.title}</h3>
-    <p style="color:#e0e6f0;line-height:1.7;margin:10px 0;font-size:.88rem">${s.detail}</p>
+    <p style="color:#1a2e22;line-height:1.7;margin:10px 0;font-size:.88rem">${s.detail}</p>
     <div style="margin-top:12px">
-      <div style="font-size:.78rem;color:#2dd4bf;font-weight:700;margin-bottom:6px">الإجراءات:</div>
-      ${s.actions.map(a=>`<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:6px;font-size:.82rem"><span style="color:#2dd4bf;flex-shrink:0">←</span><span style="color:#7ab3d4;line-height:1.4">${a}</span></div>`).join('')}
+      <div style="font-size:.78rem;color:#006633;font-weight:700;margin-bottom:6px">الإجراءات:</div>
+      ${s.actions.map(a=>`<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:6px;font-size:.82rem"><span style="color:#006633;flex-shrink:0">←</span><span style="color:#4a7a5e;line-height:1.4">${a}</span></div>`).join('')}
     </div>
-    <div style="margin-top:12px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:10px;font-size:.78rem;color:#f87171">
+    <div style="margin-top:12px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:10px;font-size:.78rem;color:#7f1d1d">
       <strong>⚠️ تجنّب:</strong> ${s.dont}
     </div>`;
 }
@@ -198,15 +198,15 @@ function loadScenario(){
   document.getElementById('scenario-card').innerHTML=`
     <h3>🔧 السيناريو: خادم الويب معطّل</h3>
     <div class="alert alert-info" style="margin-bottom:16px">${sc.problem}</div>
-    <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px">${step.q}</p>
-    <div style="display:grid;gap:8px">${step.opts.map((o,i)=>`<button style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;text-align:right;color:#e0e6f0;font-size:.88rem;width:100%;transition:all .2s" onclick="pickScStep(${i})">${o}</button>`).join('')}</div>
+    <p style="font-weight:600;color:#1a2e22;margin-bottom:12px">${step.q}</p>
+    <div style="display:grid;gap:8px">${step.opts.map((o,i)=>`<button style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:11px 16px;cursor:pointer;text-align:right;color:#1a2e22;font-size:.88rem;width:100%;transition:all .2s" onclick="pickScStep(${i})">${o}</button>`).join('')}</div>
     <div id="sc-step-fb" style="margin-top:12px"></div>`;
   document.getElementById('scenario-score').textContent=`الخطوة ${scStepIdx+1}/${sc.steps.length} | النتيجة: ${scCorrect}`;
 }
 function pickScStep(i){
   const step=SCENARIOS[0].steps[scStepIdx];const correct=i===step.ans;
   if(correct)scCorrect++;
-  document.querySelectorAll('#scenario-card button').forEach((b,bi)=>{b.disabled=true;if(bi===step.ans)b.style.background='rgba(16,185,129,.15)';});
+  document.querySelectorAll('#scenario-card button').forEach((b,bi)=>{b.disabled=true;if(bi===step.ans)b.style.background='rgba(0,102,51,.15)';});
   if(!correct)document.querySelectorAll('#scenario-card button')[i].style.background='rgba(239,68,68,.15)';
   document.getElementById('sc-step-fb').innerHTML=`<div class="alert ${correct?'alert-success':'alert-warn'}">${correct?'✅':'💡'} ${step.explain}<br><button class="btn btn-outline btn-sm" onclick="nextScStep()" style="margin-top:10px">الخطوة التالية ←</button></div>`;
 }
@@ -271,8 +271,8 @@ let quizScores={};
 function buildQuiz(){
   document.getElementById('quiz-container').innerHTML=QUIZ.map((q,qi)=>`
     <div class="card" style="margin-bottom:16px">
-      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">س${qi+1}. ${q.q}</p>
-      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})" style="color:#e0e6f0">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
+      <p style="font-weight:600;color:#1a2e22;margin-bottom:12px;line-height:1.5">س${qi+1}. ${q.q}</p>
+      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})" style="color:#1a2e22">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
     </div>`).join('');
 }
 function answerQ(qi,oi){
@@ -289,3 +289,7 @@ buildQuiz();
 </script>
 </body>
 </html>
+
+
+
+

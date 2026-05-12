@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -6,47 +6,47 @@
 <title>المختبر 05 — أدوار الخادم والخدمات</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
-.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
-.site-topbar .author-tag{color:#f59e0b;font-weight:700}
-.site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #22d3ee;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#f0f4f0;color:#1a2e22;min-height:100vh;-webkit-text-size-adjust:100%}
+.site-topbar{background:#004d28;border-bottom:1px solid #003d20;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#d4e8db;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#c9a227;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#006633 0%,#00843d 60%,#004d28 100%);border-bottom:4px solid #c9a227;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#0e7490,#06b6d4);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
 .site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#a5f3fc}
-.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.08);padding-right:18px;flex-shrink:0}
-.site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b}
-.back-btn{display:inline-flex;align-items:center;gap:6px;color:#22d3ee;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(34,211,238,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(34,211,238,.1)}
-.tabs{display:flex;gap:0;background:#071020;border-bottom:1px solid #1e3a5c;padding:0 20px;overflow-x:auto}
-.tab{padding:14px 22px;cursor:pointer;color:#7ab3d4;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#22d3ee}.tab.active{border-bottom-color:#22d3ee;background:rgba(34,211,238,.05)}
+.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.2);padding-right:18px;flex-shrink:0}
+.site-author-block .aname{font-size:.95rem;font-weight:700;color:#c9a227}.site-author-block .abook{font-size:.68rem;color:#4a7a5e}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#006633;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(0,102,51,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(0,102,51,.1)}
+.tabs{display:flex;gap:0;background:#e8f0eb;border-bottom:1px solid #c8ddd2;padding:0 20px;overflow-x:auto}
+.tab{padding:14px 22px;cursor:pointer;color:#4a7a5e;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#006633}.tab.active{border-bottom-color:#006633;background:rgba(0,102,51,.05)}
 .tab-panel{display:none;padding:30px;max-width:960px;margin:0 auto}.tab-panel.active{display:block}
-h2{color:#22d3ee;margin-bottom:8px;font-size:1.2rem}
-.subtitle{color:#7ab3d4;font-size:.85rem;margin-bottom:20px;line-height:1.7}
-.card{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
-.card h3{color:#22d3ee;margin-bottom:12px;font-size:1rem}
+h2{color:#006633;margin-bottom:8px;font-size:1.2rem}
+.subtitle{color:#4a7a5e;font-size:.85rem;margin-bottom:20px;line-height:1.7}
+.card{background:#ffffff;border:1px solid #c8ddd2;border-radius:12px;padding:22px;margin-bottom:20px}
+.card h3{color:#006633;margin-bottom:12px;font-size:1rem}
 .btn{padding:9px 20px;border:none;border-radius:6px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
 .btn-cyan{background:#0891b2;color:#fff}.btn-cyan:hover{background:#0e7490}
-.btn-outline{background:transparent;border:1px solid #22d3ee;color:#22d3ee}.btn-outline:hover{background:rgba(34,211,238,.1)}
+.btn-outline{background:transparent;border:1px solid #006633;color:#006633}.btn-outline:hover{background:rgba(0,102,51,.1)}
 .btn-sm{padding:5px 12px;font-size:.78rem}
 .alert{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.88rem;line-height:1.6}
-.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#34d399}
-.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
-.alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
-.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:#7ab3d4}
-.score-badge{display:inline-block;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#22d3ee;margin-bottom:16px}
+.alert-success{background:rgba(6,95,70,.08);border:1px solid rgba(6,95,70,.25);color:#065f46}
+.alert-warn{background:rgba(120,85,0,.06);border:1px solid rgba(180,130,0,.3);color:#7a6010}
+.alert-danger{background:rgba(127,29,29,.06);border:1px solid rgba(200,50,50,.25);color:#7f1d1d}
+.alert-info{background:rgba(0,102,51,.07);border:1px solid rgba(0,102,51,.25);color:#2d6a4a}
+.score-badge{display:inline-block;background:rgba(0,102,51,.08);border:1px solid rgba(0,102,51,.25);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#006633;margin-bottom:16px}
 .roles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin:16px 0}
-.role-card{background:#071020;border:2px solid #1e3a5c;border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .2s}
-.role-card:hover{border-color:#22d3ee;transform:translateY(-2px)}.role-card.correct-pick{border-color:#10b981;background:rgba(16,185,129,.08)}.role-card.wrong-pick{border-color:#ef4444;background:rgba(239,68,68,.08)}
-.role-icon{font-size:1.8rem;margin-bottom:6px}.role-name{font-weight:700;color:#22d3ee;font-size:.8rem}
+.role-card{background:#f0f7f3;border:2px solid #c8ddd2;border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .2s}
+.role-card:hover{border-color:#006633;transform:translateY(-2px)}.role-card.correct-pick{border-color:#006633;background:rgba(0,102,51,.08)}.role-card.wrong-pick{border-color:#ef4444;background:rgba(239,68,68,.08)}
+.role-icon{font-size:1.8rem;margin-bottom:6px}.role-name{font-weight:700;color:#006633;font-size:.8rem}
 .port-table{width:100%;border-collapse:collapse;font-size:.85rem}
-.port-table th{background:#071020;color:#7ab3d4;padding:9px;text-align:right;border-bottom:2px solid #1e3a5c}
-.port-table td{padding:9px;border-bottom:1px solid #1e3a5c;vertical-align:middle}
-.port-table select{background:#0a0f1e;border:1px solid #1e3a5c;border-radius:6px;color:#e0e6f0;padding:5px 8px;font-size:.82rem}
-.port-table tr.correct-row td{background:rgba(16,185,129,.06)}
+.port-table th{background:#f0f7f3;color:#4a7a5e;padding:9px;text-align:right;border-bottom:2px solid #c8ddd2}
+.port-table td{padding:9px;border-bottom:1px solid #c8ddd2;vertical-align:middle}
+.port-table select{background:#f0f4f0;border:1px solid #c8ddd2;border-radius:6px;color:#1a2e22;padding:5px 8px;font-size:.82rem}
+.port-table tr.correct-row td{background:rgba(0,102,51,.06)}
 .port-table tr.wrong-row td{background:rgba(239,68,68,.06)}
-.port-num{font-family:'Courier New',monospace;color:#22d3ee;font-weight:700}
-.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:#e0e6f0}
-.quiz-opt:hover{border-color:#22d3ee;color:#e0e6f0}.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
-.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
-.site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#f59e0b}
+.port-num{font-family:'Courier New',monospace;color:#006633;font-weight:700}
+.quiz-opt{background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:#1a2e22}
+.quiz-opt:hover{border-color:#006633;color:#1a2e22}.quiz-opt.correct{border-color:#006633;background:rgba(0,102,51,.12);color:#065f46}.quiz-opt.incorrect{border-color:#dc2626;background:rgba(239,68,68,.08);color:#7f1d1d}
+.site-footer-bar{background:#006633;border-top:2px solid #004d28;padding:20px 30px;text-align:center;margin-top:30px}
+.site-footer-bar p{color:#d4e8db;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#c9a227}
 </style>
 </head>
 <body>
@@ -82,14 +82,14 @@ h2{color:#22d3ee;margin-bottom:8px;font-size:1.2rem}
   <div class="card">
     <h3>📋 مرجع سريع لأدوار الخادم</h3>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#22d3ee;font-weight:700;margin-bottom:4px">🌐 خادم DNS</div><div style="font-size:.75rem;color:#64748b;line-height:1.5">يترجم أسماء النطاقات إلى عناوين IP. المنفذ 53 UDP/TCP.</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#22d3ee;font-weight:700;margin-bottom:4px">📡 خادم DHCP</div><div style="font-size:.75rem;color:#64748b;line-height:1.5">يعيّن عناوين IP تلقائيًا للعملاء. المنافذ 67/68 UDP.</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#22d3ee;font-weight:700;margin-bottom:4px">👥 Active Directory</div><div style="font-size:.75rem;color:#64748b;line-height:1.5">مصادقة وتفويض مركزيان. LDAP المنفذ 389، Kerberos 88.</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#22d3ee;font-weight:700;margin-bottom:4px">🌍 خادم الويب</div><div style="font-size:.75rem;color:#64748b;line-height:1.5">يخدم صفحات HTTP/HTTPS. المنفذ 80 و443.</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#22d3ee;font-weight:700;margin-bottom:4px">📧 خادم البريد</div><div style="font-size:.75rem;color:#64748b;line-height:1.5">الإرسال/الاستقبال. SMTP 25، IMAP 143، POP3 110.</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#22d3ee;font-weight:700;margin-bottom:4px">🗄️ خادم قواعد البيانات</div><div style="font-size:.75rem;color:#64748b;line-height:1.5">SQL/NoSQL. MySQL 3306، MSSQL 1433.</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#22d3ee;font-weight:700;margin-bottom:4px">📁 خادم الملفات</div><div style="font-size:.75rem;color:#64748b;line-height:1.5">تخزين مشترك. SMB 445، NFS 2049.</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#22d3ee;font-weight:700;margin-bottom:4px">⏰ خادم NTP</div><div style="font-size:.75rem;color:#64748b;line-height:1.5">مزامنة ساعات النظام. المنفذ 123 UDP.</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:12px"><div style="color:#006633;font-weight:700;margin-bottom:4px">🌐 خادم DNS</div><div style="font-size:.75rem;color:#4a7a5e;line-height:1.5">يترجم أسماء النطاقات إلى عناوين IP. المنفذ 53 UDP/TCP.</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:12px"><div style="color:#006633;font-weight:700;margin-bottom:4px">📡 خادم DHCP</div><div style="font-size:.75rem;color:#4a7a5e;line-height:1.5">يعيّن عناوين IP تلقائيًا للعملاء. المنافذ 67/68 UDP.</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:12px"><div style="color:#006633;font-weight:700;margin-bottom:4px">👥 Active Directory</div><div style="font-size:.75rem;color:#4a7a5e;line-height:1.5">مصادقة وتفويض مركزيان. LDAP المنفذ 389، Kerberos 88.</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:12px"><div style="color:#006633;font-weight:700;margin-bottom:4px">🌍 خادم الويب</div><div style="font-size:.75rem;color:#4a7a5e;line-height:1.5">يخدم صفحات HTTP/HTTPS. المنفذ 80 و443.</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:12px"><div style="color:#006633;font-weight:700;margin-bottom:4px">📧 خادم البريد</div><div style="font-size:.75rem;color:#4a7a5e;line-height:1.5">الإرسال/الاستقبال. SMTP 25، IMAP 143، POP3 110.</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:12px"><div style="color:#006633;font-weight:700;margin-bottom:4px">🗄️ خادم قواعد البيانات</div><div style="font-size:.75rem;color:#4a7a5e;line-height:1.5">SQL/NoSQL. MySQL 3306، MSSQL 1433.</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:12px"><div style="color:#006633;font-weight:700;margin-bottom:4px">📁 خادم الملفات</div><div style="font-size:.75rem;color:#4a7a5e;line-height:1.5">تخزين مشترك. SMB 445، NFS 2049.</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:12px"><div style="color:#006633;font-weight:700;margin-bottom:4px">⏰ خادم NTP</div><div style="font-size:.75rem;color:#4a7a5e;line-height:1.5">مزامنة ساعات النظام. المنفذ 123 UDP.</div></div>
     </div>
   </div>
 </div>
@@ -108,21 +108,21 @@ h2{color:#22d3ee;margin-bottom:8px;font-size:1.2rem}
   <div class="card">
     <h3>💡 نصائح لحفظ أرقام المنافذ</h3>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;font-size:.8rem">
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><span style="color:#22d3ee;font-weight:700">20/21</span> — FTP بيانات/تحكم</div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><span style="color:#22d3ee;font-weight:700">22</span> — SSH</div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><span style="color:#22d3ee;font-weight:700">23</span> — Telnet (غير آمن)</div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><span style="color:#22d3ee;font-weight:700">25</span> — SMTP (إرسال بريد)</div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><span style="color:#22d3ee;font-weight:700">53</span> — DNS</div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><span style="color:#22d3ee;font-weight:700">67/68</span> — DHCP</div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><span style="color:#22d3ee;font-weight:700">80</span> — HTTP</div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><span style="color:#22d3ee;font-weight:700">110</span> — POP3</div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><span style="color:#22d3ee;font-weight:700">123</span> — NTP</div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><span style="color:#22d3ee;font-weight:700">143</span> — IMAP</div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><span style="color:#22d3ee;font-weight:700">389</span> — LDAP</div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><span style="color:#22d3ee;font-weight:700">443</span> — HTTPS</div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><span style="color:#22d3ee;font-weight:700">445</span> — SMB/CIFS</div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><span style="color:#22d3ee;font-weight:700">3306</span> — MySQL</div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><span style="color:#22d3ee;font-weight:700">3389</span> — RDP</div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><span style="color:#006633;font-weight:700">20/21</span> — FTP بيانات/تحكم</div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><span style="color:#006633;font-weight:700">22</span> — SSH</div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><span style="color:#006633;font-weight:700">23</span> — Telnet (غير آمن)</div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><span style="color:#006633;font-weight:700">25</span> — SMTP (إرسال بريد)</div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><span style="color:#006633;font-weight:700">53</span> — DNS</div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><span style="color:#006633;font-weight:700">67/68</span> — DHCP</div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><span style="color:#006633;font-weight:700">80</span> — HTTP</div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><span style="color:#006633;font-weight:700">110</span> — POP3</div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><span style="color:#006633;font-weight:700">123</span> — NTP</div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><span style="color:#006633;font-weight:700">143</span> — IMAP</div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><span style="color:#006633;font-weight:700">389</span> — LDAP</div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><span style="color:#006633;font-weight:700">443</span> — HTTPS</div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><span style="color:#006633;font-weight:700">445</span> — SMB/CIFS</div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><span style="color:#006633;font-weight:700">3306</span> — MySQL</div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><span style="color:#006633;font-weight:700">3389</span> — RDP</div>
     </div>
   </div>
 </div>
@@ -162,7 +162,7 @@ function loadRole(){
   const icons={"خادم DNS":'🌐',"خادم DHCP":'📡',"Active Directory":'👥',"خادم الويب":'🌍',"خادم البريد":'📧',"خادم NTP":'⏰',"خادم الملفات":'📁',"خادم قواعد البيانات":'🗄️',"خادم التطبيقات":'⚙️'};
   document.getElementById('role-card').innerHTML=`
     <h3>السيناريو ${roleIdx+1} من ${ROLE_SCENARIOS.length}</h3>
-    <p style="color:#e0e6f0;line-height:1.7;margin:12px 0">${sc.q}</p>
+    <p style="color:#1a2e22;line-height:1.7;margin:12px 0">${sc.q}</p>
     <div class="roles-grid">${sc.opts.map(o=>`<div class="role-card" onclick="pickRole('${o}')"><div class="role-icon">${icons[o]||'🖥️'}</div><div class="role-name">${o}</div></div>`).join('')}</div>
     <div id="role-fb"></div>`;
   updateRoleScore();
@@ -195,9 +195,9 @@ const PORT_DATA=[
 ];
 function buildPorts(){
   document.getElementById('port-tbody').innerHTML=PORT_DATA.map((d,i)=>`<tr id="pr-${i}">
-    <td style="color:#e0e6f0">${d.service}</td>
+    <td style="color:#1a2e22">${d.service}</td>
     <td><select id="ps-${i}"><option value="">-- منفذ --</option>${d.opts.map(o=>`<option value="${o}">${o}</option>`).join('')}</select></td>
-    <td id="pt-${i}" style="font-size:.8rem;color:#64748b">—</td>
+    <td id="pt-${i}" style="font-size:.8rem;color:#4a7a5e">—</td>
   </tr>`).join('');
 }
 function checkPorts(){
@@ -206,8 +206,8 @@ function checkPorts(){
     const sel=document.getElementById('ps-'+i).value;
     const row=document.getElementById('pr-'+i);const status=document.getElementById('pt-'+i);
     row.classList.remove('correct-row','wrong-row');
-    if(sel===d.ans){correct++;row.classList.add('correct-row');status.innerHTML='<span style="color:#34d399">✓</span>';}
-    else if(sel){row.classList.add('wrong-row');status.innerHTML=`<span style="color:#f87171">✗ ${d.ans}</span>`;}
+    if(sel===d.ans){correct++;row.classList.add('correct-row');status.innerHTML='<span style="color:#065f46">✓</span>';}
+    else if(sel){row.classList.add('wrong-row');status.innerHTML=`<span style="color:#7f1d1d">✗ ${d.ans}</span>`;}
   });
   document.getElementById('port-feedback').innerHTML=`<div class="alert ${correct===PORT_DATA.length?'alert-success':'alert-info'}">النتيجة: ${correct}/${PORT_DATA.length}</div>`;
 }
@@ -226,14 +226,14 @@ function loadDeploy(){
   const sc=DEPLOY[deployIdx];
   document.getElementById('deploy-card').innerHTML=`
     <h3>المتطلب ${deployIdx+1} من ${DEPLOY.length}</h3>
-    <p style="color:#e0e6f0;line-height:1.7;margin:12px 0">${sc.q}</p>
-    <div style="display:grid;gap:8px">${sc.opts.map(o=>`<button style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;text-align:right;color:#e0e6f0;font-size:.88rem;transition:all .2s;width:100%" onclick="pickDeploy('${o}')">${o}</button>`).join('')}</div>
+    <p style="color:#1a2e22;line-height:1.7;margin:12px 0">${sc.q}</p>
+    <div style="display:grid;gap:8px">${sc.opts.map(o=>`<button style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:11px 16px;cursor:pointer;text-align:right;color:#1a2e22;font-size:.88rem;transition:all .2s;width:100%" onclick="pickDeploy('${o}')">${o}</button>`).join('')}</div>
     <div id="deploy-fb" style="margin-top:12px"></div>`;
   document.getElementById('deploy-score').textContent=`النتيجة: ${deployCorrect} / ${Math.min(deployIdx,DEPLOY.length)}`;
 }
 function pickDeploy(choice){
   const sc=DEPLOY[deployIdx];
-  document.querySelectorAll('#deploy-card button').forEach(b=>{b.disabled=true;if(b.textContent===sc.ans)b.style.background='rgba(16,185,129,.15)';});
+  document.querySelectorAll('#deploy-card button').forEach(b=>{b.disabled=true;if(b.textContent===sc.ans)b.style.background='rgba(0,102,51,.15)';});
   const correct=choice===sc.ans;
   if(correct)deployCorrect++;
   document.getElementById('deploy-score').textContent=`النتيجة: ${deployCorrect} / ${deployIdx+1}`;
@@ -260,7 +260,7 @@ let quizScores={};
 function buildQuiz(){
   document.getElementById('quiz-container').innerHTML=QUIZ.map((q,qi)=>`
     <div class="card" style="margin-bottom:16px">
-      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">س${qi+1}. ${q.q}</p>
+      <p style="font-weight:600;color:#1a2e22;margin-bottom:12px;line-height:1.5">س${qi+1}. ${q.q}</p>
       <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
     </div>`).join('');
 }
@@ -278,3 +278,7 @@ buildQuiz();
 </script>
 </body>
 </html>
+
+
+
+

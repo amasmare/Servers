@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -6,62 +6,62 @@
 <title>المختبر 06 — المحاكاة الافتراضية</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
-.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
-.site-topbar .author-tag{color:#f59e0b;font-weight:700}
-.site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #818cf8;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#f0f4f0;color:#1a2e22;min-height:100vh;-webkit-text-size-adjust:100%}
+.site-topbar{background:#004d28;border-bottom:1px solid #003d20;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#d4e8db;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#c9a227;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#006633 0%,#00843d 60%,#004d28 100%);border-bottom:4px solid #c9a227;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#4338ca,#6366f1);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
 .site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#c7d2fe}
-.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.08);padding-right:18px;flex-shrink:0}
-.site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b}
-.back-btn{display:inline-flex;align-items:center;gap:6px;color:#818cf8;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(129,140,248,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(129,140,248,.1)}
-.tabs{display:flex;gap:0;background:#071020;border-bottom:1px solid #1e3a5c;padding:0 20px;overflow-x:auto}
-.tab{padding:14px 22px;cursor:pointer;color:#7ab3d4;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#818cf8}.tab.active{border-bottom-color:#818cf8;background:rgba(129,140,248,.05)}
+.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.2);padding-right:18px;flex-shrink:0}
+.site-author-block .aname{font-size:.95rem;font-weight:700;color:#c9a227}.site-author-block .abook{font-size:.68rem;color:#4a7a5e}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#006633;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(0,102,51,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(0,102,51,.1)}
+.tabs{display:flex;gap:0;background:#e8f0eb;border-bottom:1px solid #c8ddd2;padding:0 20px;overflow-x:auto}
+.tab{padding:14px 22px;cursor:pointer;color:#4a7a5e;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#006633}.tab.active{border-bottom-color:#006633;background:rgba(0,102,51,.05)}
 .tab-panel{display:none;padding:30px;max-width:960px;margin:0 auto}.tab-panel.active{display:block}
-h2{color:#818cf8;margin-bottom:8px;font-size:1.2rem}
-.subtitle{color:#7ab3d4;font-size:.85rem;margin-bottom:20px;line-height:1.7}
-.card{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
-.card h3{color:#818cf8;margin-bottom:12px;font-size:1rem}
+h2{color:#006633;margin-bottom:8px;font-size:1.2rem}
+.subtitle{color:#4a7a5e;font-size:.85rem;margin-bottom:20px;line-height:1.7}
+.card{background:#ffffff;border:1px solid #c8ddd2;border-radius:12px;padding:22px;margin-bottom:20px}
+.card h3{color:#006633;margin-bottom:12px;font-size:1rem}
 .btn{padding:9px 20px;border:none;border-radius:6px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
 .btn-indigo{background:#4338ca;color:#fff}.btn-indigo:hover{background:#3730a3}
-.btn-outline{background:transparent;border:1px solid #818cf8;color:#818cf8}.btn-outline:hover{background:rgba(129,140,248,.1)}
+.btn-outline{background:transparent;border:1px solid #006633;color:#006633}.btn-outline:hover{background:rgba(0,102,51,.1)}
 .btn-sm{padding:5px 12px;font-size:.78rem}
 .alert{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.88rem;line-height:1.6}
-.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#34d399}
-.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
-.alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
-.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:#7ab3d4}
-.score-badge{display:inline-block;background:rgba(129,140,248,.1);border:1px solid rgba(129,140,248,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#818cf8;margin-bottom:16px}
+.alert-success{background:rgba(6,95,70,.08);border:1px solid rgba(6,95,70,.25);color:#065f46}
+.alert-warn{background:rgba(120,85,0,.06);border:1px solid rgba(180,130,0,.3);color:#7a6010}
+.alert-danger{background:rgba(127,29,29,.06);border:1px solid rgba(200,50,50,.25);color:#7f1d1d}
+.alert-info{background:rgba(0,102,51,.07);border:1px solid rgba(0,102,51,.25);color:#2d6a4a}
+.score-badge{display:inline-block;background:rgba(0,102,51,.08);border:1px solid rgba(0,102,51,.25);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#006633;margin-bottom:16px}
 .hyper-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:16px 0}
 .hyper-card{border-radius:12px;padding:20px}
 .hyper-card.type1{background:rgba(129,140,248,.05);border:2px solid rgba(129,140,248,.3)}
-.hyper-card.type2{background:rgba(16,185,129,.05);border:2px solid rgba(16,185,129,.3)}
+.hyper-card.type2{background:rgba(0,102,51,.05);border:2px solid rgba(0,102,51,.3)}
 .hyper-title{font-weight:800;font-size:1.1rem;margin-bottom:4px}
-.hyper-card.type1 .hyper-title{color:#818cf8}
-.hyper-card.type2 .hyper-title{color:#34d399}
-.hyper-subtitle{font-size:.78rem;color:#64748b;margin-bottom:12px}
-.hyper-example{background:#071020;border-radius:6px;padding:8px 12px;font-size:.8rem;color:#7ab3d4;margin-bottom:6px;direction:ltr;text-align:left}
-.host-box{background:#071020;border:2px solid #1e3a5c;border-radius:12px;padding:20px;min-height:200px}
-.host-title{font-size:.85rem;color:#818cf8;font-weight:700;margin-bottom:12px}
+.hyper-card.type1 .hyper-title{color:#006633}
+.hyper-card.type2 .hyper-title{color:#065f46}
+.hyper-subtitle{font-size:.78rem;color:#4a7a5e;margin-bottom:12px}
+.hyper-example{background:#f0f7f3;border-radius:6px;padding:8px 12px;font-size:.8rem;color:#4a7a5e;margin-bottom:6px;direction:ltr;text-align:left}
+.host-box{background:#f0f7f3;border:2px solid #c8ddd2;border-radius:12px;padding:20px;min-height:200px}
+.host-title{font-size:.85rem;color:#006633;font-weight:700;margin-bottom:12px}
 .resource-bar{margin-bottom:10px}
-.resource-label{display:flex;justify-content:space-between;font-size:.78rem;color:#7ab3d4;margin-bottom:4px}
-.res-track{background:#1e3a5c;border-radius:20px;height:12px;overflow:hidden}
+.resource-label{display:flex;justify-content:space-between;font-size:.78rem;color:#4a7a5e;margin-bottom:4px}
+.res-track{background:#c8ddd2;border-radius:20px;height:12px;overflow:hidden}
 .res-fill{height:100%;border-radius:20px;transition:width .4s}
 .res-cpu{background:linear-gradient(90deg,#818cf8,#6366f1)}
 .res-ram{background:linear-gradient(90deg,#34d399,#10b981)}
 .res-over{background:linear-gradient(90deg,#f87171,#ef4444)!important}
 .vm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:12px}
-.vm-item{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:8px;padding:10px;text-align:center}
+.vm-item{background:#ffffff;border:1px solid #c8ddd2;border-radius:8px;padding:10px;text-align:center}
 .vm-item .vm-icon{font-size:1.5rem;margin-bottom:4px}
-.vm-item .vm-name{font-size:.72rem;color:#e0e6f0;font-weight:600}
-.vm-item .vm-spec{font-size:.68rem;color:#64748b}
+.vm-item .vm-name{font-size:.72rem;color:#1a2e22;font-weight:600}
+.vm-item .vm-spec{font-size:.68rem;color:#4a7a5e}
 .feature-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:16px 0}
-.feat-card{background:#071020;border:2px solid #1e3a5c;border-radius:10px;padding:14px;cursor:pointer;transition:all .2s}
-.feat-card:hover{border-color:#818cf8}.feat-card.revealed{border-color:#818cf8;background:rgba(129,140,248,.05)}
-.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:#e0e6f0}
-.quiz-opt:hover{border-color:#818cf8;color:#e0e6f0}.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
-.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
-.site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#f59e0b}
+.feat-card{background:#f0f7f3;border:2px solid #c8ddd2;border-radius:10px;padding:14px;cursor:pointer;transition:all .2s}
+.feat-card:hover{border-color:#006633}.feat-card.revealed{border-color:#006633;background:rgba(129,140,248,.05)}
+.quiz-opt{background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:#1a2e22}
+.quiz-opt:hover{border-color:#006633;color:#1a2e22}.quiz-opt.correct{border-color:#006633;background:rgba(0,102,51,.12);color:#065f46}.quiz-opt.incorrect{border-color:#dc2626;background:rgba(239,68,68,.08);color:#7f1d1d}
+.site-footer-bar{background:#006633;border-top:2px solid #004d28;padding:20px 30px;text-align:center;margin-top:30px}
+.site-footer-bar p{color:#d4e8db;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#c9a227}
 @media(max-width:600px){.hyper-grid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -98,7 +98,7 @@ h2{color:#818cf8;margin-bottom:8px;font-size:1.2rem}
       <div class="hyper-title">النوع الأول — Bare Metal</div>
       <div class="hyper-subtitle">يعمل Hypervisor مباشرة على العتاد. لا يحتاج نظام تشغيل مضيف. أداء أعلى.</div>
       <div class="hyper-example">🖥️ Hardware → Hypervisor → VMs</div>
-      <div style="font-size:.78rem;color:#64748b;line-height:1.6;margin-top:8px">
+      <div style="font-size:.78rem;color:#4a7a5e;line-height:1.6;margin-top:8px">
         ✅ الأفضل لخوادم الإنتاج<br>✅ زمن انتظار أقل وأداء أفضل<br>✅ إدارة على مستوى المؤسسات<br>❌ إعداد أكثر تعقيدًا
       </div>
     </div>
@@ -106,7 +106,7 @@ h2{color:#818cf8;margin-bottom:8px;font-size:1.2rem}
       <div class="hyper-title">النوع الثاني — Hosted</div>
       <div class="hyper-subtitle">يعمل Hypervisor كتطبيق فوق نظام تشغيل مضيف. أسهل استخدامًا، أداء أقل.</div>
       <div class="hyper-example">💻 Hardware → OS → Hypervisor → VMs</div>
-      <div style="font-size:.78rem;color:#64748b;line-height:1.6;margin-top:8px">
+      <div style="font-size:.78rem;color:#4a7a5e;line-height:1.6;margin-top:8px">
         ✅ سهل التثبيت والاستخدام<br>✅ مثالي للتطوير والاختبار<br>❌ طبقة نظام تشغيل إضافية تزيد زمن الانتظار<br>❌ غير مناسب لبيئات الإنتاج
       </div>
     </div>
@@ -136,8 +136,8 @@ h2{color:#818cf8;margin-bottom:8px;font-size:1.2rem}
       <div class="card">
         <h3>إضافة آلة افتراضية</h3>
         <div style="margin-bottom:10px">
-          <label style="font-size:.8rem;color:#7ab3d4;display:block;margin-bottom:4px">نوع الآلة الافتراضية</label>
-          <select id="vm-type" style="width:100%;background:#071020;border:1px solid #1e3a5c;border-radius:6px;color:#e0e6f0;padding:8px;font-size:.85rem" onchange="updateVMPreset()">
+          <label style="font-size:.8rem;color:#4a7a5e;display:block;margin-bottom:4px">نوع الآلة الافتراضية</label>
+          <select id="vm-type" style="width:100%;background:#f0f7f3;border:1px solid #c8ddd2;border-radius:6px;color:#1a2e22;padding:8px;font-size:.85rem" onchange="updateVMPreset()">
             <option value="web">خادم ويب (2 vCPU، 4GB RAM)</option>
             <option value="db">خادم قواعد بيانات (8 vCPU، 32GB RAM)</option>
             <option value="mail">خادم بريد (4 vCPU، 8GB RAM)</option>
@@ -147,8 +147,8 @@ h2{color:#818cf8;margin-bottom:8px;font-size:1.2rem}
           </select>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-          <div><label style="font-size:.78rem;color:#7ab3d4;display:block;margin-bottom:3px">vCPU</label><input type="number" id="vm-cpu" value="2" min="1" max="16" style="width:100%;background:#071020;border:1px solid #1e3a5c;border-radius:6px;color:#e0e6f0;padding:7px"></div>
-          <div><label style="font-size:.78rem;color:#7ab3d4;display:block;margin-bottom:3px">RAM (GB)</label><input type="number" id="vm-ram" value="4" min="1" max="64" style="width:100%;background:#071020;border:1px solid #1e3a5c;border-radius:6px;color:#e0e6f0;padding:7px"></div>
+          <div><label style="font-size:.78rem;color:#4a7a5e;display:block;margin-bottom:3px">vCPU</label><input type="number" id="vm-cpu" value="2" min="1" max="16" style="width:100%;background:#f0f7f3;border:1px solid #c8ddd2;border-radius:6px;color:#1a2e22;padding:7px"></div>
+          <div><label style="font-size:.78rem;color:#4a7a5e;display:block;margin-bottom:3px">RAM (GB)</label><input type="number" id="vm-ram" value="4" min="1" max="64" style="width:100%;background:#f0f7f3;border:1px solid #c8ddd2;border-radius:6px;color:#1a2e22;padding:7px"></div>
         </div>
         <div style="display:flex;gap:8px">
           <button class="btn btn-indigo" onclick="addVM()">إضافة آلة افتراضية</button>
@@ -158,7 +158,7 @@ h2{color:#818cf8;margin-bottom:8px;font-size:1.2rem}
     </div>
     <div class="host-box">
       <div class="host-title">🖥️ المضيف المادي — الآلات الافتراضية الجارية</div>
-      <div class="vm-grid" id="vm-list"><div style="color:#64748b;font-size:.8rem;text-align:center;padding:20px">لا توجد آلات افتراضية مضافة بعد</div></div>
+      <div class="vm-grid" id="vm-list"><div style="color:#4a7a5e;font-size:.8rem;text-align:center;padding:20px">لا توجد آلات افتراضية مضافة بعد</div></div>
     </div>
   </div>
 </div>
@@ -200,13 +200,13 @@ const HYPER_PRODUCTS=[
 let hyperScores={};
 function buildHyperGrid(){
   document.getElementById('hyper-grid').innerHTML=HYPER_PRODUCTS.map((p,i)=>`
-    <div style="background:#071020;border:1px solid #1e3a5c;border-radius:10px;padding:14px" id="hg-${i}">
+    <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:10px;padding:14px" id="hg-${i}">
       <div style="font-size:1.4rem;margin-bottom:6px">${p.icon}</div>
-      <div style="font-weight:700;color:#e0e6f0;margin-bottom:4px;font-size:.88rem">${p.name}</div>
-      <div style="font-size:.72rem;color:#64748b;margin-bottom:10px">${p.hint}</div>
+      <div style="font-weight:700;color:#1a2e22;margin-bottom:4px;font-size:.88rem">${p.name}</div>
+      <div style="font-size:.72rem;color:#4a7a5e;margin-bottom:10px">${p.hint}</div>
       <div style="display:flex;gap:6px">
-        <button style="flex:1;padding:5px;border:1px solid #1e3a5c;border-radius:6px;background:#071020;color:#e0e6f0;cursor:pointer;font-size:.75rem;transition:all .2s" onclick="classifyHyper(${i},'النوع الأول')">النوع الأول</button>
-        <button style="flex:1;padding:5px;border:1px solid #1e3a5c;border-radius:6px;background:#071020;color:#e0e6f0;cursor:pointer;font-size:.75rem;transition:all .2s" onclick="classifyHyper(${i},'النوع الثاني')">النوع الثاني</button>
+        <button style="flex:1;padding:5px;border:1px solid #c8ddd2;border-radius:6px;background:#f0f7f3;color:#1a2e22;cursor:pointer;font-size:.75rem;transition:all .2s" onclick="classifyHyper(${i},'النوع الأول')">النوع الأول</button>
+        <button style="flex:1;padding:5px;border:1px solid #c8ddd2;border-radius:6px;background:#f0f7f3;color:#1a2e22;cursor:pointer;font-size:.75rem;transition:all .2s" onclick="classifyHyper(${i},'النوع الثاني')">النوع الثاني</button>
       </div>
       <div id="hf-${i}" style="margin-top:6px;font-size:.72rem"></div>
     </div>`).join('');
@@ -215,7 +215,7 @@ function classifyHyper(i,choice){
   if(hyperScores[i]!==undefined)return;
   const p=HYPER_PRODUCTS[i];const correct=choice===p.type;
   hyperScores[i]=correct?1:0;
-  document.getElementById('hg-'+i).querySelectorAll('button').forEach(b=>{b.disabled=true;if(b.textContent===p.type)b.style.background='rgba(16,185,129,.2)';});
+  document.getElementById('hg-'+i).querySelectorAll('button').forEach(b=>{b.disabled=true;if(b.textContent===p.type)b.style.background='rgba(0,102,51,.2)';});
   document.getElementById('hf-'+i).innerHTML=`<span style="color:${correct?'#34d399':'#f87171'}">${correct?'✓ '+p.type:'✗ '+p.type}</span>`;
   document.getElementById('hyper-score').textContent=`النتيجة: ${Object.values(hyperScores).reduce((a,b)=>a+b,0)} / 8`;
 }
@@ -249,7 +249,7 @@ function updateResourceDisplay(){
   else if(usedCPU>totalCPU)warn+=`<div class="alert alert-warn">ℹ️ تجاوز vCPU (${usedCPU}/${totalCPU}). طبيعي لأعمال الحمل الخفيف — الآلات تتشارك الأنوية. راقب وقت CPU Ready.</div>`;
   document.getElementById('overp-warn').innerHTML=warn;
   const icons={'خادم ويب':'🌐','خادم قواعد بيانات':'🗄️','خادم بريد':'📧','خادم ملفات':'📁','آلة تطوير/اختبار':'🧪'};
-  document.getElementById('vm-list').innerHTML=vms.length?vms.map(v=>`<div class="vm-item"><div class="vm-icon">${icons[v.name]||'🖥️'}</div><div class="vm-name">${v.name}</div><div class="vm-spec">${v.cpu}vCPU · ${v.ram}GB</div></div>`).join(''):'<div style="color:#64748b;font-size:.8rem;text-align:center;padding:20px">لا توجد آلات افتراضية مضافة بعد</div>';
+  document.getElementById('vm-list').innerHTML=vms.length?vms.map(v=>`<div class="vm-item"><div class="vm-icon">${icons[v.name]||'🖥️'}</div><div class="vm-name">${v.name}</div><div class="vm-spec">${v.cpu}vCPU · ${v.ram}GB</div></div>`).join(''):'<div style="color:#4a7a5e;font-size:.8rem;text-align:center;padding:20px">لا توجد آلات افتراضية مضافة بعد</div>';
 }
 
 const FEATURES=[
@@ -266,9 +266,9 @@ function buildFeatures(){
   document.getElementById('feature-grid').innerHTML=FEATURES.map((f,i)=>`
     <div class="feat-card" id="fc-${i}" onclick="revealFeat(${i})">
       <div style="font-size:1.5rem;margin-bottom:6px">${f.icon}</div>
-      <div style="font-weight:700;color:#818cf8;margin-bottom:4px;font-size:.85rem">${f.name}</div>
-      <div id="fd-${i}" style="font-size:.75rem;color:#64748b;display:none;line-height:1.5">${f.def}<br><br><strong style="color:#818cf8">حالة الاستخدام:</strong> ${f.use}</div>
-      <div id="fp-${i}" style="font-size:.72rem;color:#64748b;margin-top:4px">انقر للكشف ←</div>
+      <div style="font-weight:700;color:#006633;margin-bottom:4px;font-size:.85rem">${f.name}</div>
+      <div id="fd-${i}" style="font-size:.75rem;color:#4a7a5e;display:none;line-height:1.5">${f.def}<br><br><strong style="color:#006633">حالة الاستخدام:</strong> ${f.use}</div>
+      <div id="fp-${i}" style="font-size:.72rem;color:#4a7a5e;margin-top:4px">انقر للكشف ←</div>
     </div>`).join('');
 }
 function revealFeat(i){
@@ -287,15 +287,15 @@ const VIRT_SC=[
 let virtScScores={};
 function buildVirtSc(){
   document.getElementById('virt-scenarios').innerHTML=VIRT_SC.map((q,qi)=>`
-    <div style="margin-bottom:16px;padding:14px;background:#071020;border:1px solid #1e3a5c;border-radius:8px">
-      <p style="font-weight:600;color:#e0e6f0;margin-bottom:10px;font-size:.88rem;line-height:1.5">س${qi+1}. ${q.q}</p>
-      <div style="display:grid;gap:6px">${q.opts.map((o,oi)=>`<button style="background:#0d1b2a;border:1px solid #1e3a5c;border-radius:6px;padding:8px 12px;cursor:pointer;text-align:right;color:#e0e6f0;font-size:.82rem;transition:all .2s;width:100%" onclick="answerVS(${qi},${oi})">${o}</button>`).join('')}</div>
+    <div style="margin-bottom:16px;padding:14px;background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px">
+      <p style="font-weight:600;color:#1a2e22;margin-bottom:10px;font-size:.88rem;line-height:1.5">س${qi+1}. ${q.q}</p>
+      <div style="display:grid;gap:6px">${q.opts.map((o,oi)=>`<button style="background:#ffffff;border:1px solid #c8ddd2;border-radius:6px;padding:8px 12px;cursor:pointer;text-align:right;color:#1a2e22;font-size:.82rem;transition:all .2s;width:100%" onclick="answerVS(${qi},${oi})">${o}</button>`).join('')}</div>
     </div>`).join('');
 }
 function answerVS(qi,oi){
   if(virtScScores[qi]!==undefined)return;
   const q=VIRT_SC[qi];
-  document.querySelectorAll('#virt-scenarios > div')[qi].querySelectorAll('button').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.style.background='rgba(16,185,129,.2)';});
+  document.querySelectorAll('#virt-scenarios > div')[qi].querySelectorAll('button').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.style.background='rgba(0,102,51,.2)';});
   if(oi!==q.ans)document.querySelectorAll('#virt-scenarios > div')[qi].querySelectorAll('button')[oi].style.background='rgba(239,68,68,.2)';
   virtScScores[qi]=oi===q.ans?1:0;
 }
@@ -317,7 +317,7 @@ let quizScores={};
 function buildQuiz(){
   document.getElementById('quiz-container').innerHTML=QUIZ.map((q,qi)=>`
     <div class="card" style="margin-bottom:16px">
-      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">س${qi+1}. ${q.q}</p>
+      <p style="font-weight:600;color:#1a2e22;margin-bottom:12px;line-height:1.5">س${qi+1}. ${q.q}</p>
       <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
     </div>`).join('');
 }
@@ -335,3 +335,7 @@ buildQuiz();
 </script>
 </body>
 </html>
+
+
+
+

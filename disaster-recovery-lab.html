@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -6,32 +6,32 @@
 <title>مختبر 09 — التعافي من الكوارث والنسخ الاحتياطي</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
-.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
-.site-topbar .author-tag{color:#f59e0b;font-weight:700}
-.site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #f472b6;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#f0f4f0;color:#1a2e22;min-height:100vh;-webkit-text-size-adjust:100%}
+.site-topbar{background:#004d28;border-bottom:1px solid #003d20;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#d4e8db;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#c9a227;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#006633 0%,#00843d 60%,#004d28 100%);border-bottom:4px solid #c9a227;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#9d174d,#ec4899);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
 .site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#fbcfe8}
-.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.08);padding-right:18px;flex-shrink:0}
-.site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b}
-.back-btn{display:inline-flex;align-items:center;gap:6px;color:#f472b6;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(244,114,182,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(244,114,182,.1)}
-.tabs{display:flex;gap:0;background:#071020;border-bottom:1px solid #1e3a5c;padding:0 20px;overflow-x:auto}
-.tab{padding:14px 22px;cursor:pointer;color:#7ab3d4;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#f472b6}.tab.active{border-bottom-color:#f472b6;background:rgba(244,114,182,.05)}
+.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.2);padding-right:18px;flex-shrink:0}
+.site-author-block .aname{font-size:.95rem;font-weight:700;color:#c9a227}.site-author-block .abook{font-size:.68rem;color:#4a7a5e}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#006633;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(0,102,51,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(0,102,51,.1)}
+.tabs{display:flex;gap:0;background:#e8f0eb;border-bottom:1px solid #c8ddd2;padding:0 20px;overflow-x:auto}
+.tab{padding:14px 22px;cursor:pointer;color:#4a7a5e;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#006633}.tab.active{border-bottom-color:#006633;background:rgba(0,102,51,.05)}
 .tab-panel{display:none;padding:30px;max-width:960px;margin:0 auto}.tab-panel.active{display:block}
-h2{color:#f472b6;margin-bottom:8px;font-size:1.2rem}
-.subtitle{color:#7ab3d4;font-size:.85rem;margin-bottom:20px;line-height:1.7}
-.card{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
-.card h3{color:#f472b6;margin-bottom:12px;font-size:1rem}
+h2{color:#006633;margin-bottom:8px;font-size:1.2rem}
+.subtitle{color:#4a7a5e;font-size:.85rem;margin-bottom:20px;line-height:1.7}
+.card{background:#ffffff;border:1px solid #c8ddd2;border-radius:12px;padding:22px;margin-bottom:20px}
+.card h3{color:#006633;margin-bottom:12px;font-size:1rem}
 .btn{padding:9px 20px;border:none;border-radius:6px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
 .btn-pink{background:#9d174d;color:#fff}.btn-pink:hover{background:#831843}
-.btn-outline{background:transparent;border:1px solid #f472b6;color:#f472b6}.btn-outline:hover{background:rgba(244,114,182,.1)}
+.btn-outline{background:transparent;border:1px solid #006633;color:#006633}.btn-outline:hover{background:rgba(0,102,51,.1)}
 .btn-sm{padding:5px 12px;font-size:.78rem}
 .alert{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.88rem;line-height:1.6}
-.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#34d399}
-.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
-.alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
-.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:#7ab3d4}
-.score-badge{display:inline-block;background:rgba(244,114,182,.1);border:1px solid rgba(244,114,182,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#f472b6;margin-bottom:16px}
+.alert-success{background:rgba(6,95,70,.08);border:1px solid rgba(6,95,70,.25);color:#065f46}
+.alert-warn{background:rgba(120,85,0,.06);border:1px solid rgba(180,130,0,.3);color:#7a6010}
+.alert-danger{background:rgba(127,29,29,.06);border:1px solid rgba(200,50,50,.25);color:#7f1d1d}
+.alert-info{background:rgba(0,102,51,.07);border:1px solid rgba(0,102,51,.25);color:#2d6a4a}
+.score-badge{display:inline-block;background:rgba(0,102,51,.08);border:1px solid rgba(0,102,51,.25);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#006633;margin-bottom:16px}
 /* Site comparison */
 .site-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:16px 0}
 .site-card{border-radius:12px;padding:18px;border:2px solid}
@@ -39,26 +39,26 @@ h2{color:#f472b6;margin-bottom:8px;font-size:1.2rem}
 .site-warm{background:rgba(245,158,11,.05);border-color:rgba(245,158,11,.3)}
 .site-cold{background:rgba(100,116,139,.05);border-color:rgba(100,116,139,.3)}
 .site-label{font-weight:800;font-size:1rem;margin-bottom:4px}
-.site-hot .site-label{color:#f472b6}.site-warm .site-label{color:#fbbf24}.site-cold .site-label{color:#94a3b8}
-.site-detail{font-size:.78rem;color:#64748b;line-height:1.6}
+.site-hot .site-label{color:#006633}.site-warm .site-label{color:#7a6010}.site-cold .site-label{color:#4a7a5e}
+.site-detail{font-size:.78rem;color:#4a7a5e;line-height:1.6}
 /* RTO/RPO sliders */
 .slider-wrap{margin:16px 0}
-.slider-label{display:flex;justify-content:space-between;font-size:.8rem;color:#7ab3d4;margin-bottom:6px}
-input[type=range]{width:100%;accent-color:#f472b6;height:6px}
+.slider-label{display:flex;justify-content:space-between;font-size:.8rem;color:#4a7a5e;margin-bottom:6px}
+input[type=range]{width:100%;accent-color:#006633;height:6px}
 /* Backup calendar */
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:12px 0}
-.cal-day{height:44px;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.65rem;border:1px solid #1e3a5c;transition:all .2s}
-.cal-day.full-b{background:rgba(244,114,182,.2);border-color:#f472b6;color:#f472b6}
-.cal-day.incr-b{background:rgba(0,212,255,.15);border-color:#00d4ff;color:#00d4ff}
-.cal-day.diff-b{background:rgba(245,158,11,.15);border-color:#fbbf24;color:#fbbf24}
-.cal-day.empty{background:#071020;color:#475569}
+.cal-day{height:44px;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.65rem;border:1px solid #c8ddd2;transition:all .2s}
+.cal-day.full-b{background:rgba(244,114,182,.2);border-color:#006633;color:#006633}
+.cal-day.incr-b{background:rgba(0,102,51,.15);border-color:#006633;color:#006633}
+.cal-day.diff-b{background:rgba(245,158,11,.15);border-color:#7a6010;color:#7a6010}
+.cal-day.empty{background:#f0f7f3;color:#d4e8db}
 .cal-label{font-weight:700;font-size:.6rem}
 .cal-type{font-size:.55rem;margin-top:1px}
 /* Quiz */
-.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:#e0e6f0}
-.quiz-opt:hover{border-color:#f472b6}.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
-.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
-.site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#f59e0b}
+.quiz-opt{background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:#1a2e22}
+.quiz-opt:hover{border-color:#006633}.quiz-opt.correct{border-color:#006633;background:rgba(0,102,51,.12);color:#065f46}.quiz-opt.incorrect{border-color:#dc2626;background:rgba(239,68,68,.08);color:#7f1d1d}
+.site-footer-bar{background:#006633;border-top:2px solid #004d28;padding:20px 30px;text-align:center;margin-top:30px}
+.site-footer-bar p{color:#d4e8db;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#c9a227}
 @media(max-width:600px){.site-grid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -96,30 +96,30 @@ input[type=range]{width:100%;accent-color:#f472b6;height:6px}
       <div class="site-label">🔥 الموقع الساخن (Hot Site)</div>
       <div class="site-detail">
         مرآة تشغيلية كاملة للإنتاج. نسخ متزامن للبيانات في الوقت الفعلي. التحويل في دقائق.<br><br>
-        <strong style="color:#f472b6">RTO:</strong> دقائق<br>
-        <strong style="color:#f472b6">RPO:</strong> شبه صفري<br>
-        <strong style="color:#f472b6">التكلفة:</strong> الأعلى<br>
-        <strong style="color:#f472b6">الاستخدام:</strong> البنوك والمستشفيات وبورصات الأسهم
+        <strong style="color:#006633">RTO:</strong> دقائق<br>
+        <strong style="color:#006633">RPO:</strong> شبه صفري<br>
+        <strong style="color:#006633">التكلفة:</strong> الأعلى<br>
+        <strong style="color:#006633">الاستخدام:</strong> البنوك والمستشفيات وبورصات الأسهم
       </div>
     </div>
     <div class="site-card site-warm">
       <div class="site-label">🌡️ الموقع الدافئ (Warm Site)</div>
       <div class="site-detail">
         الأجهزة مُركَّبة وجاهزة لكن يجب استعادة البيانات. التحويل في ساعات.<br><br>
-        <strong style="color:#fbbf24">RTO:</strong> ساعات<br>
-        <strong style="color:#fbbf24">RPO:</strong> ساعات إلى يوم<br>
-        <strong style="color:#fbbf24">التكلفة:</strong> متوسطة<br>
-        <strong style="color:#fbbf24">الاستخدام:</strong> معظم الشركات
+        <strong style="color:#7a6010">RTO:</strong> ساعات<br>
+        <strong style="color:#7a6010">RPO:</strong> ساعات إلى يوم<br>
+        <strong style="color:#7a6010">التكلفة:</strong> متوسطة<br>
+        <strong style="color:#7a6010">الاستخدام:</strong> معظم الشركات
       </div>
     </div>
     <div class="site-card site-cold">
       <div class="site-label">❄️ الموقع البارد (Cold Site)</div>
       <div class="site-detail">
         مساحة مادية وطاقة فقط. يجب توفير وتهيئة جميع الأجهزة بعد الكارثة.<br><br>
-        <strong style="color:#94a3b8">RTO:</strong> أيام إلى أسابيع<br>
-        <strong style="color:#94a3b8">RPO:</strong> أيام<br>
-        <strong style="color:#94a3b8">التكلفة:</strong> الأدنى<br>
-        <strong style="color:#94a3b8">الاستخدام:</strong> الأنظمة غير الحيوية
+        <strong style="color:#4a7a5e">RTO:</strong> أيام إلى أسابيع<br>
+        <strong style="color:#4a7a5e">RPO:</strong> أيام<br>
+        <strong style="color:#4a7a5e">التكلفة:</strong> الأدنى<br>
+        <strong style="color:#4a7a5e">الاستخدام:</strong> الأنظمة غير الحيوية
       </div>
     </div>
   </div>
@@ -130,12 +130,12 @@ input[type=range]{width:100%;accent-color:#f472b6;height:6px}
     <div class="slider-wrap">
       <div class="slider-label"><span>RTO (هدف وقت الاسترداد)</span><span id="rto-val">4 ساعات</span></div>
       <input type="range" id="rto-slider" min="1" max="168" value="4" oninput="updateDR()">
-      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#475569;margin-top:2px"><span>1 دقيقة</span><span>يوم</span><span>أسبوع</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#d4e8db;margin-top:2px"><span>1 دقيقة</span><span>يوم</span><span>أسبوع</span></div>
     </div>
     <div class="slider-wrap" style="margin-top:16px">
       <div class="slider-label"><span>RPO (هدف نقطة الاسترداد)</span><span id="rpo-val">ساعة</span></div>
       <input type="range" id="rpo-slider" min="0" max="168" value="1" oninput="updateDR()">
-      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#475569;margin-top:2px"><span>0 (بدون فقد)</span><span>يوم</span><span>أسبوع</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#d4e8db;margin-top:2px"><span>0 (بدون فقد)</span><span>يوم</span><span>أسبوع</span></div>
     </div>
     <div id="dr-recommendation" style="margin-top:16px"></div>
   </div>
@@ -143,12 +143,12 @@ input[type=range]{width:100%;accent-color:#f472b6;height:6px}
   <div class="card">
     <h3>📖 مصطلحات DR الأساسية</h3>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;font-size:.82rem">
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">RTO</div><div style="color:#64748b;line-height:1.5">هدف وقت الاسترداد — الحد الأقصى المقبول لاستعادة الأنظمة بعد كارثة.</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">RPO</div><div style="color:#64748b;line-height:1.5">هدف نقطة الاسترداد — الحد الأقصى المقبول لفقدان البيانات مقاساً بالوقت (مثال: RPO 4 ساعات = استعادة من نسخة لا تتجاوز 4 ساعات).</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">BCP</div><div style="color:#64748b;line-height:1.5">خطة استمرارية الأعمال — خطة شاملة لإبقاء العمليات مستمرة أثناء الكوارث وبعدها.</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">DRP</div><div style="color:#64748b;line-height:1.5">خطة التعافي من الكوارث — خطة تقنية لاستعادة أنظمة IT تحديداً. جزء فرعي من BCP.</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">MTTR</div><div style="color:#64748b;line-height:1.5">متوسط وقت الإصلاح — متوسط الوقت لاستعادة مكوّن أو نظام معطّل.</div></div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px"><div style="color:#f472b6;font-weight:700;margin-bottom:4px">MTBF</div><div style="color:#64748b;line-height:1.5">متوسط الوقت بين الأعطال — متوسط الوقت بين أعطال الأجهزة. مقياس للموثوقية.</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:12px"><div style="color:#006633;font-weight:700;margin-bottom:4px">RTO</div><div style="color:#4a7a5e;line-height:1.5">هدف وقت الاسترداد — الحد الأقصى المقبول لاستعادة الأنظمة بعد كارثة.</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:12px"><div style="color:#006633;font-weight:700;margin-bottom:4px">RPO</div><div style="color:#4a7a5e;line-height:1.5">هدف نقطة الاسترداد — الحد الأقصى المقبول لفقدان البيانات مقاساً بالوقت (مثال: RPO 4 ساعات = استعادة من نسخة لا تتجاوز 4 ساعات).</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:12px"><div style="color:#006633;font-weight:700;margin-bottom:4px">BCP</div><div style="color:#4a7a5e;line-height:1.5">خطة استمرارية الأعمال — خطة شاملة لإبقاء العمليات مستمرة أثناء الكوارث وبعدها.</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:12px"><div style="color:#006633;font-weight:700;margin-bottom:4px">DRP</div><div style="color:#4a7a5e;line-height:1.5">خطة التعافي من الكوارث — خطة تقنية لاستعادة أنظمة IT تحديداً. جزء فرعي من BCP.</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:12px"><div style="color:#006633;font-weight:700;margin-bottom:4px">MTTR</div><div style="color:#4a7a5e;line-height:1.5">متوسط وقت الإصلاح — متوسط الوقت لاستعادة مكوّن أو نظام معطّل.</div></div>
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:12px"><div style="color:#006633;font-weight:700;margin-bottom:4px">MTBF</div><div style="color:#4a7a5e;line-height:1.5">متوسط الوقت بين الأعطال — متوسط الوقت بين أعطال الأجهزة. مقياس للموثوقية.</div></div>
     </div>
   </div>
 </div>
@@ -169,11 +169,11 @@ input[type=range]{width:100%;accent-color:#f472b6;height:6px}
     <h3>📊 مقارنة أنواع النسخ الاحتياطي</h3>
     <div style="overflow-x:auto">
       <table style="width:100%;border-collapse:collapse;font-size:.82rem">
-        <thead><tr style="background:#071020"><th style="padding:9px;text-align:right;color:#7ab3d4;border-bottom:2px solid #1e3a5c">النوع</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c">ما يحتوي</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c">يُعيد ضبط بت الأرشفة؟</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c">حجم النسخة</th><th style="padding:9px;color:#7ab3d4;border-bottom:2px solid #1e3a5c">تعقيد الاسترداد</th></tr></thead>
+        <thead><tr style="background:#f0f7f3"><th style="padding:9px;text-align:right;color:#4a7a5e;border-bottom:2px solid #c8ddd2">النوع</th><th style="padding:9px;color:#4a7a5e;border-bottom:2px solid #c8ddd2">ما يحتوي</th><th style="padding:9px;color:#4a7a5e;border-bottom:2px solid #c8ddd2">يُعيد ضبط بت الأرشفة؟</th><th style="padding:9px;color:#4a7a5e;border-bottom:2px solid #c8ddd2">حجم النسخة</th><th style="padding:9px;color:#4a7a5e;border-bottom:2px solid #c8ddd2">تعقيد الاسترداد</th></tr></thead>
         <tbody>
-          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#f472b6;font-weight:700">كامل (Full)</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">جميع البيانات المحددة دائماً</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#34d399">نعم</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">الأكبر</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#34d399">الأبسط (شريط واحد)</td></tr>
-          <tr><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#00d4ff;font-weight:700">تزايدي (Incremental)</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">البيانات المتغيرة منذ آخر نسخة من أي نوع</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;text-align:center;color:#34d399">نعم</td><td style="padding:9px;border-bottom:1px solid #1e3a5c">الأصغر</td><td style="padding:9px;border-bottom:1px solid #1e3a5c;color:#f87171">الأعقد (كامل + جميع التزايديات)</td></tr>
-          <tr><td style="padding:9px;color:#fbbf24;font-weight:700">تفاضلي (Differential)</td><td style="padding:9px">البيانات المتغيرة منذ آخر نسخة كاملة</td><td style="padding:9px;text-align:center;color:#f87171">لا</td><td style="padding:9px">يكبر كل يوم</td><td style="padding:9px;color:#fbbf24">متوسط (كامل + آخر تفاضلي)</td></tr>
+          <tr><td style="padding:9px;border-bottom:1px solid #c8ddd2;color:#006633;font-weight:700">كامل (Full)</td><td style="padding:9px;border-bottom:1px solid #c8ddd2">جميع البيانات المحددة دائماً</td><td style="padding:9px;border-bottom:1px solid #c8ddd2;text-align:center;color:#065f46">نعم</td><td style="padding:9px;border-bottom:1px solid #c8ddd2">الأكبر</td><td style="padding:9px;border-bottom:1px solid #c8ddd2;color:#065f46">الأبسط (شريط واحد)</td></tr>
+          <tr><td style="padding:9px;border-bottom:1px solid #c8ddd2;color:#006633;font-weight:700">تزايدي (Incremental)</td><td style="padding:9px;border-bottom:1px solid #c8ddd2">البيانات المتغيرة منذ آخر نسخة من أي نوع</td><td style="padding:9px;border-bottom:1px solid #c8ddd2;text-align:center;color:#065f46">نعم</td><td style="padding:9px;border-bottom:1px solid #c8ddd2">الأصغر</td><td style="padding:9px;border-bottom:1px solid #c8ddd2;color:#7f1d1d">الأعقد (كامل + جميع التزايديات)</td></tr>
+          <tr><td style="padding:9px;color:#7a6010;font-weight:700">تفاضلي (Differential)</td><td style="padding:9px">البيانات المتغيرة منذ آخر نسخة كاملة</td><td style="padding:9px;text-align:center;color:#7f1d1d">لا</td><td style="padding:9px">يكبر كل يوم</td><td style="padding:9px;color:#7a6010">متوسط (كامل + آخر تفاضلي)</td></tr>
         </tbody>
       </table>
     </div>
@@ -210,10 +210,10 @@ function updateDR(){
   document.getElementById('rto-val').textContent=rto<24?rto+' ساعة':Math.round(rto/24)+' يوم';
   document.getElementById('rpo-val').textContent=rpo===0?'شبه صفري (بدون فقد بيانات)':rpo<24?rpo+' ساعة':Math.round(rpo/24)+' يوم';
   let site,color,desc;
-  if(rto<=2&&rpo<=1){site='🔥 الموقع الساخن (Hot Site)';color='#f472b6';desc='متطلباتك تتطلب تحويلاً فورياً وحد أدنى من فقدان البيانات. موقع ساخن مطابق مع نسخ متزامن في الوقت الفعلي مطلوب.';}
+  if(rto<=2&&rpo<=1){site='🔥 الموقع الساخن (Hot Site)';color='#006633';desc='متطلباتك تتطلب تحويلاً فورياً وحد أدنى من فقدان البيانات. موقع ساخن مطابق مع نسخ متزامن في الوقت الفعلي مطلوب.';}
   else if(rto<=24&&rpo<=8){site='🌡️ الموقع الدافئ (Warm Site)';color='#fbbf24';desc='متطلباتك تتيح بضع ساعات لوقت الاسترداد. موقع دافئ مع أجهزة منشورة مسبقاً ونسخ مجدولة يلبي هذه الاحتياجات بتكلفة أقل.';}
   else{site='❄️ الموقع البارد (Cold Site)';color='#94a3b8';desc='متطلباتك تتيح أياماً من التوقف وتحمّل كبير لفقد البيانات. الموقع البارد (منشآت فقط) فعّال من حيث التكلفة للأنظمة غير الحيوية.';}
-  document.getElementById('dr-recommendation').innerHTML=`<div style="background:rgba(244,114,182,.05);border:2px solid ${color};border-radius:10px;padding:16px"><div style="font-size:1.1rem;font-weight:800;color:${color};margin-bottom:6px">الموصى به: ${site}</div><div style="font-size:.84rem;color:#7ab3d4;line-height:1.6">${desc}</div></div>`;
+  document.getElementById('dr-recommendation').innerHTML=`<div style="background:rgba(244,114,182,.05);border:2px solid ${color};border-radius:10px;padding:16px"><div style="font-size:1.1rem;font-weight:800;color:${color};margin-bottom:6px">الموصى به: ${site}</div><div style="font-size:.84rem;color:#4a7a5e;line-height:1.6">${desc}</div></div>`;
 }
 updateDR();
 
@@ -231,12 +231,12 @@ function showBackup(type){
   const totalStorage=b.storage.reduce((a,v)=>a+v,0);
   document.getElementById('backup-card').innerHTML=`
     <h3>${b.name}</h3>
-    <p style="color:#7ab3d4;font-size:.84rem;margin-bottom:12px;line-height:1.6">${b.desc}</p>
-    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px">${DAYS.map(d=>`<div style="text-align:center;font-size:.72rem;color:#64748b;padding:4px;font-weight:700">${d}</div>`).join('')}</div>
+    <p style="color:#4a7a5e;font-size:.84rem;margin-bottom:12px;line-height:1.6">${b.desc}</p>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px">${DAYS.map(d=>`<div style="text-align:center;font-size:.72rem;color:#4a7a5e;padding:4px;font-weight:700">${d}</div>`).join('')}</div>
     <div class="cal-grid">${b.data.map((t,i)=>`<div class="cal-day ${colorClass[t]}"><div class="cal-label">يوم ${i+1}</div><div class="cal-type">${label[t]}</div><div style="font-size:.55rem;margin-top:2px">${b.storage[i]}GB</div></div>`).join('')}</div>
     <div style="display:flex;gap:16px;margin-top:10px;flex-wrap:wrap;font-size:.8rem">
       <span><span style="display:inline-block;width:12px;height:12px;background:rgba(244,114,182,.4);border-radius:2px;vertical-align:middle;margin-left:4px"></span>نسخة كاملة</span>
-      ${type==='fi'?'<span><span style="display:inline-block;width:12px;height:12px;background:rgba(0,212,255,.4);border-radius:2px;vertical-align:middle;margin-left:4px"></span>تزايدي</span>':''}
+      ${type==='fi'?'<span><span style="display:inline-block;width:12px;height:12px;background:rgba(0,102,51,.4);border-radius:2px;vertical-align:middle;margin-left:4px"></span>تزايدي</span>':''}
       ${type==='fd'?'<span><span style="display:inline-block;width:12px;height:12px;background:rgba(245,158,11,.4);border-radius:2px;vertical-align:middle;margin-left:4px"></span>تفاضلي</span>':''}
     </div>
     <div class="alert alert-info" style="margin-top:12px">إجمالي التخزين المستخدم (4 أسابيع): <strong>${totalStorage} GB</strong> | أشرطة الاسترداد المطلوبة: <strong>${b.restore}</strong></div>`;
@@ -254,8 +254,8 @@ function loadRestore(){
   const sc=RESTORE_SC[restoreIdx];
   document.getElementById('restore-card').innerHTML=`
     <h3>السيناريو ${restoreIdx+1} من ${RESTORE_SC.length}</h3>
-    <p style="color:#e0e6f0;line-height:1.7;margin:12px 0">${sc.q}</p>
-    <div style="display:grid;gap:8px">${sc.opts.map((o,i)=>`<button style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;text-align:right;color:#e0e6f0;font-size:.88rem;transition:all .2s;width:100%" onclick="pickRestore(${i})">${o}</button>`).join('')}</div>
+    <p style="color:#1a2e22;line-height:1.7;margin:12px 0">${sc.q}</p>
+    <div style="display:grid;gap:8px">${sc.opts.map((o,i)=>`<button style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:11px 16px;cursor:pointer;text-align:right;color:#1a2e22;font-size:.88rem;transition:all .2s;width:100%" onclick="pickRestore(${i})">${o}</button>`).join('')}</div>
     <div id="restore-fb" style="margin-top:12px"></div>`;
   document.getElementById('restore-score').textContent=`النتيجة: ${restoreCorrect} / ${Math.min(restoreIdx,RESTORE_SC.length)}`;
 }
@@ -263,7 +263,7 @@ function pickRestore(i){
   const sc=RESTORE_SC[restoreIdx];const correct=sc.opts[i]===sc.ans;
   if(correct)restoreCorrect++;
   document.getElementById('restore-score').textContent=`النتيجة: ${restoreCorrect} / ${restoreIdx+1}`;
-  document.querySelectorAll('#restore-card button').forEach((b,bi)=>{b.disabled=true;if(sc.opts[bi]===sc.ans)b.style.background='rgba(16,185,129,.15)';});
+  document.querySelectorAll('#restore-card button').forEach((b,bi)=>{b.disabled=true;if(sc.opts[bi]===sc.ans)b.style.background='rgba(0,102,51,.15)';});
   if(!correct)document.querySelectorAll('#restore-card button')[i].style.background='rgba(239,68,68,.15)';
   document.getElementById('restore-fb').innerHTML=`<div class="alert ${correct?'alert-success':'alert-warn'}">${correct?'✅':'💡'} ${sc.explain}<br><button class="btn btn-outline btn-sm" onclick="nextRestore()" style="margin-top:10px">${restoreIdx<RESTORE_SC.length-1?'التالي ←':'إنهاء'}</button></div>`;
 }
@@ -289,8 +289,8 @@ let quizScores={};
 function buildQuiz(){
   document.getElementById('quiz-container').innerHTML=QUIZ.map((q,qi)=>`
     <div class="card" style="margin-bottom:16px">
-      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">س${qi+1}. ${q.q}</p>
-      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})" style="color:#e0e6f0">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
+      <p style="font-weight:600;color:#1a2e22;margin-bottom:12px;line-height:1.5">س${qi+1}. ${q.q}</p>
+      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerQ(${qi},${oi})" style="color:#1a2e22">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
     </div>`).join('');
 }
 function answerQ(qi,oi){
@@ -307,3 +307,9 @@ buildQuiz();
 </script>
 </body>
 </html>
+
+
+
+
+
+

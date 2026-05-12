@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -6,51 +6,51 @@
 <title>مختبر 11 — التحدي الختامي</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
-.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
-.site-topbar .author-tag{color:#f59e0b;font-weight:700}
-.site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #a3e635;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#f0f4f0;color:#1a2e22;min-height:100vh;-webkit-text-size-adjust:100%}
+.site-topbar{background:#004d28;border-bottom:1px solid #003d20;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#d4e8db;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#c9a227;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#006633 0%,#00843d 60%,#004d28 100%);border-bottom:4px solid #c9a227;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#3f6212,#65a30d);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
-.site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#d9f99d}
-.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.08);padding-right:18px;flex-shrink:0}
-.site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b}
-.back-btn{display:inline-flex;align-items:center;gap:6px;color:#a3e635;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(163,230,53,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(163,230,53,.1)}
-.phase-bar{display:flex;gap:4px;padding:16px 24px;background:#071020;border-bottom:1px solid #1e3a5c;flex-wrap:wrap}
-.phase-btn{padding:8px 16px;border:1px solid #1e3a5c;border-radius:8px;background:#071020;color:#64748b;font-size:.8rem;cursor:default;transition:all .2s;font-weight:600}
-.phase-btn.active-phase{border-color:#a3e635;color:#a3e635;background:rgba(163,230,53,.08)}
-.phase-btn.done-phase{border-color:#10b981;color:#34d399;background:rgba(16,185,129,.06)}
+.site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#006633}
+.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.2);padding-right:18px;flex-shrink:0}
+.site-author-block .aname{font-size:.95rem;font-weight:700;color:#c9a227}.site-author-block .abook{font-size:.68rem;color:#4a7a5e}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#006633;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(0,102,51,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(0,102,51,.1)}
+.phase-bar{display:flex;gap:4px;padding:16px 24px;background:#f0f7f3;border-bottom:1px solid #c8ddd2;flex-wrap:wrap}
+.phase-btn{padding:8px 16px;border:1px solid #c8ddd2;border-radius:8px;background:#f0f7f3;color:#4a7a5e;font-size:.8rem;cursor:default;transition:all .2s;font-weight:600}
+.phase-btn.active-phase{border-color:#006633;color:#006633;background:rgba(0,102,51,.08)}
+.phase-btn.done-phase{border-color:#006633;color:#065f46;background:rgba(0,102,51,.06)}
 .phase-content{padding:30px;max-width:960px;margin:0 auto}
-h2{color:#a3e635;margin-bottom:8px;font-size:1.2rem}
-.subtitle{color:#7ab3d4;font-size:.85rem;margin-bottom:20px;line-height:1.7}
-.card{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
-.card h3{color:#a3e635;margin-bottom:12px;font-size:1rem}
+h2{color:#006633;margin-bottom:8px;font-size:1.2rem}
+.subtitle{color:#4a7a5e;font-size:.85rem;margin-bottom:20px;line-height:1.7}
+.card{background:#ffffff;border:1px solid #c8ddd2;border-radius:12px;padding:22px;margin-bottom:20px}
+.card h3{color:#006633;margin-bottom:12px;font-size:1rem}
 .btn{padding:9px 20px;border:none;border-radius:6px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
-.btn-lime{background:#3f6212;color:#d9f99d}.btn-lime:hover{background:#365314}
-.btn-outline{background:transparent;border:1px solid #a3e635;color:#a3e635}.btn-outline:hover{background:rgba(163,230,53,.1)}
+.btn-lime{background:#3f6212;color:#006633}.btn-lime:hover{background:#365314}
+.btn-outline{background:transparent;border:1px solid #006633;color:#006633}.btn-outline:hover{background:rgba(0,102,51,.1)}
 .btn-sm{padding:5px 12px;font-size:.78rem}
 .alert{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.88rem;line-height:1.6}
-.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#34d399}
-.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
-.alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
-.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:#7ab3d4}
-.score-banner{background:linear-gradient(135deg,rgba(163,230,53,.05),rgba(16,185,129,.05));border:1px solid rgba(163,230,53,.2);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.score-main{font-size:1.8rem;font-weight:800;color:#a3e635}
-.score-label{font-size:.75rem;color:#64748b}
+.alert-success{background:rgba(6,95,70,.08);border:1px solid rgba(6,95,70,.25);color:#065f46}
+.alert-warn{background:rgba(120,85,0,.06);border:1px solid rgba(180,130,0,.3);color:#7a6010}
+.alert-danger{background:rgba(127,29,29,.06);border:1px solid rgba(200,50,50,.25);color:#7f1d1d}
+.alert-info{background:rgba(0,102,51,.07);border:1px solid rgba(0,102,51,.25);color:#2d6a4a}
+.score-banner{background:linear-gradient(135deg,rgba(0,102,51,.05),rgba(0,102,51,.05));border:1px solid rgba(0,102,51,.2);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.score-main{font-size:1.8rem;font-weight:800;color:#006633}
+.score-label{font-size:.75rem;color:#4a7a5e}
 /* Option cards */
 .option-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:16px 0}
-.opt-card{background:#071020;border:2px solid #1e3a5c;border-radius:10px;padding:16px;cursor:pointer;transition:all .2s}
-.opt-card:hover{border-color:#a3e635;transform:translateY(-2px)}.opt-card.selected-opt{border-color:#a3e635;background:rgba(163,230,53,.08)}
-.opt-card.correct-opt{border-color:#10b981;background:rgba(16,185,129,.1)}.opt-card.wrong-opt{border-color:#ef4444;background:rgba(239,68,68,.08)}
-.opt-icon{font-size:1.6rem;margin-bottom:8px}.opt-name{font-weight:700;color:#e0e6f0;font-size:.88rem;margin-bottom:3px}.opt-detail{font-size:.72rem;color:#64748b;line-height:1.4}
-.opt-price{font-size:.75rem;color:#a3e635;margin-top:6px;font-weight:700}
+.opt-card{background:#f0f7f3;border:2px solid #c8ddd2;border-radius:10px;padding:16px;cursor:pointer;transition:all .2s}
+.opt-card:hover{border-color:#006633;transform:translateY(-2px)}.opt-card.selected-opt{border-color:#006633;background:rgba(0,102,51,.08)}
+.opt-card.correct-opt{border-color:#006633;background:rgba(0,102,51,.1)}.opt-card.wrong-opt{border-color:#ef4444;background:rgba(239,68,68,.08)}
+.opt-icon{font-size:1.6rem;margin-bottom:8px}.opt-name{font-weight:700;color:#1a2e22;font-size:.88rem;margin-bottom:3px}.opt-detail{font-size:.72rem;color:#4a7a5e;line-height:1.4}
+.opt-price{font-size:.75rem;color:#006633;margin-top:6px;font-weight:700}
 /* Progress bar */
-.prog-track{background:#1e3a5c;border-radius:20px;height:8px;margin:8px 0;overflow:hidden}
-.prog-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#a3e635,#65a30d);transition:width .5s}
+.prog-track{background:#c8ddd2;border-radius:20px;height:8px;margin:8px 0;overflow:hidden}
+.prog-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#006633,#00843d);transition:width .5s}
 /* Quiz */
-.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:#e0e6f0}
-.quiz-opt:hover{border-color:#a3e635}.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
-.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
-.site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#f59e0b}
+.quiz-opt{background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:#1a2e22}
+.quiz-opt:hover{border-color:#006633}.quiz-opt.correct{border-color:#006633;background:rgba(0,102,51,.12);color:#065f46}.quiz-opt.incorrect{border-color:#dc2626;background:rgba(239,68,68,.08);color:#7f1d1d}
+.site-footer-bar{background:#006633;border-top:2px solid #004d28;padding:20px 30px;text-align:center;margin-top:30px}
+.site-footer-bar p{color:#d4e8db;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#c9a227}
 </style>
 </head>
 <body>
@@ -93,7 +93,7 @@ h2{color:#a3e635;margin-bottom:8px;font-size:1.2rem}
   <div id="exam-quiz" style="display:none">
     <h2>📝 الاختبار النهائي — 20 سؤالاً</h2>
     <p class="subtitle">أسئلة مختلطة من جميع محاور Server+. نتيجة مستوى استعدادك للشهادة.</p>
-    <div id="exam-score-badge" style="display:inline-block;background:rgba(163,230,53,.1);border:1px solid rgba(163,230,53,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#a3e635;margin-bottom:16px">النتيجة: 0 / 20</div>
+    <div id="exam-score-badge" style="display:inline-block;background:rgba(0,102,51,.08);border:1px solid rgba(0,102,51,.25);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#006633;margin-bottom:16px">النتيجة: 0 / 20</div>
     <div id="exam-container"></div>
     <div id="exam-result" style="margin-top:20px"></div>
   </div>
@@ -242,8 +242,8 @@ function showExam(){
 function buildExam(){
   document.getElementById('exam-container').innerHTML=EXAM_Q.map((q,qi)=>`
     <div class="card" style="margin-bottom:16px">
-      <p style="font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5">س${qi+1}. ${q.q}</p>
-      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerExam(${qi},${oi})" style="color:#e0e6f0">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
+      <p style="font-weight:600;color:#1a2e22;margin-bottom:12px;line-height:1.5">س${qi+1}. ${q.q}</p>
+      <div>${q.opts.map((o,oi)=>`<button class="quiz-opt" onclick="answerExam(${qi},${oi})" style="color:#1a2e22">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
     </div>`).join('');
 }
 function answerExam(qi,oi){
@@ -262,19 +262,19 @@ function showFinalResult(){
   const examTotal=Object.values(examScores).reduce((a,b)=>a+b,0);
   const pct=maxScore?Math.round(totalScore/maxScore*100):0;
   let grade,color,msg;
-  if(pct>=90){grade='ممتاز — A';color='#a3e635';msg='أداء استثنائي! لديك إتقان راسخ لجميع محاور Server+. أنت جاهز تماماً لاختبار SK0-005.';}
+  if(pct>=90){grade='ممتاز — A';color='#006633';msg='أداء استثنائي! لديك إتقان راسخ لجميع محاور Server+. أنت جاهز تماماً لاختبار SK0-005.';}
   else if(pct>=80){grade='جيد جداً — B';color='#34d399';msg='أداء جيد! راجع المجالات التي خسرت فيها نقاطاً وستكون جاهزاً للاختبار.';}
   else if(pct>=70){grade:'يحتاج مراجعة — C';color='#fbbf24';msg='راجع الفصول التي حصلت فيها على درجات أقل قبل محاولة اختبار الشهادة.';}
   else{grade='يحتاج دراسة إضافية — D';color='#f87171';msg='أمضِ وقتاً أطول مع وحدات المختبرات الفردية قبل اختبار الشهادة.';}
   document.getElementById('exam-result').innerHTML=`
-    <div style="background:linear-gradient(135deg,rgba(163,230,53,.05),rgba(16,185,129,.05));border:2px solid ${color};border-radius:16px;padding:24px;text-align:center">
+    <div style="background:linear-gradient(135deg,rgba(0,102,51,.05),rgba(0,102,51,.05));border:2px solid ${color};border-radius:16px;padding:24px;text-align:center">
       <div style="font-size:3rem;margin-bottom:8px">🏆</div>
       <div style="font-size:1.6rem;font-weight:800;color:${color};margin-bottom:4px">${grade}</div>
-      <div style="font-size:1.1rem;color:#e0e6f0;margin-bottom:12px">النتيجة النهائية: ${totalScore} / ${maxScore} نقطة (${pct}%)</div>
-      <div style="font-size:.88rem;color:#7ab3d4;line-height:1.7;max-width:500px;margin:0 auto 16px">${msg}</div>
+      <div style="font-size:1.1rem;color:#1a2e22;margin-bottom:12px">النتيجة النهائية: ${totalScore} / ${maxScore} نقطة (${pct}%)</div>
+      <div style="font-size:.88rem;color:#4a7a5e;line-height:1.7;max-width:500px;margin:0 auto 16px">${msg}</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;text-align:right;margin-top:16px;font-size:.8rem">
-        ${PHASE_DATA.map((p,i)=>`<div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><div style="color:#a3e635;font-weight:700;margin-bottom:3px">${p.title.split(':')[0]}</div><div style="color:#e0e6f0">${phaseScores[i]||0} / ${p.questions.reduce((s,q)=>s+q.pts,0)} نقطة</div></div>`).join('')}
-        <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:10px"><div style="color:#a3e635;font-weight:700;margin-bottom:3px">الاختبار النهائي</div><div style="color:#e0e6f0">${examTotal} / 20 سؤال</div></div>
+        ${PHASE_DATA.map((p,i)=>`<div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><div style="color:#006633;font-weight:700;margin-bottom:3px">${p.title.split(':')[0]}</div><div style="color:#1a2e22">${phaseScores[i]||0} / ${p.questions.reduce((s,q)=>s+q.pts,0)} نقطة</div></div>`).join('')}
+        <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:10px"><div style="color:#006633;font-weight:700;margin-bottom:3px">الاختبار النهائي</div><div style="color:#1a2e22">${examTotal} / 20 سؤال</div></div>
       </div>
       <button class="btn btn-outline" onclick="resetAll()" style="margin-top:20px">حاول مرة أخرى</button>
     </div>`;
@@ -286,3 +286,7 @@ loadPhase(0);
 </script>
 </body>
 </html>
+
+
+
+

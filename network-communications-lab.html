@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -6,69 +6,69 @@
 <title>مختبر 05-ب — اتصالات الشبكات</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
-.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
-.site-topbar .author-tag{color:#f59e0b;font-weight:700}
-.site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #00d4ff;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#0369a1,#0ea5e9);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#f0f4f0;color:#1a2e22;min-height:100vh;-webkit-text-size-adjust:100%}
+.site-topbar{background:#004d28;border-bottom:1px solid #003d20;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#d4e8db;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#c9a227;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#006633 0%,#00843d 60%,#004d28 100%);border-bottom:4px solid #c9a227;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#006633,#00843d);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
 .site-lab-info{flex:1}.site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}.site-lab-info span{font-size:.7rem;color:#7dd3fc}
-.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.08);padding-right:18px;flex-shrink:0}
-.site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}.site-author-block .abook{font-size:.68rem;color:#64748b}
-.back-btn{display:inline-flex;align-items:center;gap:6px;color:#00d4ff;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(0,212,255,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(0,212,255,.1)}
-.tabs{display:flex;gap:0;background:#071020;border-bottom:1px solid #1e3a5c;padding:0 20px;overflow-x:auto}
-.tab{padding:14px 22px;cursor:pointer;color:#7ab3d4;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#00d4ff}.tab.active{border-bottom-color:#00d4ff;background:rgba(0,212,255,.05)}
+.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.2);padding-right:18px;flex-shrink:0}
+.site-author-block .aname{font-size:.95rem;font-weight:700;color:#c9a227}.site-author-block .abook{font-size:.68rem;color:#4a7a5e}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#006633;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(0,102,51,.3);border-radius:8px;margin:16px 24px;transition:all .2s}.back-btn:hover{background:rgba(0,102,51,.1)}
+.tabs{display:flex;gap:0;background:#e8f0eb;border-bottom:1px solid #c8ddd2;padding:0 20px;overflow-x:auto}
+.tab{padding:14px 22px;cursor:pointer;color:#4a7a5e;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}.tab:hover,.tab.active{color:#006633}.tab.active{border-bottom-color:#006633;background:rgba(0,102,51,.05)}
 .tab-panel{display:none;padding:30px;max-width:960px;margin:0 auto}.tab-panel.active{display:block}
-h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
-.subtitle{color:#7ab3d4;font-size:.85rem;margin-bottom:20px;line-height:1.7}
-.card{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
-.card h3{color:#00d4ff;margin-bottom:12px;font-size:1rem}
+h2{color:#006633;margin-bottom:8px;font-size:1.2rem}
+.subtitle{color:#4a7a5e;font-size:.85rem;margin-bottom:20px;line-height:1.7}
+.card{background:#ffffff;border:1px solid #c8ddd2;border-radius:12px;padding:22px;margin-bottom:20px}
+.card h3{color:#006633;margin-bottom:12px;font-size:1rem}
 .btn{padding:9px 20px;border:none;border-radius:6px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
 .btn-blue{background:#0369a1;color:#fff}.btn-blue:hover{background:#075985}
-.btn-outline{background:transparent;border:1px solid #00d4ff;color:#00d4ff}.btn-outline:hover{background:rgba(0,212,255,.1)}
+.btn-outline{background:transparent;border:1px solid #006633;color:#006633}.btn-outline:hover{background:rgba(0,102,51,.1)}
 .btn-sm{padding:5px 12px;font-size:.78rem}
 .alert{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.88rem;line-height:1.6}
-.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#34d399}
-.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
-.alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
-.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:#7ab3d4}
-.score-badge{display:inline-block;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#00d4ff;margin-bottom:16px}
+.alert-success{background:rgba(6,95,70,.08);border:1px solid rgba(6,95,70,.25);color:#065f46}
+.alert-warn{background:rgba(120,85,0,.06);border:1px solid rgba(180,130,0,.3);color:#7a6010}
+.alert-danger{background:rgba(127,29,29,.06);border:1px solid rgba(200,50,50,.25);color:#7f1d1d}
+.alert-info{background:rgba(0,102,51,.07);border:1px solid rgba(0,102,51,.25);color:#2d6a4a}
+.score-badge{display:inline-block;background:rgba(0,102,51,.08);border:1px solid rgba(0,102,51,.25);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#006633;margin-bottom:16px}
 /* OSI layers */
-.osi-layer{background:#071020;border:2px solid #1e3a5c;border-radius:10px;padding:14px 18px;margin-bottom:8px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:14px}
-.osi-layer:hover{border-color:#00d4ff}.osi-layer.revealed{border-color:#10b981;background:rgba(16,185,129,.06)}
-.osi-num{width:34px;height:34px;border-radius:8px;background:rgba(0,212,255,.12);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;color:#00d4ff;flex-shrink:0}
+.osi-layer{background:#f0f7f3;border:2px solid #c8ddd2;border-radius:10px;padding:14px 18px;margin-bottom:8px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:14px}
+.osi-layer:hover{border-color:#006633}.osi-layer.revealed{border-color:#006633;background:rgba(0,102,51,.06)}
+.osi-num{width:34px;height:34px;border-radius:8px;background:rgba(0,102,51,.12);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;color:#006633;flex-shrink:0}
 .osi-info{flex:1}
-.osi-name{font-size:.95rem;font-weight:700;color:#e0e6f0;margin-bottom:3px}
-.osi-detail{font-size:.78rem;color:#64748b;line-height:1.5;display:none}
-.osi-layer.revealed .osi-detail{display:block;color:#7ab3d4}
-.osi-protocol{font-size:.72rem;color:#00d4ff;opacity:.7;margin-top:3px;display:none}
+.osi-name{font-size:.95rem;font-weight:700;color:#1a2e22;margin-bottom:3px}
+.osi-detail{font-size:.78rem;color:#4a7a5e;line-height:1.5;display:none}
+.osi-layer.revealed .osi-detail{display:block;color:#4a7a5e}
+.osi-protocol{font-size:.72rem;color:#006633;opacity:.7;margin-top:3px;display:none}
 .osi-layer.revealed .osi-protocol{display:block}
 /* Cable table */
 .cable-table{width:100%;border-collapse:collapse;font-size:.83rem}
-.cable-table th{background:#071020;color:#00d4ff;padding:10px 14px;text-align:right;font-weight:700;border-bottom:2px solid #1e3a5c}
-.cable-table td{padding:10px 14px;border-bottom:1px solid #1e3a5c;color:#c8d8e8;vertical-align:top;line-height:1.5}
-.cable-table tr:hover td{background:rgba(0,212,255,.04)}
-.cable-badge{display:inline-block;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:4px;padding:2px 8px;font-size:.72rem;color:#7dd3fc;margin:1px}
+.cable-table th{background:#f0f7f3;color:#006633;padding:10px 14px;text-align:right;font-weight:700;border-bottom:2px solid #c8ddd2}
+.cable-table td{padding:10px 14px;border-bottom:1px solid #c8ddd2;color:#c8d8e8;vertical-align:top;line-height:1.5}
+.cable-table tr:hover td{background:rgba(0,102,51,.04)}
+.cable-badge{display:inline-block;background:rgba(0,102,51,.08);border:1px solid rgba(0,102,51,.2);border-radius:4px;padding:2px 8px;font-size:.72rem;color:#006633;margin:1px}
 /* Subnet calc */
-.ip-input{background:#071020;border:1px solid #1e3a5c;border-radius:6px;color:#e0e6f0;padding:9px 14px;font-size:.95rem;direction:ltr;width:100%;margin-bottom:10px}
-.ip-input:focus{outline:none;border-color:#00d4ff}
-.subnet-result{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:14px;margin-top:12px}
+.ip-input{background:#f0f7f3;border:1px solid #c8ddd2;border-radius:6px;color:#1a2e22;padding:9px 14px;font-size:.95rem;direction:ltr;width:100%;margin-bottom:10px}
+.ip-input:focus{outline:none;border-color:#006633}
+.subnet-result{background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:14px;margin-top:12px}
 .subnet-row{display:flex;justify-content:space-between;padding:5px 0;font-size:.84rem;border-bottom:1px solid rgba(30,58,92,.5)}
 .subnet-row:last-child{border-bottom:none}
-.subnet-label{color:#7ab3d4}.subnet-value{color:#00d4ff;font-weight:700;font-family:monospace;direction:ltr}
+.subnet-label{color:#4a7a5e}.subnet-value{color:#006633;font-weight:700;font-family:monospace;direction:ltr}
 /* Port drag */
-.port-item{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:9px 14px;cursor:grab;font-size:.83rem;transition:all .2s;user-select:none}
-.port-item:hover{border-color:#00d4ff}
-.port-item.dragging{opacity:.4;border-color:#00d4ff}
-.drop-zone{background:#071020;border:2px dashed #1e3a5c;border-radius:10px;min-height:60px;padding:8px;transition:border-color .2s}
-.drop-zone.over{border-color:#00d4ff;background:rgba(0,212,255,.04)}
+.port-item{background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:9px 14px;cursor:grab;font-size:.83rem;transition:all .2s;user-select:none}
+.port-item:hover{border-color:#006633}
+.port-item.dragging{opacity:.4;border-color:#006633}
+.drop-zone{background:#f0f7f3;border:2px dashed #c8ddd2;border-radius:10px;min-height:60px;padding:8px;transition:border-color .2s}
+.drop-zone.over{border-color:#006633;background:rgba(0,102,51,.04)}
 .drop-zone .port-item{cursor:default}
 /* Quiz */
-.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:#e0e6f0}
-.quiz-opt:hover{border-color:#00d4ff}.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
-.quiz-q{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
-.quiz-q h4{color:#e0e6f0;font-size:.95rem;margin-bottom:14px;line-height:1.6}
-.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
-.site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#f59e0b}
+.quiz-opt{background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:#1a2e22}
+.quiz-opt:hover{border-color:#006633}.quiz-opt.correct{border-color:#006633;background:rgba(0,102,51,.12);color:#065f46}.quiz-opt.incorrect{border-color:#dc2626;background:rgba(239,68,68,.08);color:#7f1d1d}
+.quiz-q{background:#ffffff;border:1px solid #c8ddd2;border-radius:12px;padding:22px;margin-bottom:20px}
+.quiz-q h4{color:#1a2e22;font-size:.95rem;margin-bottom:14px;line-height:1.6}
+.site-footer-bar{background:#006633;border-top:2px solid #004d28;padding:20px 30px;text-align:center;margin-top:30px}
+.site-footer-bar p{color:#d4e8db;font-size:.78rem;line-height:2;margin:0}.site-footer-bar strong{color:#c9a227}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 @media(max-width:600px){.grid-2{grid-template-columns:1fr}}
 </style>
@@ -165,7 +165,7 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
       </div>
     </div>
     <button class="btn btn-outline btn-sm" style="margin-top:12px" onclick="revealAllOSI()">عرض الكل</button>
-    <button class="btn btn-sm" style="background:#1e3a5c;color:#7ab3d4;margin-top:12px;margin-right:8px" onclick="hideAllOSI()">إخفاء الكل</button>
+    <button class="btn btn-sm" style="background:#c8ddd2;color:#4a7a5e;margin-top:12px;margin-right:8px" onclick="hideAllOSI()">إخفاء الكل</button>
   </div>
   <div class="card">
     <h3>🎯 اختبر نفسك — أي طبقة؟</h3>
@@ -188,16 +188,16 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
     <h3>🔌 كابلات النحاس الملتوية (Twisted Pair)</h3>
     <table class="cable-table">
       <tr><th>الفئة</th><th>السرعة القصوى</th><th>المسافة القصوى</th><th>الاستخدام</th></tr>
-      <tr><td><strong style="color:#00d4ff">CAT 5</strong></td><td>100 Mbps</td><td>100 م</td><td>شبكات قديمة — غير موصى به</td></tr>
-      <tr><td><strong style="color:#00d4ff">CAT 5e</strong></td><td>1 Gbps</td><td>100 م</td><td>الشبكات المنزلية والمكتبية الصغيرة</td></tr>
-      <tr><td><strong style="color:#00d4ff">CAT 6</strong></td><td>10 Gbps</td><td>55 م (10G) / 100 م (1G)</td><td>مراكز البيانات، شبكات المؤسسات</td></tr>
-      <tr><td><strong style="color:#00d4ff">CAT 6A</strong></td><td>10 Gbps</td><td>100 م</td><td>مراكز البيانات — الحل الأمثل لـ 10G</td></tr>
-      <tr><td><strong style="color:#00d4ff">CAT 7</strong></td><td>10 Gbps+</td><td>100 م</td><td>معزول بالكامل، للبيئات الصناعية</td></tr>
+      <tr><td><strong style="color:#006633">CAT 5</strong></td><td>100 Mbps</td><td>100 م</td><td>شبكات قديمة — غير موصى به</td></tr>
+      <tr><td><strong style="color:#006633">CAT 5e</strong></td><td>1 Gbps</td><td>100 م</td><td>الشبكات المنزلية والمكتبية الصغيرة</td></tr>
+      <tr><td><strong style="color:#006633">CAT 6</strong></td><td>10 Gbps</td><td>55 م (10G) / 100 م (1G)</td><td>مراكز البيانات، شبكات المؤسسات</td></tr>
+      <tr><td><strong style="color:#006633">CAT 6A</strong></td><td>10 Gbps</td><td>100 م</td><td>مراكز البيانات — الحل الأمثل لـ 10G</td></tr>
+      <tr><td><strong style="color:#006633">CAT 7</strong></td><td>10 Gbps+</td><td>100 م</td><td>معزول بالكامل، للبيئات الصناعية</td></tr>
     </table>
-    <div style="margin-top:14px;font-size:.82rem;color:#7ab3d4;line-height:2">
-      <strong style="color:#00d4ff">UTP</strong> (Unshielded Twisted Pair) — الأكثر شيوعاً، غير معزول، أرخص.<br>
-      <strong style="color:#00d4ff">STP</strong> (Shielded Twisted Pair) — معزول لتقليل التداخل الكهرومغناطيسي (EMI)، مناسب للبيئات الصناعية.<br>
-      <strong style="color:#00d4ff">الموصل</strong>: RJ-45 (8 أطراف) للشبكات — RJ-11 (6 أطراف) للهاتف.
+    <div style="margin-top:14px;font-size:.82rem;color:#4a7a5e;line-height:2">
+      <strong style="color:#006633">UTP</strong> (Unshielded Twisted Pair) — الأكثر شيوعاً، غير معزول، أرخص.<br>
+      <strong style="color:#006633">STP</strong> (Shielded Twisted Pair) — معزول لتقليل التداخل الكهرومغناطيسي (EMI)، مناسب للبيئات الصناعية.<br>
+      <strong style="color:#006633">الموصل</strong>: RJ-45 (8 أطراف) للشبكات — RJ-11 (6 أطراف) للهاتف.
     </div>
   </div>
 
@@ -205,9 +205,9 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
     <h3>💡 الكابلات الضوئية (Fiber Optic)</h3>
     <div class="grid-2">
       <div>
-        <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:14px;margin-bottom:10px">
-          <div style="color:#00d4ff;font-weight:700;margin-bottom:8px">SMF — Single-Mode Fiber</div>
-          <div style="font-size:.82rem;color:#7ab3d4;line-height:1.8">
+        <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:14px;margin-bottom:10px">
+          <div style="color:#006633;font-weight:700;margin-bottom:8px">SMF — Single-Mode Fiber</div>
+          <div style="font-size:.82rem;color:#4a7a5e;line-height:1.8">
             • نواة صغيرة جداً (8-10 ميكرون)<br>
             • مسافات طويلة جداً (حتى 100 كم+)<br>
             • ليزر أصفر/أزرق<br>
@@ -216,9 +216,9 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
         </div>
       </div>
       <div>
-        <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:14px;margin-bottom:10px">
-          <div style="color:#f59e0b;font-weight:700;margin-bottom:8px">MMF — Multi-Mode Fiber</div>
-          <div style="font-size:.82rem;color:#7ab3d4;line-height:1.8">
+        <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:14px;margin-bottom:10px">
+          <div style="color:#c9a227;font-weight:700;margin-bottom:8px">MMF — Multi-Mode Fiber</div>
+          <div style="font-size:.82rem;color:#4a7a5e;line-height:1.8">
             • نواة أكبر (50-62.5 ميكرون)<br>
             • مسافات متوسطة (حتى 2 كم)<br>
             • LED أو ليزر برتقالي/فيروزي<br>
@@ -227,8 +227,8 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
         </div>
       </div>
     </div>
-    <div style="font-size:.82rem;color:#7ab3d4;line-height:2;margin-top:6px">
-      <strong style="color:#00d4ff">موصلات الألياف الضوئية:</strong><br>
+    <div style="font-size:.82rem;color:#4a7a5e;line-height:2;margin-top:6px">
+      <strong style="color:#006633">موصلات الألياف الضوئية:</strong><br>
       <strong>ST</strong> (Straight-Tip) — موصل دوّار قديم للـ MMF.<br>
       <strong>SC</strong> (Subscriber Connector) — موصل مربع الشكل، يُدفع للداخل.<br>
       <strong>LC</strong> (Lucent Connector) — موصل صغير الحجم، الأكثر شيوعاً في مراكز البيانات.<br>
@@ -264,26 +264,26 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
     <h3>📊 فئات العناوين الخاصة (RFC 1918)</h3>
     <table class="cable-table">
       <tr><th>النطاق</th><th>قناع الشبكة الافتراضي</th><th>عدد الشبكات</th><th>الاستخدام</th></tr>
-      <tr><td style="font-family:monospace;color:#00d4ff">10.0.0.0 – 10.255.255.255</td><td style="font-family:monospace">/8</td><td>1</td><td>شبكات المؤسسات الكبيرة</td></tr>
-      <tr><td style="font-family:monospace;color:#00d4ff">172.16.0.0 – 172.31.255.255</td><td style="font-family:monospace">/12</td><td>16</td><td>شبكات المؤسسات المتوسطة</td></tr>
-      <tr><td style="font-family:monospace;color:#00d4ff">192.168.0.0 – 192.168.255.255</td><td style="font-family:monospace">/16</td><td>256</td><td>الشبكات المنزلية والصغيرة</td></tr>
+      <tr><td style="font-family:monospace;color:#006633">10.0.0.0 – 10.255.255.255</td><td style="font-family:monospace">/8</td><td>1</td><td>شبكات المؤسسات الكبيرة</td></tr>
+      <tr><td style="font-family:monospace;color:#006633">172.16.0.0 – 172.31.255.255</td><td style="font-family:monospace">/12</td><td>16</td><td>شبكات المؤسسات المتوسطة</td></tr>
+      <tr><td style="font-family:monospace;color:#006633">192.168.0.0 – 192.168.255.255</td><td style="font-family:monospace">/16</td><td>256</td><td>الشبكات المنزلية والصغيرة</td></tr>
     </table>
-    <div style="margin-top:14px;font-size:.82rem;color:#7ab3d4;line-height:2">
-      <strong style="color:#f59e0b">APIPA</strong>: 169.254.x.x — يُعيَّن تلقائياً عند فشل DHCP. يعني أن الجهاز لا يستطيع الوصول للشبكة.<br>
-      <strong style="color:#f59e0b">Loopback</strong>: 127.0.0.1 — عنوان الاختبار الداخلي (localhost).<br>
-      <strong style="color:#f59e0b">NAT/PAT</strong>: ترجمة العناوين — تخفي العناوين الخاصة خلف IP عام واحد.
+    <div style="margin-top:14px;font-size:.82rem;color:#4a7a5e;line-height:2">
+      <strong style="color:#c9a227">APIPA</strong>: 169.254.x.x — يُعيَّن تلقائياً عند فشل DHCP. يعني أن الجهاز لا يستطيع الوصول للشبكة.<br>
+      <strong style="color:#c9a227">Loopback</strong>: 127.0.0.1 — عنوان الاختبار الداخلي (localhost).<br>
+      <strong style="color:#c9a227">NAT/PAT</strong>: ترجمة العناوين — تخفي العناوين الخاصة خلف IP عام واحد.
     </div>
   </div>
 
   <div class="card">
     <h3>🌐 مقدمة IPv6</h3>
-    <div style="font-size:.84rem;color:#7ab3d4;line-height:2">
-      <strong style="color:#00d4ff">الحجم:</strong> 128 بتًا (مقابل 32 بتًا في IPv4) — يكفي لـ 340 أُندِسيليون عنوان.<br>
-      <strong style="color:#00d4ff">الصيغة:</strong> 8 مجموعات هكساديسيمالية مفصولة بنقطتين — مثال: <code style="color:#34d399">2001:0db8:85a3::8a2e:0370:7334</code><br>
-      <strong style="color:#00d4ff">تقصير:</strong> يمكن إسقاط الأصفار الأمامية وإحلال :: بدل مجموعات الأصفار المتتالية (مرة واحدة فقط).<br>
-      <strong style="color:#00d4ff">Link-Local:</strong> fe80::/10 — يُعيَّن تلقائياً لكل واجهة شبكة.<br>
-      <strong style="color:#00d4ff">Loopback:</strong> ::1<br>
-      <strong style="color:#f59e0b">تقنيات الانتقال:</strong> 6to4، ISATAP، Teredo — تتيح تشغيل IPv6 فوق شبكات IPv4.
+    <div style="font-size:.84rem;color:#4a7a5e;line-height:2">
+      <strong style="color:#006633">الحجم:</strong> 128 بتًا (مقابل 32 بتًا في IPv4) — يكفي لـ 340 أُندِسيليون عنوان.<br>
+      <strong style="color:#006633">الصيغة:</strong> 8 مجموعات هكساديسيمالية مفصولة بنقطتين — مثال: <code style="color:#065f46">2001:0db8:85a3::8a2e:0370:7334</code><br>
+      <strong style="color:#006633">تقصير:</strong> يمكن إسقاط الأصفار الأمامية وإحلال :: بدل مجموعات الأصفار المتتالية (مرة واحدة فقط).<br>
+      <strong style="color:#006633">Link-Local:</strong> fe80::/10 — يُعيَّن تلقائياً لكل واجهة شبكة.<br>
+      <strong style="color:#006633">Loopback:</strong> ::1<br>
+      <strong style="color:#c9a227">تقنيات الانتقال:</strong> 6to4، ISATAP، Teredo — تتيح تشغيل IPv6 فوق شبكات IPv4.
     </div>
   </div>
 </div>
@@ -296,31 +296,31 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
   <div class="card">
     <h3>⚖️ TCP مقابل UDP</h3>
     <div class="grid-2">
-      <div style="background:#071020;border:1px solid rgba(0,212,255,.3);border-radius:10px;padding:16px">
-        <div style="color:#00d4ff;font-weight:800;font-size:1rem;margin-bottom:10px">TCP — موثوق واتصالي</div>
-        <div style="font-size:.82rem;color:#7ab3d4;line-height:2">
+      <div style="background:#f0f7f3;border:1px solid rgba(0,102,51,.3);border-radius:10px;padding:16px">
+        <div style="color:#006633;font-weight:800;font-size:1rem;margin-bottom:10px">TCP — موثوق واتصالي</div>
+        <div style="font-size:.82rem;color:#4a7a5e;line-height:2">
           ✅ مصافحة ثلاثية (SYN → SYN-ACK → ACK)<br>
           ✅ ضمان وصول الحزم بالترتيب<br>
           ✅ إعادة إرسال الحزم الضائعة<br>
           ✅ التحكم في التدفق (Flow Control)<br>
           ❌ أبطأ من UDP بسبب الحمل الإضافي<br>
-          <strong style="color:#00d4ff">استخدام:</strong> HTTP, HTTPS, FTP, SSH, Email
+          <strong style="color:#006633">استخدام:</strong> HTTP, HTTPS, FTP, SSH, Email
         </div>
       </div>
-      <div style="background:#071020;border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:16px">
-        <div style="color:#f59e0b;font-weight:800;font-size:1rem;margin-bottom:10px">UDP — سريع ولا اتصالي</div>
-        <div style="font-size:.82rem;color:#7ab3d4;line-height:2">
+      <div style="background:#f0f7f3;border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:16px">
+        <div style="color:#c9a227;font-weight:800;font-size:1rem;margin-bottom:10px">UDP — سريع ولا اتصالي</div>
+        <div style="font-size:.82rem;color:#4a7a5e;line-height:2">
           ✅ لا مصافحة — يرسل مباشرة<br>
           ✅ أسرع بكثير من TCP<br>
           ✅ أقل حملاً على الشبكة<br>
           ❌ لا ضمان لوصول الحزم<br>
           ❌ لا ترتيب مضمون للحزم<br>
-          <strong style="color:#f59e0b">استخدام:</strong> DNS, DHCP, VoIP, فيديو حي, DNS
+          <strong style="color:#c9a227">استخدام:</strong> DNS, DHCP, VoIP, فيديو حي, DNS
         </div>
       </div>
     </div>
-    <div style="background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.15);border-radius:8px;padding:12px;margin-top:14px;font-size:.82rem;color:#7ab3d4;line-height:1.8">
-      <strong style="color:#00d4ff">المصافحة الثلاثية TCP (Three-Way Handshake):</strong><br>
+    <div style="background:rgba(0,102,51,.06);border:1px solid rgba(0,102,51,.15);border-radius:8px;padding:12px;margin-top:14px;font-size:.82rem;color:#4a7a5e;line-height:1.8">
+      <strong style="color:#006633">المصافحة الثلاثية TCP (Three-Way Handshake):</strong><br>
       1. العميل يرسل SYN (طلب الاتصال)<br>
       2. الخادم يرد بـ SYN-ACK (تأكيد القبول)<br>
       3. العميل يرسل ACK (تأكيد الاستلام) — الاتصال مُنشأ
@@ -334,17 +334,17 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px" id="ports-pool"></div>
       <div class="grid-2" style="gap:14px">
         <div>
-          <div style="color:#00d4ff;font-weight:700;margin-bottom:6px;font-size:.85rem">TCP فقط</div>
+          <div style="color:#006633;font-weight:700;margin-bottom:6px;font-size:.85rem">TCP فقط</div>
           <div class="drop-zone" id="zone-tcp" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="dropPort(event,'tcp')"></div>
         </div>
         <div>
-          <div style="color:#f59e0b;font-weight:700;margin-bottom:6px;font-size:.85rem">UDP فقط</div>
+          <div style="color:#c9a227;font-weight:700;margin-bottom:6px;font-size:.85rem">UDP فقط</div>
           <div class="drop-zone" id="zone-udp" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="dropPort(event,'udp')"></div>
         </div>
       </div>
     </div>
     <button class="btn btn-outline btn-sm" style="margin-top:12px" onclick="checkPorts()">تحقق من الإجابات</button>
-    <button class="btn btn-sm" style="background:#1e3a5c;color:#7ab3d4;margin-top:12px;margin-right:8px" onclick="resetPorts()">إعادة تعيين</button>
+    <button class="btn btn-sm" style="background:#c8ddd2;color:#4a7a5e;margin-top:12px;margin-right:8px" onclick="resetPorts()">إعادة تعيين</button>
     <div id="ports-result" style="margin-top:10px"></div>
   </div>
 
@@ -352,18 +352,18 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
     <h3>📖 جدول المنافذ المرجعي</h3>
     <table class="cable-table">
       <tr><th>المنفذ</th><th>البروتوكول</th><th>النقل</th><th>الوصف</th></tr>
-      <tr><td style="font-family:monospace;color:#00d4ff">20/21</td><td>FTP</td><td>TCP</td><td>نقل الملفات (بيانات/تحكم)</td></tr>
-      <tr><td style="font-family:monospace;color:#00d4ff">22</td><td>SSH</td><td>TCP</td><td>الوصول الآمن للخوادم</td></tr>
-      <tr><td style="font-family:monospace;color:#00d4ff">23</td><td>Telnet</td><td>TCP</td><td>وصول بعيد غير مشفر (قديم)</td></tr>
-      <tr><td style="font-family:monospace;color:#00d4ff">25</td><td>SMTP</td><td>TCP</td><td>إرسال البريد الإلكتروني</td></tr>
-      <tr><td style="font-family:monospace;color:#00d4ff">53</td><td>DNS</td><td>TCP/UDP</td><td>تحليل أسماء النطاقات</td></tr>
-      <tr><td style="font-family:monospace;color:#00d4ff">67/68</td><td>DHCP</td><td>UDP</td><td>توزيع عناوين IP تلقائياً</td></tr>
-      <tr><td style="font-family:monospace;color:#00d4ff">80</td><td>HTTP</td><td>TCP</td><td>تصفح الويب (غير مشفر)</td></tr>
-      <tr><td style="font-family:monospace;color:#00d4ff">110</td><td>POP3</td><td>TCP</td><td>استلام البريد الإلكتروني</td></tr>
-      <tr><td style="font-family:monospace;color:#00d4ff">143</td><td>IMAP</td><td>TCP</td><td>استلام البريد مع البقاء على الخادم</td></tr>
-      <tr><td style="font-family:monospace;color:#00d4ff">389</td><td>LDAP</td><td>TCP</td><td>خدمات الدليل (Active Directory)</td></tr>
-      <tr><td style="font-family:monospace;color:#00d4ff">443</td><td>HTTPS</td><td>TCP</td><td>تصفح الويب المشفر</td></tr>
-      <tr><td style="font-family:monospace;color:#00d4ff">3389</td><td>RDP</td><td>TCP</td><td>سطح المكتب البعيد (Windows)</td></tr>
+      <tr><td style="font-family:monospace;color:#006633">20/21</td><td>FTP</td><td>TCP</td><td>نقل الملفات (بيانات/تحكم)</td></tr>
+      <tr><td style="font-family:monospace;color:#006633">22</td><td>SSH</td><td>TCP</td><td>الوصول الآمن للخوادم</td></tr>
+      <tr><td style="font-family:monospace;color:#006633">23</td><td>Telnet</td><td>TCP</td><td>وصول بعيد غير مشفر (قديم)</td></tr>
+      <tr><td style="font-family:monospace;color:#006633">25</td><td>SMTP</td><td>TCP</td><td>إرسال البريد الإلكتروني</td></tr>
+      <tr><td style="font-family:monospace;color:#006633">53</td><td>DNS</td><td>TCP/UDP</td><td>تحليل أسماء النطاقات</td></tr>
+      <tr><td style="font-family:monospace;color:#006633">67/68</td><td>DHCP</td><td>UDP</td><td>توزيع عناوين IP تلقائياً</td></tr>
+      <tr><td style="font-family:monospace;color:#006633">80</td><td>HTTP</td><td>TCP</td><td>تصفح الويب (غير مشفر)</td></tr>
+      <tr><td style="font-family:monospace;color:#006633">110</td><td>POP3</td><td>TCP</td><td>استلام البريد الإلكتروني</td></tr>
+      <tr><td style="font-family:monospace;color:#006633">143</td><td>IMAP</td><td>TCP</td><td>استلام البريد مع البقاء على الخادم</td></tr>
+      <tr><td style="font-family:monospace;color:#006633">389</td><td>LDAP</td><td>TCP</td><td>خدمات الدليل (Active Directory)</td></tr>
+      <tr><td style="font-family:monospace;color:#006633">443</td><td>HTTPS</td><td>TCP</td><td>تصفح الويب المشفر</td></tr>
+      <tr><td style="font-family:monospace;color:#006633">3389</td><td>RDP</td><td>TCP</td><td>سطح المكتب البعيد (Windows)</td></tr>
     </table>
   </div>
 </div>
@@ -377,16 +377,16 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
     <h3>🔄 DHCP — تبادل الحزم الأربع (DORA)</h3>
     <p class="subtitle" style="margin-bottom:14px">يتفاوض العميل مع خادم DHCP عبر 4 رسائل. انقر كل خطوة لعرض التفاصيل.</p>
     <div id="dora-steps">
-      <div class="osi-layer" onclick="toggleOSI(this)" style="border-color:rgba(0,212,255,.3)">
-        <div class="osi-num" style="background:rgba(0,212,255,.15);font-size:.75rem">D</div>
+      <div class="osi-layer" onclick="toggleOSI(this)" style="border-color:rgba(0,102,51,.3)">
+        <div class="osi-num" style="background:rgba(0,102,51,.15);font-size:.75rem">D</div>
         <div class="osi-info">
           <div class="osi-name">Discover — اكتشاف</div>
           <div class="osi-detail">العميل يبث رسالة على المنفذ UDP 67 بحثاً عن أي خادم DHCP متاح. المصدر: 0.0.0.0 — الوجهة: 255.255.255.255 (بث عام).</div>
           <div class="osi-protocol">نوع الرسالة: UDP Broadcast ← العميل</div>
         </div>
       </div>
-      <div class="osi-layer" onclick="toggleOSI(this)" style="border-color:rgba(16,185,129,.3)">
-        <div class="osi-num" style="background:rgba(16,185,129,.15);color:#34d399;font-size:.75rem">O</div>
+      <div class="osi-layer" onclick="toggleOSI(this)" style="border-color:rgba(0,102,51,.3)">
+        <div class="osi-num" style="background:rgba(0,102,51,.15);color:#065f46;font-size:.75rem">O</div>
         <div class="osi-info">
           <div class="osi-name">Offer — عرض</div>
           <div class="osi-detail">خادم DHCP يعرض عنوان IP محجوزاً مؤقتاً مع معلومات الشبكة (قناع الشبكة، البوابة الافتراضية، DNS، مدة الإيجار). يُرسَل إلى عنوان MAC الخاص بالعميل.</div>
@@ -394,7 +394,7 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
         </div>
       </div>
       <div class="osi-layer" onclick="toggleOSI(this)" style="border-color:rgba(245,158,11,.3)">
-        <div class="osi-num" style="background:rgba(245,158,11,.15);color:#f59e0b;font-size:.75rem">R</div>
+        <div class="osi-num" style="background:rgba(245,158,11,.15);color:#c9a227;font-size:.75rem">R</div>
         <div class="osi-info">
           <div class="osi-name">Request — طلب</div>
           <div class="osi-detail">العميل يقبل العرض ويطلب رسمياً استخدام العنوان المعروض. يُرسَل كبثّ (Broadcast) حتى يعلم خوادم DHCP الأخرى أن عرضها رُفض.</div>
@@ -402,7 +402,7 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
         </div>
       </div>
       <div class="osi-layer" onclick="toggleOSI(this)" style="border-color:rgba(139,92,246,.3)">
-        <div class="osi-num" style="background:rgba(139,92,246,.15);color:#a78bfa;font-size:.75rem">A</div>
+        <div class="osi-num" style="background:rgba(139,92,246,.15);color:#006633;font-size:.75rem">A</div>
         <div class="osi-info">
           <div class="osi-name">Acknowledgment — تأكيد</div>
           <div class="osi-detail">الخادم يؤكد تخصيص العنوان للعميل بشكل رسمي ويرسل جميع معلومات الإعداد النهائية. يبدأ العميل بعدها باستخدام العنوان رسمياً.</div>
@@ -410,31 +410,31 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
         </div>
       </div>
     </div>
-    <div style="margin-top:14px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:12px;font-size:.82rem;color:#7ab3d4;line-height:1.8">
-      <strong style="color:#f59e0b">APIPA (169.254.x.x):</strong> إذا فشل الاتصال بخادم DHCP، يعيّن ويندوز عنوان APIPA تلقائياً (169.254.1.0 – 169.254.254.255). هذا يعني عدم وجود اتصال بالشبكة الخارجية.
+    <div style="margin-top:14px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:12px;font-size:.82rem;color:#4a7a5e;line-height:1.8">
+      <strong style="color:#c9a227">APIPA (169.254.x.x):</strong> إذا فشل الاتصال بخادم DHCP، يعيّن ويندوز عنوان APIPA تلقائياً (169.254.1.0 – 169.254.254.255). هذا يعني عدم وجود اتصال بالشبكة الخارجية.
     </div>
   </div>
 
   <div class="card">
     <h3>🌍 DNS — نظام أسماء النطاقات</h3>
-    <div style="font-size:.84rem;color:#7ab3d4;line-height:2">
-      <strong style="color:#00d4ff">الهرمية:</strong> Root (.) → TLD (.com, .org) → Domain (google.com) → Subdomain (mail.google.com)<br>
-      <strong style="color:#00d4ff">FQDN</strong> (Fully Qualified Domain Name): الاسم الكامل المؤهل — مثال: <code style="color:#34d399">www.example.com.</code> (مع نقطة في النهاية)<br>
-      <strong style="color:#00d4ff">Forward Lookup:</strong> اسم النطاق → عنوان IP (السجل A أو AAAA)<br>
-      <strong style="color:#00d4ff">Reverse Lookup:</strong> عنوان IP → اسم النطاق (سجل PTR)<br>
-      <strong style="color:#00d4ff">سجلات DNS الرئيسية:</strong>
+    <div style="font-size:.84rem;color:#4a7a5e;line-height:2">
+      <strong style="color:#006633">الهرمية:</strong> Root (.) → TLD (.com, .org) → Domain (google.com) → Subdomain (mail.google.com)<br>
+      <strong style="color:#006633">FQDN</strong> (Fully Qualified Domain Name): الاسم الكامل المؤهل — مثال: <code style="color:#065f46">www.example.com.</code> (مع نقطة في النهاية)<br>
+      <strong style="color:#006633">Forward Lookup:</strong> اسم النطاق → عنوان IP (السجل A أو AAAA)<br>
+      <strong style="color:#006633">Reverse Lookup:</strong> عنوان IP → اسم النطاق (سجل PTR)<br>
+      <strong style="color:#006633">سجلات DNS الرئيسية:</strong>
     </div>
     <table class="cable-table" style="margin-top:10px">
       <tr><th>نوع السجل</th><th>الوظيفة</th><th>مثال</th></tr>
-      <tr><td style="color:#00d4ff">A</td><td>اسم نطاق → IPv4</td><td style="font-family:monospace;font-size:.78rem">example.com → 93.184.216.34</td></tr>
-      <tr><td style="color:#00d4ff">AAAA</td><td>اسم نطاق → IPv6</td><td style="font-family:monospace;font-size:.78rem">example.com → 2606:2800::1</td></tr>
-      <tr><td style="color:#00d4ff">CNAME</td><td>اسم نطاق → اسم آخر (مستعار)</td><td style="font-family:monospace;font-size:.78rem">www → example.com</td></tr>
-      <tr><td style="color:#00d4ff">MX</td><td>خادم البريد للنطاق</td><td style="font-family:monospace;font-size:.78rem">mail.example.com</td></tr>
-      <tr><td style="color:#00d4ff">PTR</td><td>IP → اسم نطاق (عكسي)</td><td style="font-family:monospace;font-size:.78rem">34.216.184.93.in-addr.arpa</td></tr>
-      <tr><td style="color:#00d4ff">SOA</td><td>معلومات منطقة DNS الأصلية</td><td>—</td></tr>
+      <tr><td style="color:#006633">A</td><td>اسم نطاق → IPv4</td><td style="font-family:monospace;font-size:.78rem">example.com → 93.184.216.34</td></tr>
+      <tr><td style="color:#006633">AAAA</td><td>اسم نطاق → IPv6</td><td style="font-family:monospace;font-size:.78rem">example.com → 2606:2800::1</td></tr>
+      <tr><td style="color:#006633">CNAME</td><td>اسم نطاق → اسم آخر (مستعار)</td><td style="font-family:monospace;font-size:.78rem">www → example.com</td></tr>
+      <tr><td style="color:#006633">MX</td><td>خادم البريد للنطاق</td><td style="font-family:monospace;font-size:.78rem">mail.example.com</td></tr>
+      <tr><td style="color:#006633">PTR</td><td>IP → اسم نطاق (عكسي)</td><td style="font-family:monospace;font-size:.78rem">34.216.184.93.in-addr.arpa</td></tr>
+      <tr><td style="color:#006633">SOA</td><td>معلومات منطقة DNS الأصلية</td><td>—</td></tr>
     </table>
-    <div style="margin-top:12px;font-size:.82rem;color:#7ab3d4;line-height:1.8">
-      <strong style="color:#f59e0b">WINS</strong> (Windows Internet Name Service): يحل أسماء NetBIOS إلى عناوين IP. يُستخدم في شبكات Windows القديمة. مهجور في الشبكات الحديثة لصالح DNS.
+    <div style="margin-top:12px;font-size:.82rem;color:#4a7a5e;line-height:1.8">
+      <strong style="color:#c9a227">WINS</strong> (Windows Internet Name Service): يحل أسماء NetBIOS إلى عناوين IP. يُستخدم في شبكات Windows القديمة. مهجور في الشبكات الحديثة لصالح DNS.
     </div>
   </div>
 </div>
@@ -663,7 +663,7 @@ function answerQ(qi,picked,correct,container){
 function showFinal(){
   const total=quizData.length,correct=Object.values(quizAnswers).filter(Boolean).length;
   const pct=Math.round(correct/total*100);
-  document.getElementById('quiz-score-text').innerHTML=`أجبت صحيحاً على <strong style="color:#00d4ff">${correct}</strong> من <strong>${total}</strong> سؤالاً (${pct}%) ${pct>=80?'🎉 ممتاز!':pct>=60?'👍 جيد، راجع الأخطاء':'📚 راجع المحتوى مجدداً'}`;
+  document.getElementById('quiz-score-text').innerHTML=`أجبت صحيحاً على <strong style="color:#006633">${correct}</strong> من <strong>${total}</strong> سؤالاً (${pct}%) ${pct>=80?'🎉 ممتاز!':pct>=60?'👍 جيد، راجع الأخطاء':'📚 راجع المحتوى مجدداً'}`;
   document.getElementById('quiz-final').style.display='block';
   document.getElementById('quiz-final').scrollIntoView({behavior:'smooth'});
   localStorage.setItem('sp_lab_nc',JSON.stringify({score:correct,total:total,pct:pct}));
@@ -673,3 +673,8 @@ buildQuiz();
 </script>
 </body>
 </html>
+
+
+
+
+

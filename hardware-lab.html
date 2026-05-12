@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -6,72 +6,72 @@
 <title>المختبر 01 — التعرف على عتاد الخوادم</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0f1e;color:#e0e6f0;min-height:100vh;-webkit-text-size-adjust:100%}
-.site-topbar{background:#04080f;border-bottom:1px solid #0f2040;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#475569;flex-wrap:wrap;gap:6px}
-.site-topbar .author-tag{color:#f59e0b;font-weight:700}
-.site-header-bar{background:linear-gradient(135deg,#0a1628,#0d2145);border-bottom:3px solid #00d4ff;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#0369a1,#0ea5e9);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#f0f4f0;color:#1a2e22;min-height:100vh;-webkit-text-size-adjust:100%}
+.site-topbar{background:#004d28;border-bottom:1px solid #003d20;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#d4e8db;flex-wrap:wrap;gap:6px}
+.site-topbar .author-tag{color:#c9a227;font-weight:700}
+.site-header-bar{background:linear-gradient(135deg,#006633 0%,#00843d 60%,#004d28 100%);border-bottom:4px solid #c9a227;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.site-logo-box{width:52px;height:52px;background:linear-gradient(135deg,#006633,#00843d);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
 .site-lab-info{flex:1;min-width:0}
 .site-lab-info h2{font-size:1.1rem;font-weight:800;color:#fff;margin:0 0 2px}
-.site-lab-info span{font-size:.7rem;color:#93c5fd}
-.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.08);padding-right:18px;flex-shrink:0}
-.site-author-block .aname{font-size:.95rem;font-weight:700;color:#f59e0b}
-.site-author-block .abook{font-size:.68rem;color:#64748b;margin-top:1px}
-.back-btn{display:inline-flex;align-items:center;gap:6px;color:#00d4ff;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(0,212,255,.3);border-radius:8px;margin:16px 24px;transition:all .2s}
-.back-btn:hover{background:rgba(0,212,255,.1)}
-.tabs{display:flex;gap:0;background:#071020;border-bottom:1px solid #1e3a5c;padding:0 20px;overflow-x:auto}
-.tab{padding:14px 22px;cursor:pointer;color:#7ab3d4;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}
-.tab:hover{color:#00d4ff}
-.tab.active{color:#00d4ff;border-bottom-color:#00d4ff;background:rgba(0,212,255,.05)}
+.site-lab-info span{font-size:.7rem;color:#d4e8db}
+.site-author-block{text-align:left;border-right:1px solid rgba(255,255,255,.2);padding-right:18px;flex-shrink:0}
+.site-author-block .aname{font-size:.95rem;font-weight:700;color:#c9a227}
+.site-author-block .abook{font-size:.68rem;color:#4a7a5e;margin-top:1px}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#006633;text-decoration:none;font-size:.85rem;padding:8px 16px;border:1px solid rgba(0,102,51,.3);border-radius:8px;margin:16px 24px;transition:all .2s}
+.back-btn:hover{background:rgba(0,102,51,.1)}
+.tabs{display:flex;gap:0;background:#e8f0eb;border-bottom:1px solid #c8ddd2;padding:0 20px;overflow-x:auto}
+.tab{padding:14px 22px;cursor:pointer;color:#4a7a5e;border-bottom:3px solid transparent;white-space:nowrap;font-size:.9rem;transition:all .2s}
+.tab:hover{color:#006633}
+.tab.active{color:#006633;border-bottom-color:#006633;background:rgba(0,102,51,.05)}
 .tab-panel{display:none;padding:30px;max-width:960px;margin:0 auto}
 .tab-panel.active{display:block}
-h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
-.subtitle{color:#7ab3d4;font-size:.85rem;margin-bottom:20px;line-height:1.7}
-.card{background:#0d1b2a;border:1px solid #1e3a5c;border-radius:12px;padding:22px;margin-bottom:20px}
-.card h3{color:#00d4ff;margin-bottom:12px;font-size:1rem}
+h2{color:#006633;margin-bottom:8px;font-size:1.2rem}
+.subtitle{color:#4a7a5e;font-size:.85rem;margin-bottom:20px;line-height:1.7}
+.card{background:#ffffff;border:1px solid #c8ddd2;border-radius:12px;padding:22px;margin-bottom:20px}
+.card h3{color:#006633;margin-bottom:12px;font-size:1rem}
 .btn{padding:9px 20px;border:none;border-radius:6px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
-.btn-blue{background:#0ea5e9;color:#fff}.btn-blue:hover{background:#0284c7}
-.btn-outline{background:transparent;border:1px solid #00d4ff;color:#00d4ff}.btn-outline:hover{background:rgba(0,212,255,.1)}
+.btn-blue{background:#006633;color:#fff}.btn-blue:hover{background:#004d28}
+.btn-outline{background:transparent;border:1px solid #006633;color:#006633}.btn-outline:hover{background:rgba(0,102,51,.1)}
 .btn-sm{padding:5px 12px;font-size:.78rem}
 .alert{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.88rem;line-height:1.6}
-.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:#7ab3d4}
-.alert-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#34d399}
-.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fbbf24}
-.alert-danger{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#f87171}
-.score-badge{display:inline-block;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#00d4ff;margin-bottom:16px}
+.alert-info{background:rgba(0,102,51,.07);border:1px solid rgba(0,102,51,.25);color:#2d6a4a}
+.alert-success{background:rgba(6,95,70,.08);border:1px solid rgba(6,95,70,.25);color:#065f46}
+.alert-warn{background:rgba(120,85,0,.06);border:1px solid rgba(180,130,0,.3);color:#7a6010}
+.alert-danger{background:rgba(127,29,29,.06);border:1px solid rgba(200,50,50,.25);color:#7f1d1d}
+.score-badge{display:inline-block;background:rgba(0,102,51,.08);border:1px solid rgba(0,102,51,.25);border-radius:20px;padding:4px 14px;font-size:.8rem;color:#006633;margin-bottom:16px}
 .ff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:16px 0}
-.ff-card{background:#071020;border:2px solid #1e3a5c;border-radius:10px;padding:18px;text-align:center;cursor:pointer;transition:all .2s}
-.ff-card:hover{border-color:#00d4ff;background:rgba(0,212,255,.05)}
-.ff-card.selected{border-color:#10b981;background:rgba(16,185,129,.08)}
+.ff-card{background:#f0f7f3;border:2px solid #c8ddd2;border-radius:10px;padding:18px;text-align:center;cursor:pointer;transition:all .2s}
+.ff-card:hover{border-color:#006633;background:rgba(0,102,51,.05)}
+.ff-card.selected{border-color:#006633;background:rgba(0,102,51,.08)}
 .ff-card.wrong{border-color:#ef4444;background:rgba(239,68,68,.08)}
 .ff-icon{font-size:2.5rem;margin-bottom:10px}
-.ff-name{font-weight:700;color:#e0e6f0;margin-bottom:4px}
-.ff-desc{font-size:.75rem;color:#64748b;line-height:1.4}
+.ff-name{font-weight:700;color:#1a2e22;margin-bottom:4px}
+.ff-desc{font-size:.75rem;color:#4a7a5e;line-height:1.4}
 .match-container{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:16px 0}
-.match-col h4{font-size:.85rem;color:#7ab3d4;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
-.match-item{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:all .2s;font-size:.88rem}
-.match-item:hover{border-color:#00d4ff}
-.match-item.selected{border-color:#0ea5e9;background:rgba(14,165,233,.1);color:#38bdf8}
-.match-item.matched{border-color:#10b981;background:rgba(16,185,129,.1);color:#34d399}
-.match-item.wrong-match{border-color:#ef4444;background:rgba(239,68,68,.1);color:#f87171}
+.match-col h4{font-size:.85rem;color:#4a7a5e;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
+.match-item{background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:all .2s;font-size:.88rem}
+.match-item:hover{border-color:#006633}
+.match-item.selected{border-color:#006633;background:rgba(0,102,51,.1);color:#006633}
+.match-item.matched{border-color:#006633;background:rgba(0,102,51,.12);color:#065f46}
+.match-item.wrong-match{border-color:#dc2626;background:rgba(239,68,68,.08);color:#7f1d1d}
 .quiz-q{margin-bottom:24px}
-.quiz-q p{font-weight:600;color:#e0e6f0;margin-bottom:12px;line-height:1.5}
+.quiz-q p{font-weight:600;color:#1a2e22;margin-bottom:12px;line-height:1.5}
 .quiz-options{display:grid;gap:8px}
-.quiz-opt{background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:#e0e6f0}
-.quiz-opt:hover{border-color:#0ea5e9;background:rgba(14,165,233,.06)}
-.quiz-opt.correct{border-color:#10b981;background:rgba(16,185,129,.12);color:#34d399}
-.quiz-opt.incorrect{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
+.quiz-opt{background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:#1a2e22}
+.quiz-opt:hover{border-color:#006633;background:rgba(0,102,51,.06)}
+.quiz-opt.correct{border-color:#006633;background:rgba(0,102,51,.12);color:#065f46}
+.quiz-opt.incorrect{border-color:#dc2626;background:rgba(239,68,68,.08);color:#7f1d1d}
 .spec-table{width:100%;border-collapse:collapse;font-size:.85rem}
-.spec-table th{background:#071020;color:#7ab3d4;padding:10px;text-align:right;border-bottom:2px solid #1e3a5c}
-.spec-table td{padding:10px;border-bottom:1px solid #1e3a5c;vertical-align:middle}
-.spec-table select{background:#0a0f1e;border:1px solid #1e3a5c;border-radius:6px;color:#e0e6f0;padding:5px 8px;font-size:.82rem;width:100%}
-.spec-table tr.correct-row td{background:rgba(16,185,129,.06)}
+.spec-table th{background:#e8f0eb;color:#4a7a5e;padding:10px;text-align:right;border-bottom:2px solid #c8ddd2}
+.spec-table td{padding:10px;border-bottom:1px solid #c8ddd2;vertical-align:middle}
+.spec-table select{background:#f0f7f3;border:1px solid #c8ddd2;border-radius:6px;color:#1a2e22;padding:5px 8px;font-size:.82rem;width:100%}
+.spec-table tr.correct-row td{background:rgba(0,102,51,.06)}
 .spec-table tr.wrong-row td{background:rgba(239,68,68,.06)}
-.prog-wrap{background:#1e3a5c;border-radius:20px;height:8px;margin:8px 0;overflow:hidden}
-.prog-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#00d4ff,#0ea5e9);transition:width .4s}
-.site-footer-bar{background:#04080f;border-top:2px solid #0f2040;padding:20px 30px;text-align:center;margin-top:30px}
-.site-footer-bar p{color:#475569;font-size:.78rem;line-height:2;margin:0}
-.site-footer-bar strong{color:#f59e0b}
+.prog-wrap{background:#c8ddd2;border-radius:20px;height:8px;margin:8px 0;overflow:hidden}
+.prog-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#006633,#00843d);transition:width .5s}
+.site-footer-bar{background:#006633;border-top:2px solid #004d28;padding:20px 30px;text-align:center;margin-top:30px}
+.site-footer-bar p{color:#d4e8db;font-size:.78rem;line-height:2;margin:0}
+.site-footer-bar strong{color:#c9a227}
 @media(max-width:600px){.match-container{grid-template-columns:1fr}.ff-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
@@ -108,7 +108,7 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
 
   <div class="card">
     <h3>السيناريو 1 من 4</h3>
-    <p id="ff-scenario" style="color:#e0e6f0;line-height:1.7;margin-bottom:16px"></p>
+    <p id="ff-scenario" style="color:#1a2e22;line-height:1.7;margin-bottom:16px"></p>
     <div class="ff-grid" id="ff-options"></div>
     <div id="ff-feedback" style="margin-top:12px"></div>
     <button class="btn btn-blue" id="ff-next" onclick="nextFF()" style="margin-top:16px;display:none">السيناريو التالي ←</button>
@@ -117,25 +117,25 @@ h2{color:#00d4ff;margin-bottom:8px;font-size:1.2rem}
   <div class="card">
     <h3>📋 مرجع سريع لأشكال الخوادم</h3>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:8px">
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:14px">
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:14px">
         <div style="font-size:1.8rem;margin-bottom:6px">🏢</div>
-        <div style="color:#00d4ff;font-weight:700;margin-bottom:4px">Rack Mount</div>
-        <div style="font-size:.78rem;color:#64748b;line-height:1.5">يُقاس بوحدة U (وحدة الرف). 1U = 44.45 مم. يُستخدم في مراكز البيانات. كثافة عالية. يحتاج خزانة رف.</div>
+        <div style="color:#006633;font-weight:700;margin-bottom:4px">Rack Mount</div>
+        <div style="font-size:.78rem;color:#4a7a5e;line-height:1.5">يُقاس بوحدة U (وحدة الرف). 1U = 44.45 مم. يُستخدم في مراكز البيانات. كثافة عالية. يحتاج خزانة رف.</div>
       </div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:14px">
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:14px">
         <div style="font-size:1.8rem;margin-bottom:6px">🗼</div>
-        <div style="color:#00d4ff;font-weight:700;margin-bottom:4px">Tower</div>
-        <div style="font-size:.78rem;color:#64748b;line-height:1.5">هيكل مستقل منتصب. مناسب للمكاتب الصغيرة. سهل الصيانة. لا يحتاج رفًا خاصًا.</div>
+        <div style="color:#006633;font-weight:700;margin-bottom:4px">Tower</div>
+        <div style="font-size:.78rem;color:#4a7a5e;line-height:1.5">هيكل مستقل منتصب. مناسب للمكاتب الصغيرة. سهل الصيانة. لا يحتاج رفًا خاصًا.</div>
       </div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:14px">
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:14px">
         <div style="font-size:1.8rem;margin-bottom:6px">⚡</div>
-        <div style="color:#00d4ff;font-weight:700;margin-bottom:4px">Blade</div>
-        <div style="font-size:.78rem;color:#64748b;line-height:1.5">وحدات رفيعة في هيكل Blade. أعلى كثافة. مشاركة الطاقة والتبريد والشبكة. الأغلى سعرًا.</div>
+        <div style="color:#006633;font-weight:700;margin-bottom:4px">Blade</div>
+        <div style="font-size:.78rem;color:#4a7a5e;line-height:1.5">وحدات رفيعة في هيكل Blade. أعلى كثافة. مشاركة الطاقة والتبريد والشبكة. الأغلى سعرًا.</div>
       </div>
-      <div style="background:#071020;border:1px solid #1e3a5c;border-radius:8px;padding:14px">
+      <div style="background:#f0f7f3;border:1px solid #c8ddd2;border-radius:8px;padding:14px">
         <div style="font-size:1.8rem;margin-bottom:6px">📦</div>
-        <div style="color:#00d4ff;font-weight:700;margin-bottom:4px">Micro / Mini</div>
-        <div style="font-size:.78rem;color:#64748b;line-height:1.5">خوادم صغيرة منخفضة الاستهلاك. للحوسبة الطرفية والفروع. توسع محدود وحجم صغير.</div>
+        <div style="color:#006633;font-weight:700;margin-bottom:4px">Micro / Mini</div>
+        <div style="font-size:.78rem;color:#4a7a5e;line-height:1.5">خوادم صغيرة منخفضة الاستهلاك. للحوسبة الطرفية والفروع. توسع محدود وحجم صغير.</div>
       </div>
     </div>
   </div>
@@ -295,9 +295,9 @@ const SPEC_DATA=[
 ];
 function buildSpecs(){
   document.getElementById('spec-tbody').innerHTML=SPEC_DATA.map((d,i)=>`<tr id="sr-${i}">
-    <td style="color:#e0e6f0;line-height:1.5">${d.spec}</td>
+    <td style="color:#1a2e22;line-height:1.5">${d.spec}</td>
     <td><select id="ss-${i}"><option value="">-- اختر --</option>${d.opts.map(o=>`<option value="${o}">${o}</option>`).join('')}</select></td>
-    <td id="st-${i}" style="font-size:.8rem;color:#64748b">—</td>
+    <td id="st-${i}" style="font-size:.8rem;color:#4a7a5e">—</td>
   </tr>`).join('');
 }
 function checkSpecs(){
@@ -307,9 +307,9 @@ function checkSpecs(){
     const row=document.getElementById('sr-'+i);
     const status=document.getElementById('st-'+i);
     row.classList.remove('correct-row','wrong-row');
-    if(sel===d.ans){correct++;row.classList.add('correct-row');status.innerHTML='<span style="color:#34d399">✓ صحيح</span>';}
-    else if(sel){row.classList.add('wrong-row');status.innerHTML=`<span style="color:#f87171">✗ ${d.ans}</span>`;}
-    else{status.innerHTML='<span style="color:#64748b">—</span>';}
+    if(sel===d.ans){correct++;row.classList.add('correct-row');status.innerHTML='<span style="color:#065f46">✓ صحيح</span>';}
+    else if(sel){row.classList.add('wrong-row');status.innerHTML=`<span style="color:#7f1d1d">✗ ${d.ans}</span>`;}
+    else{status.innerHTML='<span style="color:#4a7a5e">—</span>';}
   });
   document.getElementById('spec-feedback').innerHTML=`<div class="alert ${correct===SPEC_DATA.length?'alert-success':'alert-info'}">النتيجة: ${correct}/${SPEC_DATA.length} إجابات صحيحة</div>`;
 }
@@ -362,3 +362,7 @@ buildQuiz();
 </script>
 </body>
 </html>
+
+
+
+
